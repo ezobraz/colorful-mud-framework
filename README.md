@@ -1,3 +1,8 @@
+# Description
+Multi User Dungeon (MUD) is a multiplayer game that is played online through command line terminal, however can also be played with any MUD client out there (mudlet for example).
+
+This project is an attempt to create the MUD server in javascript.
+
 ### Login screen
 [![image.png](https://i.postimg.cc/qvmnN2b5/image.png)](https://postimg.cc/3kvW60HX)
 
@@ -6,6 +11,9 @@
 
 ### Drawing
 [![image.png](https://i.postimg.cc/W3xxTFcD/image.png)](https://postimg.cc/JDcpQhnm)
+
+### Server log
+[![image.png](https://i.postimg.cc/XqS3xDJD/image.png)](https://postimg.cc/DJgtw61q)
 
 # Installation
 
