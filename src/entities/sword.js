@@ -1,12 +1,35 @@
 const Color = require('../common/color');
 const Item = require('./_item');
 
-module.exports = class Sword extends Item {
-    constructor(params) {
-        super(params);
+const defaultAttributes = {
+    sharpness: 0.0,
+    length: 1.0,
+};
 
-        this.sharpness = params.sharpness || 0.0;
-        this.length = params.length || 1.0;
+module.exports = class Sword extends Item {
+    constructor(params = {}) {
+        params.slot = 'rHand';
+
+        super(params);
+        this.attributes = params;
+    }
+
+    get attributes() {
+        let res = super.attributes;
+
+        for (let i in defaultAttributes) {
+            res[i] = this[i];
+        }
+
+        return res;
+    }
+
+    set attributes(params) {
+        super.attributes = params;
+
+        for (let i in defaultAttributes) {
+            this[i] = params[i] || defaultAttributes[i];
+        }
     }
 
     get attackSpeed() {

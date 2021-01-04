@@ -10,6 +10,7 @@ const savableParams = [
     'single',
     'type',
     'ownerId',
+    'items',
 ];
 
 module.exports = class Location {
@@ -21,6 +22,7 @@ module.exports = class Location {
         type = 'town',
         ownerId = null,
         single = false,
+        items = [],
     }) {
         this._id = _id;
         this.img = img;
@@ -29,6 +31,7 @@ module.exports = class Location {
         this.type = type;
         this.ownerId = ownerId;
         this.single = single;
+        this.items = items;
     }
 
     get savableParams() {

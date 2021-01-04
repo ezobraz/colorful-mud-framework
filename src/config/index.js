@@ -29,6 +29,9 @@ module.exports = {
             'remove locations',
             'edit locations',
 
+            'item create',
+            'item destroy',
+
             'draw',
 
             'system',

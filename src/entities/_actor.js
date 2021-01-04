@@ -1,16 +1,6 @@
 const Processor = require('../processor');
 const Color = require('../common/color');
 
-const icons = {
-    m: [
-        Color.img([' Y ', 'BBB']),
-        ' ' + Color.parse(`[r][cw]|[/] `),
-    ],
-    f: [
-        Color.img([' Y ', 'MMM', ' R ']),
-    ],
-};
-
 module.exports = class Actor {
     constructor({
         _id = null,
@@ -101,11 +91,6 @@ module.exports = class Actor {
             Math.floor(this.attributes.dexterity.level * 0.3);
 
         return this.ed > max ? this.ed : max;
-    }
-
-    get icon() {
-        let gender = this.gender || 'm';
-        return icons[gender];
     }
 
     get state() {

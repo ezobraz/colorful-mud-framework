@@ -36,19 +36,6 @@ module.exports = {
             ]);
         }
 
-        let playerIcons = [
-            '',
-            '',
-            '',
-            '',
-        ];
-
-        let locPlayers = location.players.slice(0, 10);
-
-        locPlayers.forEach((ply, index) => ply.icon.forEach((line, i) => playerIcons[i] += line));
-
-        res.push(...playerIcons);
-
         if (location.desc) {
             res.push(...[
                 Color.wrap(location.desc),
@@ -56,15 +43,25 @@ module.exports = {
             ]);
         }
 
-        if (locPlayers.length > 0) {
-            res.push(...[
-                Color.parse(`Players nearby:`),
-                '',
-            ]);
+        if (location.players.length > 0) {
+            res.push(Color.parse(`[b][cW]Players nearby:[/]`));
 
-            const names = locPlayers.map(ply => Color.parse(`[b][cY]${ply.name}[/]`));
+            const playerNames = location.players.map(ply => Color.parse(`[b][cY]${ply.name}[/]`));
 
-            res.push(...Color.list(names, 4));
+            res.push(...Color.list(playerNames, 4));
+        }
+
+        if (location.items.length) {
+            const itemNames = location.items.map(item => Color.parse(`[b][cC]${item.name}[/]`));
+
+            res.push(
+                ...[
+                    '',
+                    Color.parse(`[b][cW]Items:[/]`),
+                ],
+                ...Color.list(itemNames, 4),
+            );
+
         }
 
         Broadcaster.sendTo({
