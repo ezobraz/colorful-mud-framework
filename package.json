@@ -1,0 +1,15 @@
+{
+  "name": "mud",
+  "version": "1.0.0",
+  "author": "ezobraz",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "GPL3.0",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "nedb": "^1.8.0"
+  }
+}
