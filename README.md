@@ -1,4 +1,7 @@
-# Description
+# Node JS MUD server and engine
+[![Build Status](https://travis-ci.org/ezobraz/colorful-mud-server-node.js.svg?branch=master)](https://travis-ci.org/ezobraz/colorful-mud-server-node.js)
+![image](https://status.david-dm.org/gh/ezobraz/colorful-mud-server-node.js.svg)
+
 Multi User Dungeon (MUD) is a multiplayer game that is played online through command line terminal, however can also be played with any MUD client out there (mudlet for example).
 
 This project is an attempt to create the MUD server in javascript.
