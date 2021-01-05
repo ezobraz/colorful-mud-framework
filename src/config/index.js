@@ -6,9 +6,6 @@ module.exports = {
         debug: {
             logRam: true,
         },
-        locations: {
-            startId: 'TfhRs6XOQxYWmqbR',
-        },
         players: {
             auth: {
                 maxPasswordAttempts: 5,
@@ -31,6 +28,7 @@ module.exports = {
 
             'item create',
             'item destroy',
+            'item typeinfo',
 
             'draw',
 

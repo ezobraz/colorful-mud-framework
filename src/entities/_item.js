@@ -1,32 +1,41 @@
 const Color = require('../common/color');
+const Entity = require('./index');
 
-const defaultAttributes = {
-    name: null,
-    slot: null,
-    weight: 0.1,
-    quality: 100,
-    wear: 0,
-    value: 0,
-};
-
-module.exports = class Item {
-    constructor(params) {
-        this.attributes = params;
+module.exports = class Item extends Entity {
+    get dictionary() {
+        return {
+            ...super.dictionary,
+            name: {
+                type: String,
+                default: "Unknown",
+            },
+            slot: {
+                type: String,
+                default: null,
+            },
+            weight: {
+                type: Number,
+                default: 0.1,
+            },
+            quality: {
+                type: Number,
+                default: 100,
+            },
+        }
     }
 
-    get attributes() {
-        const res = {};
+    get condition() {
+        let now = new Date();
+        let createdOn = this.createdOn;
 
-        for (let i in defaultAttributes) {
-            res[i] = this[i];
-        }
-
-        return res;
+        // calculate condition based on creation time. bad - 0, good - 100
+        return 0;
     }
 
-    set attributes(params) {
-        for (let i in defaultAttributes) {
-            this[i] = params[i] || defaultAttributes[i];
-        }
+    get value() {
+        let createdOn = this.createdOn;
+
+        // todo: calculate value based on creation time, quality, condition
+        return 0;
     }
 };

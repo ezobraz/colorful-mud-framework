@@ -1,53 +1,46 @@
 const Model = require('../model');
+const Entity = require('./index');
 const Broadcaster = require('../engine/broadcaster');
 const Store = require('../store');
 
-const savableParams = [
-    '_id',
-    'img',
-    'name',
-    'desc',
-    'single',
-    'type',
-    'ownerId',
-    'items',
-];
-
-module.exports = class Location {
-    constructor({
-        _id = null,
-        img = [],
-        name = null,
-        desc = null,
-        type = 'town',
-        ownerId = null,
-        single = false,
-        items = [],
-    }) {
-        this._id = _id;
-        this.img = img;
-        this.name = name;
-        this.desc = desc;
-        this.type = type;
-        this.ownerId = ownerId;
-        this.single = single;
-        this.items = items;
-    }
-
-    get savableParams() {
-        let res = {}
-
-        savableParams.forEach(item => {
-            res[item] = this[item];
-        });
-
-        return res;
-    }
-
-    set savableParams(params) {
-        savableParams.forEach(item => {
-            this[item] = params[item];
-        });
+module.exports = class Location extends Entity {
+    get dictionary() {
+        return {
+            ...super.dictionary,
+            _id: {
+                type: String,
+                default: null,
+            },
+            img: {
+                type: Array,
+                default: [],
+            },
+            name: {
+                type: String,
+                default: "Unknown",
+            },
+            desc: {
+                type: String,
+                default: null,
+            },
+            single: {
+                type: Boolean,
+                default: false,
+            },
+            type: {
+                type: String,
+                default: 'town',
+                options: ['town', 'castle'],
+            },
+            ownerId: {
+                type: String,
+                default: null,
+            },
+            items: {
+                type: Array,
+                default: [],
+            },
+        }
     }
 
     async create() {
@@ -55,7 +48,7 @@ module.exports = class Location {
             return;
         }
 
-        const params = this.savableParams;
+        const params = this.props;
         delete params._id;
 
         let res = await Model.mutations('locations/create', {
@@ -64,7 +57,7 @@ module.exports = class Location {
         });
 
         if (res) {
-            this.savableParams = res;
+            this.props = res;
         }
 
         return res;
@@ -86,7 +79,7 @@ module.exports = class Location {
         }
 
         await Model.mutations('locations/save', {
-            ...this.savableParams,
+            ...this.props,
         });
     }
 

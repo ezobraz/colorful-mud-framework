@@ -1,81 +1,98 @@
 const Processor = require('../processor');
 const Color = require('../common/color');
+const Entity = require('./index');
 
-module.exports = class Actor {
-    constructor({
-        _id = null,
-
-        name = null,
-        gender = 'm',
-
-        locationId = null,
-
-        hp = 10,
-        ed = 10,
-
-        strength = 1,
-        willpower = 1,
-        dexterity = 1,
-
-        fencing = 0,
-        bows = 0,
-
-        inventory = [],
-    }) {
-        this._id = _id;
-
-        this.name = name;
-
-        this.locationId = locationId;
-        this.inventory = inventory;
-        this.gender = gender;
-
-        this.hp = hp;
-        this.ed = ed;
-
-        this.attributes = {
-            strength: {
-                level: strength,
-                progress: 0,
-            },
-            willpower: {
-                level: willpower,
-                progress: 0,
-            },
-            dexterity: {
-                level: dexterity,
-                progress: 0,
-            },
-        };
-
-        this.skills = {
-            fencing: {
-                level: fencing,
-                progress: 0,
-            },
-            bows: {
-                level: bows,
-                progress: 0,
-            },
-        };
-
-        this.slots = {
-            rHand: null,
-            lHand: null,
-            rShoulder: null,
-            lShoulder: null,
-            chest: null,
-            legs: null,
-            boots: null,
-            robe: null,
-        };
+module.exports = class Actor extends Entity {
+    constructor(params = {}) {
+        super(params);
 
         this.meta = {
-            state: {
-                name: null,
-                step: null,
-            },
+            state: {},
         };
+    }
+
+    get dictionary() {
+        return {
+            ...super.dictionary,
+            _id: {
+                type: String,
+                default: null,
+            },
+            name: {
+                type: String,
+                default: "Unknown",
+            },
+            gender: {
+                type: String,
+                default: 'm',
+                options: ['m', 'f'],
+            },
+            locationId: {
+                type: String,
+                default: null,
+            },
+
+            hp: {
+                type: Number,
+                default: 10,
+            },
+            ed: {
+                type: Number,
+                default: 10,
+            },
+            mp: {
+                type: Number,
+                default: 0,
+            },
+
+            skills: {
+                type: Object,
+                default: {
+                    fencing: {
+                        level: 0,
+                        progress: 0,
+                    },
+                    bows: {
+                        level: 0,
+                        progress: 0,
+                    },
+                },
+            },
+            attributes: {
+                type: Object,
+                default: {
+                    strength: {
+                        level: 0,
+                        progress: 0,
+                    },
+                    willpower: {
+                        level: 0,
+                        progress: 0,
+                    },
+                    dexterity: {
+                        level: 0,
+                        progress: 0,
+                    },
+                },
+            },
+            inventory: {
+                type: Array,
+                default: [],
+            },
+            slots: {
+                type: Object,
+                default: {
+                    rHand: null,
+                    lHand: null,
+                    rShoulder: null,
+                    lShoulder: null,
+                    chest: null,
+                    legs: null,
+                    boots: null,
+                    robe: null,
+                },
+            },
+        }
     }
 
     get hpMax() {

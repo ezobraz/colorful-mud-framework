@@ -7,63 +7,7 @@ const Config = require('../config');
 const Store = require('../store');
 const Debug = require('../engine/debug');
 
-const savableParams = [
-    '_id',
-
-    'name',
-    'gender',
-
-    'locationId',
-
-    'hp',
-    'ed',
-    'attributes',
-    'skills',
-
-    'inventory',
-    'slots',
-
-    'permissions',
-];
-
 const paramLevelCap = param => param.level * 100;
-
-const calculateTitle = ({ id, kingdom, castles, vassals, feudal, isNoble, gender }) => {
-    if (!kingdom && !isNoble) {
-        // count castles, vassals
-
-        return '';
-    }
-
-    if (kingdom && !isNoble) {
-        if (kingdom.lordId == id) {
-            return `Leader of ${kingdom.name}`;
-        }
-
-        // count castles, vassals
-
-        return '';
-    }
-
-    if (!kingdom && isNoble) {
-        return gender == 'm' ? 'Sir' : 'Lady';
-
-        // count castles, vassals
-
-        return gender == 'm' ? 'Sir' : 'Lady';
-    }
-
-    if (kingdom && noble) {
-        if (kingdom.lordId == id) {
-            let t = gender == 'm' ? 'King' : 'Queen';
-            return `${t} of ${kingdom.name}`;
-        }
-
-        // count castles, vassals
-
-        return gender == 'm' ? 'Sir' : 'Lady';
-    }
-};
 
 module.exports = class Player extends Actor {
 
@@ -71,83 +15,17 @@ module.exports = class Player extends Actor {
         super(params);
 
         this.socket = params.socket;
-        this.permissions = params.permissions || [];
         this.lastInput = Date.now();
     }
 
-    get savableParams() {
-        let res = {}
-
-        savableParams.forEach(item => {
-            res[item] = this[item];
-        });
-
-        return res;
-    }
-
-    set savableParams(params) {
-        savableParams.forEach(item => {
-            this[item] = params[item];
-        });
-    }
-
-    async getTitle() {
-        if (this.meta.title) {
-            return this.meta.title;
+    get dictionary() {
+        return {
+            ...super.dictionary,
+            permissions: {
+                type: Array,
+                default: [],
+            },
         }
-
-        // promise.all ?
-        const kingdom = await this.getKingdom();
-        const castles = await this.getCastles();
-        const vassals = await this.getVassals();
-        const feudal = await this.getFeudal();
-        const isNoble = this.noble;
-
-        this.meta.title = calculateTitle({
-            id: this._id,
-            kingdom,
-            castles,
-            vassals,
-            feudal,
-            isNoble,
-            gender,
-        });
-
-        return this.meta.title;
-    }
-
-    async getFeudal() {
-        if (!this.feudalId) {
-            return;
-        }
-
-        if (this.meta.feudal) {
-            return this.meta.feudal;
-        }
-
-        let res = await Model.getters('players/findOne', {
-            _id: this.feudalId,
-        });
-
-        this.meta.feudal = res;
-        return res;
-    }
-
-    async getVssals() {
-        if (!this._id) {
-            return;
-        }
-
-        if (this.meta.vassals) {
-            return this.meta.vassals;
-        }
-
-        let res = await Model.getters('players/find', {
-            feudalId: this._id,
-        });
-
-        this.meta.vassals = res;
-        return res;
     }
 
     async getCurrentLocation() {
@@ -164,41 +42,6 @@ module.exports = class Player extends Actor {
         });
 
         this.meta.currentLocation = res;
-        return res;
-    }
-
-    async getCastles() {
-        if (!this._id) {
-            return;
-        }
-
-        if (this.meta.castles) {
-            return this.meta.castles;
-        }
-
-        let res = await Model.getters('locations/find', {
-            type: 'castle',
-            ownerId: this._id,
-        });
-
-        this.meta.castles = res;
-        return res;
-    }
-
-    async getKingdom() {
-        if (!this.kingdomId) {
-            return;
-        }
-
-        if (this.meta.kingdom) {
-            return this.meta.kingdom;
-        }
-
-        let res = await Model.getters('kingdoms/findOne', {
-            _id: this.kingdomId,
-        });
-
-        this.meta.kingdom = res;
         return res;
     }
 
@@ -228,7 +71,7 @@ module.exports = class Player extends Actor {
             params.locationId = startLocationId;
         }
 
-        this.savableParams = params;
+        this.props = params;
 
         if (this.locationId && !silent) {
             let location = Store.findById('locations', this.locationId);
@@ -296,7 +139,7 @@ module.exports = class Player extends Actor {
 
         password = await hash.password(password);
 
-        const params = this.savableParams;
+        const params = this.props;
         delete params._id;
 
         let res = await Model.mutations('players/insert', {
@@ -328,7 +171,7 @@ module.exports = class Player extends Actor {
         }
 
         await Model.mutations('players/save', {
-            ...this.savableParams,
+            ...this.props,
         });
     }
 };

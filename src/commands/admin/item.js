@@ -3,36 +3,66 @@ const Broadcaster = require('../../engine/broadcaster');
 
 const hasPermissions = require('../common/has-permissions');
 
-const TYPES = {
-    'sword': [
-        'name',
-        'sharpness',
-        'length',
-        'desc',
-    ],
-}
+const TYPES = [
+    'sword',
+];
 
 const actions = {
-    'create': {
-        permissions: ['item create'],
-        async execute(player, params) {
-            const typeStr = params[0];
+    'typeinfo': {
+        permissions: ['item typeinfo'],
+        async execute(player, words) {
+            const params = words.split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            const type = params[0];
             params.shift();
 
-            if (!TYPES[typeStr]) {
+            if (!TYPES.includes(type)) {
                 return;
             }
 
-            const type = TYPES[typeStr];
-            const itemClass = require(`../../entities/${typeStr}`);
+            const itemClass = require(`../../entities/${type}`);
             const item = new itemClass();
-            const attributes = item.attributes;
+            const itemProps = item.props;
 
-            params.forEach((value, i) => {
-                attributes[type[i]] = value;
+            const res = [
+                Color.parse(`[b][r][cY] Default ${type} props [/]`),
+            ];
+
+            for (let i in itemProps) {
+                res.push(Color.parse(`[b][cY]${i}[/]: ${itemProps[i]}`));
+            }
+
+            Broadcaster.sendTo({
+                to: player,
+                text: res.join('\r\n'),
+            });
+        },
+    },
+    'create': {
+        permissions: ['item create'],
+        execute(player, words) {
+            const params = words.split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            const type = params[0];
+            params.shift();
+
+            if (!TYPES.includes(type)) {
+                return;
+            }
+
+            const itemClass = require(`../../entities/${type}`);
+            const item = new itemClass();
+            const itemProps = item.props;
+            const props = {};
+
+            params.forEach((param, i) => {
+                const data = param.split('=');
+                const value = data[1].replace(/"+/g, '');
+
+                if (typeof itemProps[data[0]] != 'undefined') {
+                    props[data[0]] = value;
+                }
             });
 
-            item.attributes = attributes;
+            item.props = props;
 
             player.addItem(item);
             player.save();
@@ -44,7 +74,8 @@ const actions = {
     },
     'destroy': {
         permissions: ['item destroy'],
-        async execute(player, params) {
+        async execute(player, words) {
+            const params = words.split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
             const name = params[0];
             const item = player.inventory.find(i => i.name == name);
 
@@ -65,7 +96,8 @@ module.exports = {
     permissions: ['item create'],
     desc: 'With this command you can create or destroy items',
     examples: [
-        'item create sword Basterd - will create a sword with name "Bastard" in your inventory',
+        'item create sword name="Big Stick" sharpness=1.0 - will create a sword with name "Big Stick" and 1.0 sharpness in your inventory',
+        'item typeinfo sword - will output all props you can pass when creating a sword',
     ],
     async execute(player, text) {
         const params = text.split(' ');
@@ -83,6 +115,6 @@ module.exports = {
             return;
         }
 
-        return action.execute(player, params);
+        return action.execute(player, params.join(' '));
     },
 };

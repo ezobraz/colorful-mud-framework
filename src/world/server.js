@@ -10,7 +10,6 @@ const initServer = () => {
     });
 
     server.on('error', e => {
-        console.log(e);
         Event.emit('save');
         // this.server.close();
     });

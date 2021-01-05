@@ -27,9 +27,7 @@ module.exports = {
             return;
         }
 
-        // doesn't have permissions
         if (!hasPermissions(action.permissions, player)) {
-            console.log('no rights 2');
             return;
         }
 
