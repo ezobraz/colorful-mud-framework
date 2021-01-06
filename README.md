@@ -9,18 +9,18 @@ This project is an attempt to create the MUD server in javascript.
 [![image.png](https://i.postimg.cc/qvmnN2b5/image.png)](https://postimg.cc/3kvW60HX)
 
 # Features
-* WYSIWYG-like world building.
+* ### WYSIWYG-like world building.
 Everything (locations, npcs, items) can be created from the command line, no need to edit the soruce files.
-* [nedb](https://github.com/louischatriot/nedb) as a database. All data is stored into `/db/*.db` files with json-like syntax
-* Drawing. With `draw` command you can create 8-bit pictures and put them as images to your locations
-
+* ### [nedb](https://github.com/louischatriot/nedb) as a database. 
+All data is stored into `/db/*.db` files with json-like syntax
+* ### Drawing. 
+With `draw` command you can create 8-bit pictures and set them as images for locations  
 [![image.png](https://i.postimg.cc/W3xxTFcD/image.png)](https://postimg.cc/JDcpQhnm)
-* All entities in game have their own classes and easly are customizable. For example, sword's condition is not just a number, it is a function that returns the number based on sharpness, quality, date it was created, etc.
-* Nice player stats
-
+* ### All entities in game have their own classes and are easily customizable. 
+For example, sword's condition is not just a number, it is a function that returns the number based on sharpness, quality, date it was created, etc.
+* ### Nice player stats  
 [![image.png](https://i.postimg.cc/jdcn1zbS/image.png)](https://postimg.cc/PPLqpvJg)
-* Convenient server logs
-
+* ### Convenient server logs  
 [![image.png](https://i.postimg.cc/XqS3xDJD/image.png)](https://postimg.cc/DJgtw61q)
 
 # Installation
