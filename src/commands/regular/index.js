@@ -2,6 +2,7 @@ module.exports = [
     require('./say'),
     require('./whisper'),
     require('./look'),
+    require('./go'),
     require('./help'),
     require('./stats'),
     require('./inventory'),

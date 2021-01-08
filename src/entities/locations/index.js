@@ -34,14 +34,26 @@ module.exports = class Location extends Base {
             },
             type: {
                 type: String,
-                default: 'town',
-                options: ['town', 'castle'],
+                default: 'room',
+                options: [
+                    'room',
+                    'town',
+                    'castle',
+                ],
+            },
+            locked: {
+                type: Boolean,
+                default: false,
             },
             ownerId: {
                 type: String,
                 default: null,
             },
             items: {
+                type: Array,
+                default: [],
+            },
+            exits: {
                 type: Array,
                 default: [],
             },
@@ -126,6 +138,18 @@ module.exports = class Location extends Base {
 
     removeItem(item) {
         this.items = this.items.filter(i => i !== item);
+    }
+
+    addExit(id) {
+        if (this.exits.find(exit => exit === id)) {
+            return;
+        }
+
+        this.exits.push(id);
+    }
+
+    removeExit(id) {
+        this.exits = this.exits.filter(exit => exit !== id);
     }
 
     notifyAll({ text, exclude = null}) {

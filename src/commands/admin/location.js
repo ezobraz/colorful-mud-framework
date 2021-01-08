@@ -6,6 +6,15 @@ const Location = require('../../entities/locations');
 
 const hasPermissions = require('../common/has-permissions');
 
+const setParams = [
+    'name',
+    'desc',
+    'img',
+    'type',
+    'exit',
+    'exit-bind',
+];
+
 module.exports = {
     names: ['location', 'loc'],
     permissions: ['list locations'],
@@ -15,6 +24,8 @@ module.exports = {
         'location create my location - will create a new location with name "my location"',
         'location set desc this is something - will set current location\'s description to "this is something"',
         'location set img - will set current location\'s picture to whatever is in your canvas right now (see draw command)',
+        'location set exit 23s6g3 - will add new exit to the current location',
+        'location set exit-bind 23s6g3 - will connect current location with the one with id "23s6g3"',
     ],
     async execute(player, text) {
         const words = text.split(' ');
@@ -35,6 +46,65 @@ module.exports = {
     },
 
     actions: {
+        'unset': {
+            permissions: ['edit locations'],
+            async execute(player, text) {
+                if (!text) {
+                    return;
+                }
+
+                const words = text.split(' ');
+
+                if (!words.length) {
+                    return;
+                }
+
+                const param = words[0];
+                words.shift();
+                let val = words.join(' ');
+
+                if (!setParams.includes(param)) {
+                    return;
+                }
+
+                if (!player.locationId) {
+                    return;
+                }
+
+                let location = Store.findById('locations', player.locationId);
+
+                if (!location) {
+                    return;
+                }
+
+                if (param == 'img') {
+                    val = [];
+                }
+
+                if (param == 'exit') {
+                    location.removeExit(val);
+                    location.save();
+                    return true;
+                }
+
+                if (param == 'exit-bind') {
+                    location.removeExit(val);
+                    location.save();
+
+                    const otherLocation = Store.findById('locations', val);
+
+                    if (otherLocation) {
+                        otherLocation.removeExit(location._id);
+                        otherLocation.save();
+                    }
+                    return true;
+                }
+
+                location[param] = val;
+                location.save();
+                return true;
+            },
+        },
         'set': {
             permissions: ['edit locations'],
             async execute(player, text) {
@@ -60,7 +130,7 @@ module.exports = {
 
                 let param = words[0];
 
-                if (!['name', 'desc', 'img', 'type'].includes(param)) {
+                if (!setParams.includes(param)) {
                     return;
                 }
 
@@ -75,9 +145,27 @@ module.exports = {
                     return;
                 }
 
+                if (param == 'exit') {
+                    location.addExit(val);
+                    location.save();
+                    return true;
+                }
+
+                if (param == 'exit-bind') {
+                    location.addExit(val);
+                    location.save();
+
+                    const otherLocation = Store.findById('locations', val);
+
+                    if (otherLocation) {
+                        otherLocation.addExit(location._id);
+                        otherLocation.save();
+                    }
+                    return true;
+                }
+
                 location[param] = val;
                 location.save();
-
                 return true;
             },
         },

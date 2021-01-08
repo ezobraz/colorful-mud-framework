@@ -49,6 +49,10 @@ module.exports = class Base {
                     val = val.toString();
                 }
 
+                if (dic.type === Boolean) {
+                    val = !!val;
+                }
+
                 if (dic.type === Date) {
                     val = parseInt(val);
                 }

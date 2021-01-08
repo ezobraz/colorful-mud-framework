@@ -25,8 +25,15 @@ module.exports = {
 
         let res = [
             Color.parse(`[b][r][cY]${ Color.align({ text: location.displayName }) }[/]`),
-            '',
         ];
+
+        if (player.permissions.includes('list locations')) {
+            res.push(...[
+                `ID: ${location._id}`,
+            ]);
+        }
+
+        res.push('');
 
         if (location.img && location.img.length) {
             res.push(...[
@@ -63,9 +70,29 @@ module.exports = {
                 ...[
                     Color.parse(`[b][u][cW]Items:[/]`),
                     ...items.length > 10 ? Color.list(items, 4) : items,
+                    '',
                 ],
             );
+        }
 
+        if (location.exits.length) {
+            const exits = location.exits.map((id, index) => {
+                const exit = Store.findById('locations', id);
+
+                if (exit.locked) {
+                    return Color.parse(`${index + 1}. [locked] ${exit.displayName}`);
+                }
+
+                return Color.parse(`${index + 1}. ${exit.displayName}`);
+            });
+
+            res.push(
+                ...[
+                    Color.parse(`[b][u][cW]Exits:[/]`),
+                    ...exits.length > 10 ? Color.list(exits, 4) : exits,
+                    '',
+                ],
+            );
         }
 
         Broadcaster.sendTo({
