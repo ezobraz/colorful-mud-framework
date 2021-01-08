@@ -13,9 +13,7 @@ module.exports = {
     ],
     execute(player) {
         const params = {
-            'Attributes': player.attributes,
-            'Skills': player.skills,
-            'Other': {
+            'Parameters': {
                 'health': {
                     level: `${player.hp}/${player.hpMax}`,
                 },
@@ -29,7 +27,9 @@ module.exports = {
                 'speed': {
                     level: `${player.speed}km/h`,
                 },
-            }
+            },
+            'Attributes': player.attributes,
+            'Skills': player.skills,
         };
 
         const res = [
@@ -64,7 +64,7 @@ module.exports = {
 
             res.push(...Color.list(tmp, 2));
 
-            if (i != 'Other') {
+            if (i != 'Skills') {
                 res.push('');
             }
         }

@@ -87,16 +87,7 @@ module.exports = class Location extends Base {
     }
 
     get displayName() {
-        switch (this.type) {
-            case 'village':
-                return `${this.name} village`;
-            case 'town':
-                return `Town of ${this.name}`;
-            case 'castle':
-                return `${this.name} castle`;
-            default:
-                return this.name;
-        }
+        return this.name;
     }
 
     async create() {

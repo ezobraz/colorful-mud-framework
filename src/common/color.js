@@ -180,6 +180,12 @@ const img = (imgArr, numeral = false) => {
 
     let length = 8;
 
+    for (let i = 0; i < imgArr.length; i++) {
+        if (!imgArr[i]) {
+            imgArr[i] = ' ';
+        }
+    }
+
     imgArr = imgArr.map(line => {
         if (line.length > length) {
             length = line.length;
