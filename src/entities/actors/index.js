@@ -209,6 +209,13 @@ module.exports = class Actor extends Base {
         return this.mp > max ? this.mp : max;
     }
 
+    get speed() {
+        return 15 +
+            Math.floor(this.attributes.strength.level * 0.2) +
+            Math.floor(this.attributes.willpower.level * 0.1) +
+            Math.floor(this.attributes.dexterity.level * 0.3);
+    }
+
     get state() {
         return this.meta.state;
     }

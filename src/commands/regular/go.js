@@ -38,9 +38,10 @@ module.exports = {
         }
 
         player.changeLocation(location);
+        player.save();
         Broadcaster.sendTo({
             to: player,
-            text: Color.parse(`[b][cC]Moved to ${location.name}[/]`),
+            text: Color.parse(`[b][cY]You've moved to ${location.name}[/]`),
         });
 
         return true;

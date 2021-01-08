@@ -5,6 +5,7 @@ module.exports = [
     require('./go'),
     require('./help'),
     require('./stats'),
+    require('./hp'),
     require('./inventory'),
     require('./take'),
     require('./drop'),

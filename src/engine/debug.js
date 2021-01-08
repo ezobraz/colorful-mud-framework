@@ -14,6 +14,9 @@ const types = {
     'CHAT': {
         color: 'cB',
     },
+    'MOVE': {
+        color: 'cY',
+    },
 }
 
 module.exports = {

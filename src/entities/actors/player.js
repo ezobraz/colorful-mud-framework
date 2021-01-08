@@ -89,6 +89,12 @@ module.exports = class Player extends Actor {
                 exclude: this,
             });
         }
+
+        if (from) {
+            Debug.log(Color.parse(`${this.displayName} went from [b]${from.displayName}[/] to [b]${to.displayName}[/]`), 'MOVE');
+        } else {
+            Debug.log(Color.parse(`${this.displayName} appeared in [b]${to.displayName}[/]`), 'MOVE');
+        }
     }
 
     async setUp({ params, silent = false }) {

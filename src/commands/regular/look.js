@@ -23,14 +23,14 @@ module.exports = {
             return;
         }
 
+        const showIds = player.permissions.includes('list locations');
+
         let res = [
-            Color.parse(`[b][r][cY]${ Color.align({ text: location.displayName }) }[/]`),
+            Color.parse(`[b][r][${location.color}]${ Color.align({ text: location.displayName }) }[/]`),
         ];
 
-        if (player.permissions.includes('list locations')) {
-            res.push(...[
-                `ID: ${location._id}`,
-            ]);
+        if (showIds) {
+            res.push(location._id);
         }
 
         res.push('');
@@ -79,11 +79,19 @@ module.exports = {
             const exits = location.exits.map((id, index) => {
                 const exit = Store.findById('locations', id);
 
+                let str = `${index + 1}. `;
+
                 if (exit.locked) {
-                    return Color.parse(`${index + 1}. [locked] ${exit.displayName}`);
+                    str += '[locked] ';
                 }
 
-                return Color.parse(`${index + 1}. ${exit.displayName}`);
+                str += `[b][${exit.color}]${exit.displayName}[/]`;
+
+                if (showIds) {
+                    str += `: [b][cW]${exit._id}[/]`;
+                }
+
+                return Color.parse(str);
             });
 
             res.push(

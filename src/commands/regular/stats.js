@@ -15,6 +15,21 @@ module.exports = {
         const params = {
             'Attributes': player.attributes,
             'Skills': player.skills,
+            'Other': {
+                'health': {
+                    level: `${player.hp}/${player.hpMax}`,
+                },
+                'endurance': {
+                    level: `${player.ed}/${player.edMax}`,
+                },
+                'mana': {
+                    hide: player.mpMax <= 0,
+                    level: `${player.mp}/${player.mpMax}`,
+                },
+                'speed': {
+                    level: `${player.speed}km/h`,
+                },
+            }
         };
 
         const res = [
@@ -30,7 +45,11 @@ module.exports = {
             const pack = params[i];
             const tmp = [];
             for (let key in pack) {
-                if (pack[key].level <= 0 && pack[key].progress <= 0) {
+                if (pack[key].level <= 0 && typeof pack[key].progress != 'undefined' && pack[key].progress <= 0) {
+                    continue;
+                }
+
+                if (pack[key].hide) {
                     continue;
                 }
 
@@ -44,44 +63,11 @@ module.exports = {
             }
 
             res.push(...Color.list(tmp, 2));
-            res.push('');
-        }
 
-        const stats = {
-            hp: {
-                bg: 'br',
-                color: 'cW',
-            },
-            ed: {
-                bg: 'bg',
-                color: 'cS',
-            },
-            mp: {
-                bg: 'bb',
-                color: 'cW',
-            },
-        };
-
-        const statsStr = [];
-        for (let key in stats) {
-            let max = `${key}Max`;
-
-            if (player[max] <= 0) {
-                continue;
+            if (i != 'Other') {
+                res.push('');
             }
-
-            let str = Color.parse(`[b]${key.toUpperCase()}[/] `) + Color.progress({
-                bgColor: stats[key].bg,
-                textColor: stats[key].color,
-                val: player[key],
-                max: player[max],
-            });
-
-            statsStr.push(str);
         }
-
-        res.push(statsStr.join(' '));
-
 
         const text = `${res.join('\r\n')}`;
 

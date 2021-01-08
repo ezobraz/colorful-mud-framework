@@ -36,9 +36,12 @@ module.exports = class Location extends Base {
                 type: String,
                 default: 'room',
                 options: [
+                    'nature',
                     'room',
+                    'village',
                     'town',
                     'castle',
+                    'dungeon',
                 ],
             },
             locked: {
@@ -64,8 +67,29 @@ module.exports = class Location extends Base {
         return Store.findAll('players', 'locationId', this._id);
     }
 
+    get color() {
+        switch (this.type) {
+            case 'nature':
+                return 'cg';
+            case 'village':
+                return 'cy';
+            case 'town':
+                return 'cY';
+            case 'castle':
+                return 'cw';
+            case 'room':
+                return 'cW';
+            case 'dungeon':
+                return 'cr';
+            default:
+                return 'cW';
+        }
+    }
+
     get displayName() {
         switch (this.type) {
+            case 'village':
+                return `${this.name} village`;
             case 'town':
                 return `Town of ${this.name}`;
             case 'castle':
