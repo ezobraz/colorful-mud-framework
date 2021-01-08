@@ -1,3 +1,7 @@
+const Config = require('../config');
+
+const lineLength = Config.get('format.lineLength');
+
 const alias = {
     // normal
     'cs': '[30m', // black
@@ -90,7 +94,7 @@ const formatScaleNumber = i => {
 
 const wrap = text => {
     const res = text.split(' ');
-    const chunks = [];
+    let chunks = [];
     let lastChunk = 0;
 
     res.forEach((word, i) => {
@@ -99,16 +103,18 @@ const wrap = text => {
                 chunks[lastChunk] = [];
             }
 
+            const line = chunks[lastChunk].join(' ');
+
+            if (line.length + word.length > lineLength) {
+                lastChunk += 1;
+                chunks[lastChunk] = [];
+            }
+
             chunks[lastChunk].push(word);
         }
-
-        const line = chunks[lastChunk].join(' ');
-
-        if (i + 1 == res.length || line.length >= 50) {
-            chunks[lastChunk] = line;
-            lastChunk += 1;
-        }
     });
+
+    chunks = chunks.map(line => line.join(' '));
 
     return chunks.join('\r\n');
 };
@@ -139,50 +145,95 @@ const list = (arr, cols = 1) => {
     return res;
 }
 
+const align = ({ symbol = ' ', length = lineLength, text = null, align = 'center' }) => {
+    let start = 0;
+
+    if (text && align == 'center') {
+        start = Math.floor(length / 2 - text.length / 2);
+    } else if (text && align == 'right') {
+        start = length - text.length;
+    }
+
+    const res = new Array(length).join(symbol).split('');
+
+    if (text) {
+        for (var i in text) {
+            res[start + parseInt(i)] = text[i];
+        }
+    }
+
+    return res.join('');
+};
+
+const img = (imgArr, numeral = false) => {
+    if (!imgArr) {
+        return;
+    }
+
+    if (typeof imgArr === 'string') {
+        imgArr = [imgArr];
+    }
+
+    if (!imgArr.length) {
+        return;
+    }
+
+    let length = 8;
+
+    imgArr = imgArr.map(line => {
+        if (line.length > length) {
+            length = line.length;
+        }
+
+        for (let symbol in imgSymbols) {
+            line = line.replace(new RegExp(symbol, 'g'), '\u001b' + imgSymbols[symbol] + ' ' + '\u001b' + alias['/']);
+        }
+
+        return line;
+    });
+
+    if (numeral) {
+        imgArr = imgArr.map((line, i) => {
+            return `${formatScaleNumber(i)}${line}`
+        });
+
+        let line = parse(`[r][cW] [/]`) +
+            Array.from(Array(length).keys()).map(i => formatScaleNumber(i)).join('');
+
+        imgArr.unshift(line);
+        imgArr.push(line);
+    }
+
+    return imgArr.join('\r\n');
+};
+
+const progress = ({ bgColor = 'bb', textColor = 'cw', val = 0, max = 100 }) => {
+    let percent = Math.round(val * 100 / max);
+    let percentBar = Math.round(percent / 10);
+    let percentStr = `${val}/${max}`;
+
+    let str = '';
+
+    for (let i = 1; i <= 10; i++) {
+        let rBg = i <= percentBar ? bgColor : 'bw';
+        let rColor = rBg == 'bw' ? 'cs' : textColor;
+
+        if (i >= 2 && percentStr.length >= i - 1) {
+            str += parse(`[${rBg}][${rColor}]${percentStr[i - 2]}[/]`);
+            continue;
+        }
+
+        str += parse(`[${rBg}] [/]`);
+    }
+
+    return str;
+};
+
 module.exports = {
     parse,
     wrap,
     list,
-
-    img(imgArr, numeral = false) {
-        if (!imgArr) {
-            return;
-        }
-
-        if (typeof imgArr === 'string') {
-            imgArr = [imgArr];
-        }
-
-        if (!imgArr.length) {
-            return;
-        }
-
-        let length = 8;
-
-        imgArr = imgArr.map(line => {
-            if (line.length > length) {
-                length = line.length;
-            }
-
-            for (let symbol in imgSymbols) {
-                line = line.replace(new RegExp(symbol, 'g'), '\u001b' + imgSymbols[symbol] + ' ' + '\u001b' + alias['/']);
-            }
-
-            return line;
-        });
-
-        if (numeral) {
-            imgArr = imgArr.map((line, i) => {
-                return `${formatScaleNumber(i)}${line}`
-            });
-
-            let line = parse(`[r][cW] [/]`) +
-                Array.from(Array(length).keys()).map(i => formatScaleNumber(i)).join('');
-
-            imgArr.unshift(line);
-            imgArr.push(line);
-        }
-
-        return imgArr.join('\r\n');
-    },
+    align,
+    img,
+    progress,
 };

@@ -1,8 +1,9 @@
-const Processor = require('../processor');
-const Color = require('../common/color');
-const Entity = require('./index');
+const Processor = require('../../processor');
+const Color = require('../../common/color');
+const Base = require('../base');
+const Config = require('../../config');
 
-module.exports = class Actor extends Entity {
+module.exports = class Actor extends Base {
     constructor(params = {}) {
         super(params);
 
@@ -31,6 +32,10 @@ module.exports = class Actor extends Entity {
                 type: String,
                 default: null,
             },
+            inventory: {
+                type: Array,
+                default: [],
+            },
 
             hp: {
                 type: Number,
@@ -49,36 +54,60 @@ module.exports = class Actor extends Entity {
                 type: Object,
                 default: {
                     fencing: {
-                        level: 0,
+                        level: 1,
                         progress: 0,
+                        max: 100,
                     },
                     bows: {
-                        level: 0,
+                        level: 1,
                         progress: 0,
+                        max: 100,
                     },
                 },
             },
+
             attributes: {
                 type: Object,
                 default: {
                     strength: {
-                        level: 0,
+                        level: 1,
                         progress: 0,
-                    },
-                    willpower: {
-                        level: 0,
-                        progress: 0,
+                        max: 100,
                     },
                     dexterity: {
+                        level: 1,
+                        progress: 0,
+                        max: 100,
+                    },
+                    willpower: {
+                        level: 1,
+                        progress: 0,
+                        max: 100,
+                    },
+                    wisdom: {
+                        level: 1,
+                        progress: 0,
+                        max: 100,
+                    },
+                    charisma: {
+                        level: 1,
+                        progress: 0,
+                        max: 100,
+                    },
+                    intelligence: {
+                        level: 1,
+                        progress: 0,
+                        max: 100,
+                    },
+
+                    magic: {
                         level: 0,
                         progress: 0,
+                        max: 100,
                     },
                 },
             },
-            inventory: {
-                type: Array,
-                default: [],
-            },
+
             slots: {
                 type: Object,
                 default: {
@@ -95,6 +124,66 @@ module.exports = class Actor extends Entity {
         }
     }
 
+    get isGm() {
+        if (this.permissions && this.permissions.length > 0) {
+            const allPermissions = Config.get('allPermissions');
+
+            if (this.permissions.length < allPermissions) {
+                return 1;
+            }
+
+            return 2;
+        }
+
+        return 0;
+    }
+
+    get color() {
+        if (this.permissions && this.permissions.length > 0) {
+            const allPermissions = Config.get('allPermissions');
+
+            if (this.permissions.length < allPermissions) {
+                return 'cY';
+            }
+
+            return 'cR';
+        }
+
+        const attrKeys = Object.keys(this.attributes);
+        const skillKeys = Object.keys(this.skills)
+
+        let sum = attrKeys.reduce((a, b) => a + this.attributes[b].level, 0) +
+                  skillKeys.reduce((a, b) => a + this.skills[b].level, 0);
+
+        let max = attrKeys.reduce((a, b) => a + this.attributes[b].max, 0) +
+                  skillKeys.reduce((a, b) => a + this.skills[b].max, 0);
+
+        let perc = sum * 100 / max;
+
+        if (perc >= 80) {
+            return 'cg';
+        }
+
+        if (perc >= 40) {
+            return 'cc';
+        }
+
+        return 'cW';
+    }
+
+    get displayName() {
+        const isGm = this.isGm;
+        const color = this.color;
+
+        if (isGm == 2) {
+            return `[cR][A][/] [${color}]${this.name}[/]`;
+        } else if (isGm == 1) {
+            return `[cY][GM][/] [${color}]${this.name}[/]`;
+        }
+
+        return `[${color}]${this.name}[/]`;
+    }
+
     get hpMax() {
         let max = 10 + Math.floor(this.attributes.strength.level * 0.5);
 
@@ -108,6 +197,16 @@ module.exports = class Actor extends Entity {
             Math.floor(this.attributes.dexterity.level * 0.3);
 
         return this.ed > max ? this.ed : max;
+    }
+
+    get mpMax() {
+        if (this.attributes.magic.level <= 0) {
+            return 0;
+        }
+
+        let max = Math.floor(1 + (this.attributes.magic.level * 0.4));
+
+        return this.mp > max ? this.mp : max;
     }
 
     get state() {
@@ -126,6 +225,13 @@ module.exports = class Actor extends Entity {
         if (step !== null) {
             this.meta.state.step = step;
         }
+    }
+
+    initInventory() {
+        this.inventory = this.inventory.map(data => {
+            const obj = require(`../items/${data.className.toLowerCase()}`);
+            return new obj(data);
+        });
     }
 
     addItem(item) {

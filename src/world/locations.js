@@ -1,5 +1,5 @@
 const Store = require('../store');
-const Location = require('../entities/location');
+const Location = require('../entities/locations');
 const Model = require('../model');
 const Debug = require('../engine/debug');
 

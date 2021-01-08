@@ -1,9 +1,14 @@
-const Model = require('../model');
-const Entity = require('./index');
-const Broadcaster = require('../engine/broadcaster');
-const Store = require('../store');
+const Model = require('../../model');
+const Base = require('../base');
+const Broadcaster = require('../../engine/broadcaster');
+const Store = require('../../store');
 
-module.exports = class Location extends Entity {
+module.exports = class Location extends Base {
+    constructor(params) {
+        super(params);
+        this.initItems();
+    }
+
     get dictionary() {
         return {
             ...super.dictionary,
@@ -40,6 +45,21 @@ module.exports = class Location extends Entity {
                 type: Array,
                 default: [],
             },
+        }
+    }
+
+    get players() {
+        return Store.findAll('players', 'locationId', this._id);
+    }
+
+    get displayName() {
+        switch (this.type) {
+            case 'town':
+                return `Town of ${this.name}`;
+            case 'castle':
+                return `${this.name} castle`;
+            default:
+                return this.name;
         }
     }
 
@@ -93,14 +113,25 @@ module.exports = class Location extends Entity {
         Store.remove('locations', this);
     }
 
-    get players() {
-        return Store.findAll('players', 'locationId', this._id);
+    initItems() {
+        this.items = this.items.map(data => {
+            const obj = require(`../items/${data.className.toLowerCase()}`);
+            return new obj(data);
+        });
+    }
+
+    addItem(item) {
+        this.items.push(item);
+    }
+
+    removeItem(item) {
+        this.items = this.items.filter(i => i !== item);
     }
 
     notifyAll({ text, exclude = null}) {
         this.players.forEach(ply => {
             if (ply !== exclude) {
-                Broadcaster.system({
+                Broadcaster.sendTo({
                     to: ply,
                     text,
                 });

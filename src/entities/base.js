@@ -1,8 +1,9 @@
 const Color = require('../common/color');
 
-module.exports = class Entity {
+module.exports = class Base {
     constructor(params = {}) {
         this.props = params;
+        this.className = this.constructor.name;
     }
 
     get dictionary() {
@@ -21,6 +22,8 @@ module.exports = class Entity {
             res[i] = this[i];
         }
 
+        res.className = this.className;
+
         return res;
     }
 
@@ -32,6 +35,14 @@ module.exports = class Entity {
             if (val) {
                 if (dic.type === Number) {
                     val = parseFloat(val);
+
+                    if (dic.min && val < dic.min) {
+                        val = dic.min;
+                    }
+
+                    if (dic.max && val > dic.max) {
+                        val = dic.max;
+                    }
                 }
 
                 if (dic.type === String) {
@@ -39,7 +50,7 @@ module.exports = class Entity {
                 }
 
                 if (dic.type === Date) {
-                    val = new Date(val);
+                    val = parseInt(val);
                 }
 
                 if (dic.options && !dic.options.includes(val)) {

@@ -6,8 +6,7 @@ const logRam = Config.get('debug.logRam');
 const afkTimeout = Config.get('players.afkTimeout');
 
 const tasks = {
-    // 10 sec
-    10000: () => {
+    10000: () => { // 10 sec
         const players = Store.get('players');
         const afkTimeLimit = Date.now() - afkTimeout;
 
@@ -15,14 +14,26 @@ const tasks = {
             if (player.lastInput <= afkTimeLimit) {
                 player.disconnect('Timeout');
             }
+
+            if (player.ed < player.edMax / 2) {
+                player.ed++;
+            }
         }
     },
-    // 1 min
-    60000: () => {
+    60000: () => { // 1 min
         if (logRam) {
             Debug.memory();
         }
-    }
+    },
+    600000: () => { // 10 min
+        const players = Store.get('players');
+
+        for (const player of players) {
+            if (player.hp < player.hpMax / 3) {
+                player.hp++;
+            }
+        }
+    },
 }
 
 const running = {};

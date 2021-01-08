@@ -1,5 +1,6 @@
 const Color = require('../common/color');
 const Store = require('../store');
+const pjson = require('../../package.json');
 
 let lastRam = 0;
 

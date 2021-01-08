@@ -42,8 +42,7 @@ const actions = [
                 name = name[0].toUpperCase() + name.slice(1);
 
                 let tmp = [
-                    Color.parse(`[b][${cmdColor}]${name}[/]`),
-                    Color.parse(`[b][${cmdColor}]------------------------------------------------------[/]`),
+                    Color.parse(`[b][u][${cmdColor}]${ Color.align({ text: name, align: 'left' }) }[/]`),
                 ];
 
                 if (cmd.desc) {
@@ -69,9 +68,9 @@ const actions = [
                             parts.shift();
                             const exDesc = parts.join(' - ');
 
-                            tmp.push(Color.parse(`${i+1}. [b][${cmdColor}]${exCmd}[/] - ${exDesc}`));
+                            tmp.push(Color.wrap(Color.parse(`${i+1}. [b][${cmdColor}]${exCmd}[/] - ${exDesc}`)));
                         } else {
-                            tmp.push(Color.parse(`${i+1}. [b][${cmdColor}]${ex}[/]`));
+                            tmp.push(Color.wrap(Color.parse(`${i+1}. [b][${cmdColor}]${ex}[/]`)));
                         }
                     });
 

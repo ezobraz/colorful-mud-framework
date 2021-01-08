@@ -5,7 +5,9 @@ const Store = require('../store');
 const Processor = require('../processor');
 const Commands = require('../commands');
 
-const Player = require('../entities/player');
+const Player = require('../entities/actors/player');
+
+const requireChatCommand = Config.get('chat.requireCommand');
 
 const subscribers = {
     'save':(params = 'all') => {
@@ -55,6 +57,10 @@ const subscribers = {
 
             if (player.state.name && typeof Processor[player.state.name] != 'undefined') {
                 Processor[player.state.name](player, message);
+            }
+
+            if (!requireChatCommand) {
+                Commands.execute(player, `say ${message}`);
             }
         });
 

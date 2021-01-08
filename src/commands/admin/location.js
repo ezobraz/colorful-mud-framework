@@ -2,7 +2,7 @@ const Color = require('../../common/color');
 const Config = require('../../config');
 const Broadcaster = require('../../engine/broadcaster');
 const Store = require('../../store');
-const Location = require('../../entities/location');
+const Location = require('../../entities/locations');
 
 const hasPermissions = require('../common/has-permissions');
 
@@ -60,7 +60,7 @@ module.exports = {
 
                 let param = words[0];
 
-                if (!['name', 'desc', 'img'].includes(param)) {
+                if (!['name', 'desc', 'img', 'type'].includes(param)) {
                     return;
                 }
 
@@ -109,7 +109,7 @@ module.exports = {
 
                 Broadcaster.system({
                     to: player,
-                    text: `Created "${location.name}", with id: ${location._id}`,
+                    text: `[b][cW]${location.displayName}[/] successfully created: [b][cW]${location._id}[/]`,
                 });
 
                 return true;
@@ -120,15 +120,10 @@ module.exports = {
             execute(player) {
                 const locations = Store.get('locations');
                 const res = [
+                    Color.parse(`[b][r][cW]${Color.align({ text: 'List of all locations in game' })}[/]`),
                     '',
-                    Color.parse(`[r][cY] List of all locations in game [/]`),
-                    '',
+                    ...locations.map(loc => `${Color.parse(`[cY]${loc.displayName}[/]: [b][cW]${loc._id}[/]`)}`),
                 ];
-
-                locations.forEach(loc => {
-                    let line = `${loc._id}: ${Color.parse(`[cY]${loc.name}[/]`)}`;
-                    res.push(line);
-                });
 
                 Broadcaster.sendTo({
                     to: player,

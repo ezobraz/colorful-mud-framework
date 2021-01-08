@@ -14,7 +14,7 @@ module.exports = {
     },
 
     replica({ from, to, text }) {
-        text = Color.parse(`[b][cR]${from.name}[/]: ${text}`);
+        text = Color.parse(`${from.displayName}: [b]${text}[/]`);
         text = Color.wrap(text);
 
         this.sendTo({ to, text });

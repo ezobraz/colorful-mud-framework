@@ -19,7 +19,7 @@ const actions = {
                 return;
             }
 
-            const itemClass = require(`../../entities/${type}`);
+            const itemClass = require(`../../entities/items/${type}`);
             const item = new itemClass();
             const itemProps = item.props;
 
@@ -48,7 +48,7 @@ const actions = {
                 return;
             }
 
-            const itemClass = require(`../../entities/${type}`);
+            const itemClass = require(`../../entities/items/${type}`);
             const item = new itemClass();
             const itemProps = item.props;
             const props = {};
@@ -68,7 +68,7 @@ const actions = {
             player.save();
             Broadcaster.sendTo({
                 to: player,
-                text: `${item.name} was added to your inventory`,
+                text: Color.parse(`[b][cW]"${item.name}" ${type}[/] was [b][cG]added[/] to your inventory`),
             });
         },
     },
@@ -76,7 +76,7 @@ const actions = {
         permissions: ['item destroy'],
         async execute(player, words) {
             const params = words.split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            const name = params[0];
+            const name = params[0].replace(/"+/g, '');
             const item = player.inventory.find(i => i.name == name);
 
             if (item) {
@@ -84,7 +84,7 @@ const actions = {
                 player.save();
                 Broadcaster.sendTo({
                     to: player,
-                    text: `${item.name} was destroyed`,
+                    text: Color.parse(`[b][cW]"${item.name}" ${item.className.toLowerCase()}[/] was [b][cR]destroyed[/]`),
                 });
             }
         },

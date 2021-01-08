@@ -3,20 +3,20 @@ const Model = require('../model');
 module.exports = {
     runtime: {},
     static: {
+        format: {
+            lineLength: 62,
+        },
         debug: {
             logRam: true,
+        },
+        chat: {
+            requireCommand: true,
         },
         players: {
             auth: {
                 maxPasswordAttempts: 5,
             },
             afkTimeout: 600000, // ms
-            stats: {
-                maxLevel: 100,
-            },
-            attributes: {
-                maxLevel: 100,
-            },
         },
         allPermissions: [
             'set permissions',
@@ -25,6 +25,8 @@ module.exports = {
             'create locations',
             'remove locations',
             'edit locations',
+
+            'teleport to locations',
 
             'item create',
             'item destroy',

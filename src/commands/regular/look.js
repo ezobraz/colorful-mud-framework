@@ -24,8 +24,7 @@ module.exports = {
         }
 
         let res = [
-            '',
-            Color.parse(`[r][cY] ${location.name} [/]`),
+            Color.parse(`[b][r][cY]${ Color.align({ text: location.displayName }) }[/]`),
             '',
         ];
 
@@ -44,22 +43,27 @@ module.exports = {
         }
 
         if (location.players.length > 0) {
-            res.push(Color.parse(`[b][cW]Players nearby:[/]`));
+            res.push();
 
-            const playerNames = location.players.map(ply => Color.parse(`[b][cY]${ply.name}[/]`));
-
-            res.push(...Color.list(playerNames, 4));
-        }
-
-        if (location.items.length) {
-            const itemNames = location.items.map(item => Color.parse(`[b][cC]${item.name}[/]`));
+            const playerNames = location.players.map(ply => Color.parse(ply.displayName));
 
             res.push(
                 ...[
+                    Color.parse(`[b][u][cW]Players nearby:[/]`),
+                    ...Color.list(playerNames, 4),
                     '',
-                    Color.parse(`[b][cW]Items:[/]`),
                 ],
-                ...Color.list(itemNames, 4),
+            );
+        }
+
+        if (location.items.length) {
+            const items = location.items.map(item => Color.parse(item.displayName));
+
+            res.push(
+                ...[
+                    Color.parse(`[b][u][cW]Items:[/]`),
+                    ...items.length > 10 ? Color.list(items, 4) : items,
+                ],
             );
 
         }

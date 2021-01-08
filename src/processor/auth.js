@@ -1,5 +1,4 @@
 const Broadcaster = require('../engine/broadcaster');
-const Npc = require('../entities/npc');
 const Commands = require('../commands');
 const Color = require('../common/color');
 const Event = require('../common/event');
@@ -7,17 +6,19 @@ const Debug = require('../engine/debug');
 const Config = require('../config');
 const Store = require('../store');
 
+const pjson = require('../../package.json');
+
 const img = [
-    '     YYSS                   SSCC',
-    '     YYSS                   SSCC',
-    '     SSYY      W W W W      CCSS',
-    '     SSYY      WWWWWWW      CCSS',
-    '     R         WWW WWW         R',
-    '     R         WWWWWWW         R',
-    '     R      W WRWRWRWRW W      R',
-    '  W WRW W W WWWWWWWWWWWWW W W WRW W',
-    '  WWWWWWWWWWWW WWRRRWW WWWWWWWWWWWW',
-    '  WWWWWWWWWWWWWWWRRRWWWWWWWWWWWWWWW',
+    '                  YYWW                   WWCC                 ',
+    '                  YYWW                   WWCC                 ',
+    '                  WWYY      W W W W      CCWW                 ',
+    '                  WWYY      WWWWWWW      CCWW                 ',
+    '                  R         WWW WWW         R                 ',
+    '                  R         WWWWWWW         R                 ',
+    '                  R      W WRWRWRWRW W      R                 ',
+    '               W WRW W W WWWWWWWWWWWWW W W WRW W              ',
+    '               WWWWWWWWWWWW WWRRRWW WWWWWWWWWWWW              ',
+    '               WWWWWWWWWWWWWWWRRRWWWWWWWWWWWWWWW              ',
 ];
 
 const askForLogin = player => {
@@ -29,6 +30,7 @@ const askForLogin = player => {
         Color.img(img),
         '',
         Color.parse('[b][r][cY] Welcome [/] to another [b][r][cW] MUD [/]'),
+        Color.align({ text: `v${pjson.version}`, align: 'right' }),
         '',
         'By what name are you known in this world?',
     ];

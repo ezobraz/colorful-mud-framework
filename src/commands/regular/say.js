@@ -26,18 +26,18 @@ module.exports = {
         }
 
         Debug.log(
-            Color.parse(`[b][u]${player.name}[/] @ [cY]${location.name}[/]: [b]${text}[/]`),
+            Color.parse(`${player.displayName} @ [cY]${location.name}[/]: [b]${text}[/]`),
             'CHAT',
         );
 
         location.players.forEach(ply => {
-            if (ply._id !== player._id) {
-                Broadcaster.replica({
-                    to: ply,
-                    from: player,
-                    text,
-                });
-            }
+            Broadcaster.replica({
+                to: ply,
+                from: player,
+                text,
+            });
         });
+
+        return true;
     }
 }
