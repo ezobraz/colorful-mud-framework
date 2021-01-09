@@ -60,7 +60,7 @@ module.exports = class Location extends Base {
     }
 
     get displayName() {
-        return this.name;
+        return `[${this.color}]${this.name}[/]`;
     }
 
     async create() {

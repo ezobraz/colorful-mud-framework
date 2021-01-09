@@ -203,9 +203,9 @@ module.exports = {
                 let exists = await loc.exists();
 
                 if (exists) {
-                    Broadcaster.system({
+                    Broadcaster.sendTo({
                         to: player,
-                        text: `Location ${loc.name} already exists`,
+                        text: Color.parse(`Location ${loc.name} already exists`),
                     });
                     return;
                 }
@@ -219,9 +219,9 @@ module.exports = {
                     player.locationId = loc._id;
                 }
 
-                Broadcaster.system({
+                Broadcaster.sendTo({
                     to: player,
-                    text: `[b][cW]${loc.displayName}[/] successfully created: [b][cW]${loc._id}[/]`,
+                    text: Color.parse(`${loc.displayName} successfully created: [b][cW]${loc._id}[/]`),
                 });
 
                 return true;
@@ -234,7 +234,7 @@ module.exports = {
                 const res = [
                     Color.parse(`[b][r][cW]${Color.align({ text: 'List of all locations in game' })}[/]`),
                     '',
-                    ...locations.map(loc => `${Color.parse(`[cY]${loc.displayName}[/]: [b][cW]${loc._id}[/]`)}`),
+                    ...locations.map(loc => `${Color.parse(`${loc.displayName}: [b][cW]${loc._id}[/]`)}`),
                 ];
 
                 Broadcaster.sendTo({

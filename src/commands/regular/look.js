@@ -26,7 +26,7 @@ module.exports = {
         const showIds = player.permissions.includes('list locations');
 
         let res = [
-            Color.parse(`[b][r][${location.color}]${ Color.align({ text: location.displayName }) }[/]`),
+            Color.parse(`[b][r][${location.color}]${ Color.align({ text: location.name }) }[/]`),
         ];
 
         if (showIds) {
@@ -85,7 +85,7 @@ module.exports = {
                     str += '[locked] ';
                 }
 
-                str += `[b][${exit.color}]${exit.displayName}[/]`;
+                str += `${exit.displayName}`;
 
                 if (showIds) {
                     str += `: [b][cW]${exit._id}[/]`;

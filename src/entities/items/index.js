@@ -73,7 +73,7 @@ module.exports = class Item extends Base {
     }
 
     get value() {
-        let res = this.quality * 1.1 + this.condition * 3.2;
+        let res = this.quality * 0.4 + this.condition * 0.7;
         return Math.round(res * 100) / 100;
     }
 };

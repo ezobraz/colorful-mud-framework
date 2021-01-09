@@ -39,7 +39,7 @@ module.exports = class Sword extends Item {
 
     get sharpness() {
         const negative = (Date.now() - this.sharpenedOn) / (day * 6);
-        let res = 100 - negative;
+        let res = 100 - negative - (100 - this.condition);
 
         if (res < 0) {
             res = 0;
