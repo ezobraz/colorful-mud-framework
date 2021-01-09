@@ -2,7 +2,6 @@ const Color = require('../../common/color');
 const Config = require('../../config');
 const Broadcaster = require('../../engine/broadcaster');
 const Store = require('../../store');
-const Location = require('../../entities/locations');
 
 const hasPermissions = require('../common/has-permissions');
 
@@ -13,6 +12,15 @@ const setParams = [
     'type',
     'exit',
     'exit-bind',
+];
+
+const locTypes = [
+    'castle',
+    'town',
+    'village',
+    'nature',
+    'dungeon',
+    'room',
 ];
 
 module.exports = {
@@ -171,33 +179,49 @@ module.exports = {
         },
         'create': {
             permissions: ['create locations'],
-            async execute(player, name) {
-                const location = new Location({
+            async execute(player, text) {
+                const words = text.split(' ');
+                if (words.length < 2) {
+                    return;
+                }
+
+                const type = words[0];
+
+                if (!locTypes.includes(type)) {
+                    return;
+                }
+
+                words.shift();
+
+                const name = words.join(' ');
+
+                const Location = require(`../../entities/locations/${type}`);
+                const loc = new Location({
                     name,
                 });
 
-                let exists = await location.exists();
+                let exists = await loc.exists();
 
                 if (exists) {
                     Broadcaster.system({
                         to: player,
-                        text: `Location ${location.name} already exists`,
+                        text: `Location ${loc.name} already exists`,
                     });
                     return;
                 }
 
-                await location.create();
-                Store.add('locations', location);
+                await loc.create();
+                Store.add('locations', loc);
 
                 let startLocationId = await Config.getRuntime('startLocationId');
                 if (!startLocationId) {
-                    Config.setRuntime('startLocationId', location._id);
-                    player.locationId = location._id;
+                    Config.setRuntime('startLocationId', loc._id);
+                    player.locationId = loc._id;
                 }
 
                 Broadcaster.system({
                     to: player,
-                    text: `[b][cW]${location.displayName}[/] successfully created: [b][cW]${location._id}[/]`,
+                    text: `[b][cW]${loc.displayName}[/] successfully created: [b][cW]${loc._id}[/]`,
                 });
 
                 return true;

@@ -32,18 +32,6 @@ module.exports = class Location extends Base {
                 type: Boolean,
                 default: false,
             },
-            type: {
-                type: String,
-                default: 'room',
-                options: [
-                    'nature',
-                    'room',
-                    'village',
-                    'town',
-                    'castle',
-                    'dungeon',
-                ],
-            },
             locked: {
                 type: Boolean,
                 default: false,
@@ -68,22 +56,7 @@ module.exports = class Location extends Base {
     }
 
     get color() {
-        switch (this.type) {
-            case 'nature':
-                return 'cg';
-            case 'village':
-                return 'cy';
-            case 'town':
-                return 'cY';
-            case 'castle':
-                return 'cw';
-            case 'room':
-                return 'cW';
-            case 'dungeon':
-                return 'cr';
-            default:
-                return 'cW';
-        }
+        return 'cW';
     }
 
     get displayName() {
