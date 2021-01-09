@@ -1,7 +1,7 @@
 module.exports = [
-    require('./location'),
-    require('./item'),
-    require('./draw'),
-    require('./teleport'),
-    require('./system'),
+    ...require('./location'),
+    ...require('./item'),
+    ...require('./draw'),
+    ...require('./teleport'),
+    ...require('./system'),
 ];

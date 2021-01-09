@@ -23,7 +23,7 @@ module.exports = {
             return;
         }
 
-        const showIds = player.permissions.includes('list locations');
+        const showIds = player.permissions.includes('see location id');
 
         let res = [
             Color.parse(`[b][r][${location.color}]${ Color.align({ text: location.name }) }[/]`),

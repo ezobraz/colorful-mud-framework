@@ -1,12 +1,23 @@
 const list = require('./list');
-const hasPermissions = require('./common/has-permissions');
+const hasPermissions = require('./helpers/has-permissions');
 
 module.exports = {
     execute(player, text) {
-        const words = text.split(' ');
-        const cmd = words[0].toLowerCase();
+        let cmdParams = '';
+        const command = list.find(opt => {
+            return opt.names.find(name => {
+                if (text == name) {
+                    return true;
+                }
 
-        const command = list.find(opt => opt.names.includes(cmd));
+                if (text.startsWith(`${name} `)) {
+                    cmdParams = text.replace(`${name} `, '');
+                    return true;
+                }
+
+                return false
+            });
+        });
 
         if (!command) {
             return false;
@@ -24,7 +35,6 @@ module.exports = {
             return false;
         }
 
-        words.shift();
-        return command.execute(player, words.join(' '));
+        return command.execute(player, cmdParams);
     },
 };

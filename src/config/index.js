@@ -21,16 +21,16 @@ module.exports = {
         allPermissions: [
             'set permissions',
 
-            'list locations',
+            'see location id',
             'create locations',
-            'remove locations',
+            'delete locations',
             'edit locations',
 
-            'teleport to locations',
+            'teleport locations',
+            'teleport players',
 
-            'item create',
-            'item destroy',
-            'item typeinfo',
+            'create items',
+            'delete items',
 
             'draw',
 
