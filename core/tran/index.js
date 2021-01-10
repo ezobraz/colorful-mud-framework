@@ -31,7 +31,7 @@ module.exports = {
         }
 
         this.lang = lang;
-        const langData = require(`../../tran/${lang}`);
+        const langData = require(`../../tran/${lang}.json`);
 
         data = {
             ...en,
