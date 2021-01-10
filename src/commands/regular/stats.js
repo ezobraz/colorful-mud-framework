@@ -6,14 +6,14 @@ const lineLength = Config.get('format.lineLength');
 const statLineLength = lineLength / 2 - 1;
 
 module.exports = {
-    names: ['stats', 'level', 'score', 'status'],
-    desc: 'Shows your current stats',
+    names: tran.slate('command-stats-names'),
+    desc: tran.slate('command-stats-desc'),
     examples: [
         'stats',
     ],
     execute(player) {
         const params = {
-            'Parameters': {
+            'parameters': {
                 'health': {
                     level: `${player.hp}/${player.hpMax}`,
                 },
@@ -25,22 +25,22 @@ module.exports = {
                     level: `${player.mp}/${player.mpMax}`,
                 },
                 'speed': {
-                    level: `${player.speed}km/h`,
+                    level: `${player.speed} ${tran.slate('measure-speed')}`,
                 },
             },
-            'Attributes': player.attributes,
-            'Skills': player.skills,
+            'attributes': player.attributes,
+            'skills': player.skills,
         };
 
         const res = [
-            Color.parse(`[b][r][cG]${ Color.align({ text: 'Stats' }) }[/]`),
+            Color.parse(`[b][r][cG]${ Color.align({ text: tran.slate('window-name-stats') }) }[/]`),
             '',
-            Color.parse(`[b][cW]Name:[/] ${player.displayName}`),
+            Color.parse(`[b][cW]${tran.slate('player-name')}:[/] ${player.displayName}`),
             '',
         ];
 
         for (let i in params) {
-            res.push(Color.parse(`[b][u][cG]${ Color.align({ text: i, align: 'left' }) }[/]`));
+            res.push(Color.parse(`[b][u][cG]${ Color.align({ text: tran.slate(`player-${i}`), align: 'left' }) }[/]`));
 
             const pack = params[i];
             const tmp = [];
@@ -53,7 +53,7 @@ module.exports = {
                     continue;
                 }
 
-                const name = key[0].toUpperCase() + key.slice(1);
+                const name = tran.slate(`player-${i}-${key}`);
                 const data = pack[key].level.toString();
 
                 let add = statLineLength - name.length - data.length;
