@@ -1,4 +1,4 @@
-const Actor = require('./index');
+const Actor = require('./actor');
 const Model = require('../../model');
 const hash = require('../../common/hash');
 const Event = require('../../common/event');
@@ -6,8 +6,6 @@ const Color = require('../../common/color');
 const Config = require('../../config');
 const Store = require('../../store');
 const Debug = require('../../engine/debug');
-
-const paramLevelCap = param => param.level * 100;
 
 module.exports = class Player extends Actor {
 
@@ -29,75 +27,6 @@ module.exports = class Player extends Actor {
         }
     }
 
-    async getCurrentLocation() {
-        if (!this.locationId) {
-            return;
-        }
-
-        if (this.meta.currentLocation) {
-            return this.meta.currentLocation;
-        }
-
-        let res = await Model.getters('locations/findOne', {
-            _id: this.locationId,
-        });
-
-        this.meta.currentLocation = res;
-        return res;
-    }
-
-    getProgressCap({ type, param }) {
-        return this[type][param].level * 100;
-    }
-
-    addPointsToParam({ name, points, type = 'attributes' }) {
-        const param = this[type][name];
-        const cap = paramLevelCap(param);
-
-        // time to level up
-        if (param.level < param.max && param.level + points >= cap) {
-            param.level++;
-            param.progress = cap - param.level - points;
-            this.save();
-            return;
-        }
-
-        param.progress += points;
-        this.save();
-    }
-
-    changeLocation(location, silent = false) {
-        const to = typeof location == 'string' ? Store.findById('locations', location) : location;
-
-        if (!to) {
-            return;
-        }
-
-        let from = Store.findById('locations', this.locationId);
-
-        this.locationId = to._id;
-
-        if (from && !silent) {
-            from.notifyAll({
-                text: Color.parse(`${this.name} left`),
-                exclude: this,
-            });
-        }
-
-        if (!silent) {
-            to.notifyAll({
-                text: Color.parse(`${this.name} appeared here`),
-                exclude: this,
-            });
-        }
-
-        if (from) {
-            Debug.log(Color.parse(`${this.displayName} went from [b]${from.displayName}[/] to [b]${to.displayName}[/]`), 'MOVE');
-        } else {
-            Debug.log(Color.parse(`${this.displayName} appeared in [b]${to.displayName}[/]`), 'MOVE');
-        }
-    }
-
     async setUp({ params, silent = false }) {
         if (!params.locationId) {
             const startLocationId = await Config.getRuntime('startLocationId');
@@ -105,6 +34,9 @@ module.exports = class Player extends Actor {
         }
 
         this.props = params;
+        this.initParams();
+        this.initAttributes();
+        this.initSkills();
         this.initInventory();
 
         if (this.locationId && !silent) {

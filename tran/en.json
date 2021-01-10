@@ -1,10 +1,10 @@
 {
     "player-name": "Name",
 
-    "player-parameters": "Parameters",
-    "player-parameters-health": "Health",
-    "player-parameters-endurance": "Endurance",
-    "player-parameters-speed": "Speed",
+    "player-params": "Parameters",
+    "player-params-health": "Health",
+    "player-params-endurance": "Endurance",
+    "player-params-speed": "Speed",
 
     "player-attributes": "Attributes",
     "player-attributes-strength": "Strength",

@@ -16,8 +16,9 @@
         "afkTimeout": 600000
     },
     "modules": [
-        "motd",
-        "auth",
-        "demo-module"
+        "demo-custom-player-params",
+        "demo-custom-commands",
+        "demo-motd",
+        "demo-player-auth"
     ]
 }

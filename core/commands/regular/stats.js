@@ -10,21 +10,7 @@ module.exports = {
     desc: tran.slate('command-stats-desc'),
     execute(player) {
         const params = {
-            'parameters': {
-                'health': {
-                    level: `${player.hp}/${player.hpMax}`,
-                },
-                'endurance': {
-                    level: `${player.ed}/${player.edMax}`,
-                },
-                'mana': {
-                    hide: player.mpMax <= 0,
-                    level: `${player.mp}/${player.mpMax}`,
-                },
-                'speed': {
-                    level: `${player.speed} ${tran.slate('measure-speed')}`,
-                },
-            },
+            'params': player.params,
             'attributes': player.attributes,
             'skills': player.skills,
         };
@@ -50,7 +36,7 @@ module.exports = {
                     continue;
                 }
 
-                const name = tran.slate(`player-${i}-${key}`);
+                const name = tran.slate(`player-${i}-${pack[key].name.toLowerCase()}`);
                 const data = pack[key].level.toString();
 
                 let add = statLineLength - name.length - data.length;
@@ -59,7 +45,9 @@ module.exports = {
                 tmp.push(Color.parse(`[b][cW]${name}[/]${addStr}[b][cW]${data}[/]`));
             }
 
-            res.push(...Color.list(tmp, 2));
+            if (tmp.length) {
+                res.push(...Color.list(tmp, 2));
+            }
 
             if (i != 'Skills') {
                 res.push('');

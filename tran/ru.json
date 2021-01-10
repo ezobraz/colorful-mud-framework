@@ -1,10 +1,10 @@
 {
     "player-name": "Имя",
 
-    "player-parameters": "Параметры",
-    "player-parameters-health": "Здоровье",
-    "player-parameters-endurance": "Выносливость",
-    "player-parameters-speed": "Скорость",
+    "player-params": "Параметры",
+    "player-params-health": "Здоровье",
+    "player-params-endurance": "Выносливость",
+    "player-params-speed": "Скорость",
 
     "player-attributes": "Аттрибуты",
     "player-attributes-strength": "Сила",

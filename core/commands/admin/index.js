@@ -4,4 +4,5 @@ module.exports = [
     ...require('./draw'),
     ...require('./teleport'),
     ...require('./system'),
+    ...require('./attributes'),
 ];

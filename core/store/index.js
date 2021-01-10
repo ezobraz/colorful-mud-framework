@@ -1,10 +1,18 @@
 const data = {
     players: [],
     locations: [],
+    attributes: {},
+    skills: {},
+    params: {},
 };
 
 module.exports = {
-    add(collection, obj) {
+    add(collection, obj, key) {
+        if (key) {
+            data[collection][key] = obj;
+            return;
+        }
+
         if (!data[collection].find(o => o === obj)) {
             data[collection].push(obj);
         }
@@ -15,6 +23,10 @@ module.exports = {
     },
 
     find(collection, key, value) {
+        if (!Array.isArray(data[collection])) {
+            return data[collection][key];
+        }
+
         return data[collection].find(item => item[key] == value);
     },
 
