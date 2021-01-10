@@ -1,7 +1,6 @@
 const data = {
     players: [],
     locations: [],
-    modules: [],
 };
 
 module.exports = {

@@ -55,7 +55,7 @@ module.exports = [
             'help commmands',
         ],
         execute(player, text) {
-            const commandsList = require('../list')();
+            const commandsList = require('../list');
             const res = [];
 
             let commands = commandsList;
@@ -94,7 +94,7 @@ module.exports = [
                 return;
             }
 
-            const commandsList = require('../list')();
+            const commandsList = require('../list');
             const command = commandsList.find(c => c.names.includes(text));
 
             if (!command) {

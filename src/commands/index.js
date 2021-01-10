@@ -4,7 +4,7 @@ const hasPermissions = require('./helpers/has-permissions');
 module.exports = {
     execute(player, text) {
         let cmdParams = '';
-        const command = list().find(opt => {
+        const command = list.find(opt => {
             return opt.names.find(name => {
                 if (text == name) {
                     return true;

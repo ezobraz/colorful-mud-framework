@@ -1,20 +1,18 @@
+const { readdirSync } = require('fs');
 const admin = require('./admin');
 const regular = require('./regular');
-const Store = require('../store');
 
-module.exports = () => {
-    const modules = Store.get('modules');
-    const moduleCommands = [];
+const modules = readdirSync('modules', { withFileTypes: true }).filter(dirent => dirent.isDirectory()).map(dirent => dirent.name);
+const moduleCommands = [];
+modules.forEach(dir => {
+    const mod = require(`../../modules/${dir}`);
+    if (mod.enabled && mod.commands && mod.commands.length) {
+        moduleCommands.push(...mod.commands);
+    }
+});
 
-    modules.forEach(mod => {
-        if (mod.commands && mod.commands.length) {
-            moduleCommands.push(...mod.commands);
-        }
-    });
-
-    return [
-        ...admin,
-        ...regular,
-        ...moduleCommands,
-    ];
-};
+module.exports = [
+    ...admin,
+    ...regular,
+    ...moduleCommands,
+];
