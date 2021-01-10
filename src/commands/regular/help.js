@@ -49,11 +49,8 @@ const formatCmdInfo = cmd => {
 
 module.exports = [
     {
-        names: ['help commands'],
-        desc: 'Shows the list of all available commands',
-        examples: [
-            'help commmands',
-        ],
+        names: tran.slate('command-help-commands-names'),
+        desc: tran.slate('command-help-commands-desc'),
         execute(player, text) {
             const commandsList = require('../list');
             const res = [];
@@ -81,14 +78,9 @@ module.exports = [
         },
     },
     {
-        names: ['help command'],
-        desc: 'Shows command info',
-        examples: [
-            'help commmand look',
-            'help commmand go',
-            'help commmand drop',
-            'help commmand take',
-        ],
+        names: tran.slate('command-help-command-names'),
+        desc: tran.slate('command-help-command-desc'),
+        examples: tran.slate('command-help-command-examples'),
         execute(player, text) {
             if (!text) {
                 return;

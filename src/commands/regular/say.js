@@ -4,12 +4,8 @@ const Debug = require('../../engine/debug');
 const Store = require('../../store');
 
 module.exports = {
-    names: ['say', 's'],
-    desc: 'Sends chat command to all players in your current location.',
-    examples: [
-        'say hello!',
-        'say how are you?',
-    ],
+    names: tran.slate('command-say-names'),
+    desc: tran.slate('command-say-desc'),
     execute(player, text) {
         if (!text.length) {
             return;

@@ -3,12 +3,9 @@ const Broadcaster = require('../../engine/broadcaster');
 const Store = require('../../store');
 
 module.exports = {
-    names: ['take', 'grab'],
-    desc: 'Pick up the specified item from the ground and',
-    examples: [
-        'take long sword',
-        'grab long sword',
-    ],
+    names: tran.slate('command-take-names'),
+    desc: tran.slate('command-take-desc'),
+    examples: tran.slate('command-take-examples'),
     execute(player, text) {
         if (!player.locationId) {
             return;

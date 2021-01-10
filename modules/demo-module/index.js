@@ -3,7 +3,7 @@ const Color = require('../../src/common/color');
 
 module.exports = {
     name: 'Demo Module',
-    enabled: true,
+    enabled: false, // set to true to enable
 
     init() {
 
@@ -12,6 +12,7 @@ module.exports = {
     commands: [
         {
             names: ['test'],
+            desc: 'This command if from the module "Demo Module"',
             execute(player) {
                 Broadcaster.sendTo({
                     to: player,

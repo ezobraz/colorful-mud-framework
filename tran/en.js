@@ -28,6 +28,43 @@ module.exports = {
     'param-name-mp': 'mp',
     'param-name-ed': 'ed',
 
-    'command-stats-names': ['stats', 'params', 'me'],
+    'command-help-commands-names': ['help commands'],
+    'command-help-commands-desc': 'Shows the list of all available commands',
+
+    'command-help-command-names': ['help command'],
+    'command-help-command-desc': 'Shows command info',
+    'command-help-command-examples': [
+        'help commmand look',
+        'help commmand go',
+        'help commmand drop',
+        'help commmand take',
+    ],
+
+    'command-say-names': ['say', 's'],
+    'command-say-desc': 'Sends chat command to all players in your current location.',
+
+    'command-drop-names': ['drop'],
+    'command-drop-desc': 'Places the specified item from your inventory to the ground',
+    'command-drop-examples': [
+        'drop long sword',
+    ],
+
+    'command-take-names': ['take'],
+    'command-take-desc': 'Pick up the specified item from the ground and',
+    'command-take-examples': [
+        'take long sword',
+    ],
+
+    'command-stats-names': ['stats', 'params', 'me', 'score'],
     'command-stats-desc': 'Shows your current stats',
+
+    'command-hp-names': ['hp', 'mp', 'ed'],
+    'command-hp-desc': 'Shows your health, endurance and other critical parameters',
+
+    'command-go-names': ['go', 'move'],
+    'command-go-desc': 'Go to specified location name or index (see exits section)',
+    'command-go-examples': [
+        'go 1',
+        'move 2',
+    ],
 };

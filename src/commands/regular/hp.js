@@ -6,12 +6,8 @@ const lineLength = Config.get('format.lineLength');
 const statLineLength = lineLength / 2 - 1;
 
 module.exports = {
-    names: ['hp', 'mp', 'ed'],
-    desc: 'Shows your health, endurance and other critical parameters',
-    examples: [
-        'hp',
-        'ed',
-    ],
+    names: tran.slate('command-hp-names'),
+    desc: tran.slate('command-hp-desc'),
     execute(player) {
         const stats = {
             hp: {

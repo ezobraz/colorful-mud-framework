@@ -3,11 +3,9 @@ const Broadcaster = require('../../engine/broadcaster');
 const Store = require('../../store');
 
 module.exports = {
-    names: ['drop', 'place'],
-    desc: 'Places the specified item from your inventory to the ground',
-    examples: [
-        'drop long sword',
-    ],
+    names: tran.slate('command-drop-names'),
+    desc: tran.slate('command-drop-desc'),
+    examples: tran.slate('command-drop-examples'),
     execute(player, text) {
         if (!player.locationId) {
             return;

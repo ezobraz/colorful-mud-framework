@@ -3,12 +3,9 @@ const Broadcaster = require('../../engine/broadcaster');
 const Store = require('../../store');
 
 module.exports = {
-    names: ['go', 'move'],
-    desc: 'Go to specified location name or index (see exits section)',
-    examples: [
-        'go 1',
-        'move 2',
-    ],
+    names: tran.slate('command-go-names'),
+    desc: tran.slate('command-go-desc'),
+    examples: tran.slate('command-go-examples'),
     execute(player, text) {
         if (!player.locationId) {
             return;

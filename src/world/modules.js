@@ -21,6 +21,6 @@ const initModules = async () => {
 module.exports = {
     async init() {
         const count = await initModules();
-        Debug.status('All modules loaded', count);
+        Debug.status('Total modules loaded', count);
     }
 };

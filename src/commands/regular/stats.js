@@ -8,9 +8,6 @@ const statLineLength = lineLength / 2 - 1;
 module.exports = {
     names: tran.slate('command-stats-names'),
     desc: tran.slate('command-stats-desc'),
-    examples: [
-        'stats',
-    ],
     execute(player) {
         const params = {
             'parameters': {
