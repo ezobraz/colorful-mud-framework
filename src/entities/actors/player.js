@@ -167,7 +167,7 @@ module.exports = class Player extends Actor {
         // first player is super admin, aka root
         let otherS = await Model.getters('players/findOne', {});
         if (!otherS) {
-            this.permissions = Config.get('allPermissions');
+            this.permissions = require('../../commands/helpers/all-permissions')();
         }
 
         password = await hash.password(password);

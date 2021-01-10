@@ -1,0 +1,18 @@
+{
+    "lang": "en",
+    "format": {
+        "lineLength": 62
+    },
+    "debug": {
+        "logRam": true
+    },
+    "chat": {
+        "requireCommand": true
+    },
+    "players": {
+        "auth": {
+            "maxPasswordAttempts": 5
+        },
+        "afkTimeout": 600000
+    }
+}

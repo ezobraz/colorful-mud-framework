@@ -126,7 +126,7 @@ module.exports = class Actor extends Base {
 
     get isGm() {
         if (this.permissions && this.permissions.length > 0) {
-            const allPermissions = Config.get('allPermissions');
+            const allPermissions = require('../../commands/helpers/all-permissions')();
 
             if (this.permissions.length < allPermissions) {
                 return 1;
@@ -140,7 +140,7 @@ module.exports = class Actor extends Base {
 
     get color() {
         if (this.permissions && this.permissions.length > 0) {
-            const allPermissions = Config.get('allPermissions');
+            const allPermissions = require('../../commands/helpers/all-permissions')();
 
             if (this.permissions.length < allPermissions) {
                 return 'cY';
