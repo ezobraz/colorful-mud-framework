@@ -7,27 +7,26 @@ Multi User Dungeon (MUD) is a multiplayer game that is played online through com
 This project is an attempt to create the MUD server in javascript.
 
 <img src="https://i.postimg.cc/qvmnN2b5/image.png" width="350">
+<img src="https://i.postimg.cc/W3xxTFcD/image.png" width="180">
+<img src="https://i.postimg.cc/jdcn1zbS/image.png" width="350">
+<img src="https://i.postimg.cc/XqS3xDJD/image.png" width="350">
 
 # Features
 
-### WYSIWYG-like world building.
+* Modules. You can create your own modules (see `modules/demo-module`) to extend the game
+
+* WYSIWYG-like world building.
 Everything (locations, npcs, items) can be created from the command line, no need to edit the soruce files.
 
-### [nedb](https://github.com/louischatriot/nedb) as a database.
+* [nedb](https://github.com/louischatriot/nedb) as a database.
 All data is stored into `/db/*.db` files with json-like syntax
 
-### Drawing.
-With `draw` command you can create 8-bit pictures and set them as images for locations  
-<img src="https://i.postimg.cc/W3xxTFcD/image.png" width="180">
+* Drawing. You can create 8-bit pictures and set them as images for locations
 
-### All entities in game have their own classes and are easily customizable.
+* All entities in game have their own classes and are easily customizable.
 For example, sword's condition is not just a number, it is a function that returns the number based on sharpness, quality, date it was created, etc.
 
-### Nice player stats  
-<img src="https://i.postimg.cc/jdcn1zbS/image.png" width="350">
-
-### Convenient server logs  
-<img src="https://i.postimg.cc/XqS3xDJD/image.png" width="350">
+* Convenient server logs
 
 # Installation
 1. Clone this repository `git clone https://github.com/ezobraz/colorful-mud-server-node.js.git .`
