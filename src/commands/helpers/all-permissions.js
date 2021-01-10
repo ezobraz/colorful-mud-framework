@@ -4,7 +4,7 @@ module.exports = () => {
         return allPermissions;
     }
 
-    const list = require('../list');
+    const list = require('../list')();
 
     list.forEach(cmd => {
         if (cmd.permissions) {
