@@ -17,7 +17,7 @@ module.exports = {
 
     'player-skills': 'Skills',
     'player-skills-fencing': 'Fencing',
-    'player-skills-bows': 'Bows',
+    'player-skills-shooting': 'Shooting',
 
     'measure-speed': 'km/h',
 

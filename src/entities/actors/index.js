@@ -58,7 +58,7 @@ module.exports = class Actor extends Base {
                         progress: 0,
                         max: 100,
                     },
-                    bows: {
+                    shooting: {
                         level: 1,
                         progress: 0,
                         max: 100,

@@ -4,10 +4,8 @@ const fs = require('fs')
 const runtime = {};
 const static = require('../../config/config.default.json');
 
-const path = '../../config/config.json';
-if (fs.existsSync(path)) {
-    let res = require(path);
-
+if (fs.existsSync('./config/config.json')) {
+    let res = require('../../config/config.json');
     for (let i in res) {
         static[i] = res[i];
     }

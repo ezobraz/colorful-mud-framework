@@ -17,7 +17,7 @@ module.exports = {
 
     'player-skills': 'Навыки',
     'player-skills-fencing': 'Фехтование',
-    'player-skills-bows': 'Стрельба из лука',
+    'player-skills-shooting': 'Стрельба',
 
     'measure-speed': 'км/ч',
 
@@ -62,7 +62,7 @@ module.exports = {
     'command-hp-names': ['здоровье', 'жс'],
     'command-hp-desc': 'Shows your health, endurance and other critical parameters',
 
-    'command-go-names': ['перейти в', 'перейти в', 'пойти в', 'идти в', 'уйти в', 'войти в'],
+    'command-go-names': ['перейти в', 'пойти в', 'идти в', 'уйти в', 'войти в'],
     'command-go-desc': 'Переход в локацию из списка выходов',
     'command-go-examples': [
         'перейти в 1',
