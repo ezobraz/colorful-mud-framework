@@ -6,7 +6,7 @@ let server;
 
 const initServer = () => {
     server = net.createServer(socket => {
-        Event.emit('socketConnected', {socket});
+        Event.emit('socketConnected', socket);
     });
 
     server.on('error', e => {

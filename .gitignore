@@ -4,4 +4,5 @@ config/config.json
 
 modules/*
 !modules/motd
+!modules/auth
 !modules/demo-module

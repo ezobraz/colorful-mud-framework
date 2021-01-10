@@ -14,5 +14,10 @@
             "maxPasswordAttempts": 5
         },
         "afkTimeout": 600000
-    }
+    },
+    "modules": [
+        "motd",
+        "auth",
+        "demo-module"
+    ]
 }

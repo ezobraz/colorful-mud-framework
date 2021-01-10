@@ -1,0 +1,14 @@
+{
+    "en": {
+        "auth-promt-your-name": "Your name",
+        "auth-promt-password": "Password",
+        "auth-promt-create-password": "Create password",
+        "auth-error-name-long": "Too long, try something shorter"
+    },
+    "ru": {
+        "auth-promt-your-name": "Ваше имя",
+        "auth-promt-password": "Пароль",
+        "auth-promt-create-password": "Придумайте пароль",
+        "auth-error-name-long": "Слишком длинное имя. Придумайте что-нибудь короче"
+    }
+}

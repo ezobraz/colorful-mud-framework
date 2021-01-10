@@ -1,5 +1,5 @@
 global.__basedir = __dirname;
-global.tran = require('./tran');
+global.tran = require('./core/tran');
 
 const Config = require('./core/config');
 tran.init(Config.get('lang'));

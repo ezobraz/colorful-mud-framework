@@ -26,7 +26,6 @@ const motd = [
 
 module.exports = {
     name: 'MOTD',
-    enabled: true,
 
     init() {
         Event.on('playerConnected', player => {

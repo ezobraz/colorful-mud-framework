@@ -1,21 +1,16 @@
-const { readdirSync } = require('fs');
+const Config = require('../config');
 const Debug = require('../engine/debug');
 
-const modules = readdirSync('modules', { withFileTypes: true }).filter(dirent => dirent.isDirectory()).map(dirent => dirent.name);
-
 const initModules = async () => {
-    let count = 0;
+    const modules = Config.get('modules');
+
     modules.forEach(async dir => {
         const mod = require(`../../modules/${dir}`);
-
-        if (mod.enabled) {
-            count++;
-            await mod.init();
-            Debug.status(`Module "${mod.name || 'unknown'}"`, 'loaded');
-        }
+        await mod.init();
+        Debug.status(`Module "${mod.name || 'unknown'}"`, 'loaded');
     });
 
-    return count;
+    return modules.length;
 };
 
 module.exports = {

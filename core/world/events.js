@@ -2,7 +2,6 @@ const Event = require('../common/event');
 const Config = require('../config');
 const Debug = require('../engine/debug');
 const Store = require('../store');
-const Processor = require('../processor');
 const Commands = require('../commands');
 
 const Player = require('../entities/actors/player');
@@ -24,21 +23,14 @@ const subscribers = {
         }
     },
 
-    'socketConnected': ({ socket }) => {
+    'socketConnected': socket => {
         const player = new Player({
             socket,
         });
 
-        player.state = {
-            name: 'auth',
-            step: 0,
-        };
-
         Store.add('players', player);
-
         Event.emit('playerConnected', player);
 
-        Processor.auth(player);
         Debug.connected(player);
 
         player.socket.on('data', data => {
@@ -54,13 +46,7 @@ const subscribers = {
                 return;
             }
 
-            if (player.state.step === -1) {
-                return;
-            }
-
-            if (player.state.name && typeof Processor[player.state.name] != 'undefined') {
-                Processor[player.state.name](player, message);
-            }
+            Event.emit('playerMessage', { player, message });
 
             if (!requireChatCommand) {
                 Commands.execute(player, `say ${message}`);

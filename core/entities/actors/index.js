@@ -1,4 +1,3 @@
-const Processor = require('../../processor');
 const Color = require('../../common/color');
 const Base = require('../base');
 const Config = require('../../config');
@@ -6,10 +5,7 @@ const Config = require('../../config');
 module.exports = class Actor extends Base {
     constructor(params = {}) {
         super(params);
-
-        this.meta = {
-            state: {},
-        };
+        this.meta = {};
     }
 
     get dictionary() {
@@ -214,24 +210,6 @@ module.exports = class Actor extends Base {
             Math.floor(this.attributes.strength.level * 0.2) +
             Math.floor(this.attributes.willpower.level * 0.1) +
             Math.floor(this.attributes.dexterity.level * 0.3);
-    }
-
-    get state() {
-        return this.meta.state;
-    }
-
-    set state({ name, step = null }) {
-        if (typeof name != 'undefined') {
-            if (name && typeof Processor[name] == 'undefined') {
-                return;
-            }
-
-            this.meta.state.name = name;
-        }
-
-        if (step !== null) {
-            this.meta.state.step = step;
-        }
     }
 
     initInventory() {

@@ -15,6 +15,7 @@ module.exports = class Player extends Actor {
         super(params);
 
         this.socket = params.socket;
+        this.canUseCommands = true;
         this.lastInput = Date.now();
     }
 

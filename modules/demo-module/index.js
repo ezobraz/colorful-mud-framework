@@ -3,7 +3,6 @@ const Color = require('../../core/common/color');
 
 module.exports = {
     name: 'Demo Module',
-    enabled: false, // set to true to enable
 
     init() {
 

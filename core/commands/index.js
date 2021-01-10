@@ -27,11 +27,7 @@ module.exports = {
             return false;
         }
 
-        if (player.state.name == 'auth' && !command.names.includes('quit')) {
-            return false;
-        }
-
-        if (player.state.step === -1 && !command.names.includes('quit')) {
+        if (!player.canUseCommands && command.names[0] != tran.slate('command-quit-names')[0]) {
             return false;
         }
 
