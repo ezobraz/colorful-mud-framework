@@ -1,5 +1,5 @@
-const Broadcaster = require('../../src/engine/broadcaster');
-const Color = require('../../src/common/color');
+const Broadcaster = require('../../core/engine/broadcaster');
+const Color = require('../../core/common/color');
 
 module.exports = {
     name: 'Demo Module',

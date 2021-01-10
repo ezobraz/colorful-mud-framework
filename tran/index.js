@@ -1,6 +1,6 @@
 const en = require('./en');
-const Debug = require('../src/engine/debug');
-const Color = require('../src/common/color');
+const Debug = require('../core/engine/debug');
+const Color = require('../core/common/color');
 
 module.exports = {
     lang: en,
