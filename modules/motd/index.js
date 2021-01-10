@@ -28,11 +28,9 @@ module.exports = {
     name: 'MOTD',
 
     init() {
-        Event.on('playerConnected', player => {
-            Broadcaster.sendTo({
-                to: player,
-                text: motd.join('\r\n'),
-            })
-        });
+        Event.on('playerConnected', player => Broadcaster.sendTo({
+            to: player,
+            text: motd.join('\r\n'),
+        }));
     },
 }

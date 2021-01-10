@@ -39,7 +39,7 @@ const signUp = async (player, password) => {
     if (password == player.name) {
         Broadcaster.sendTo({
             to: player,
-            text: Color.parse(`[cR]Not a valid password.[/] Your name can not be your password. Try again`),
+            text: Color.parse(tran.slate('auth-error-password-same-as-name')),
         });
         Broadcaster.promt({
             to: player,
@@ -52,7 +52,7 @@ const signUp = async (player, password) => {
 
     Broadcaster.sendTo({
         to: player,
-        text: Color.parse(`[cG]Done.[/] Welcome to the game, ${player.name}`),
+        text: Color.parse(tran.slate('auth-success-signup', { name: player.name} )),
     });
 
     Debug.status('New player has signed up', player.name);
@@ -77,7 +77,7 @@ const signIn = async (player, password) => {
 
         Broadcaster.sendTo({
             to: player,
-            text: Color.parse(`[cG]Correct.[/] Welcome back, ${player.name}`),
+            text: Color.parse(tran.slate('auth-success-signin', { name: player.name} )),
         });
 
         Debug.status('Player has signed in as', player.name);
@@ -95,7 +95,7 @@ const signIn = async (player, password) => {
 
     Broadcaster.sendTo({
         to: player,
-        text: Color.parse('[cR]Incorrect.[/] Please, try again'),
+        text: Color.parse(tran.slate('auth-error-password')),
     });
     Broadcaster.promt({
         to: player,
