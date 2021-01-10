@@ -24,7 +24,7 @@ const subscribers = {
         }
     },
 
-    'playerConnected': ({socket}) => {
+    'socketConnected': ({ socket }) => {
         const player = new Player({
             socket,
         });
@@ -35,6 +35,9 @@ const subscribers = {
         };
 
         Store.add('players', player);
+
+        Event.emit('playerConnected', player);
+
         Processor.auth(player);
         Debug.connected(player);
 

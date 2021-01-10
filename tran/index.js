@@ -2,28 +2,31 @@ const en = require('./en');
 const Debug = require('../core/engine/debug');
 const Color = require('../core/common/color');
 
+let data = en;
+
 module.exports = {
-    lang: en,
+    lang: 'en',
 
     init(lang) {
         if (lang == 'en') {
             return;
         }
 
-        const data = require(`./${lang}`);
+        this.lang = lang;
+        const langData = require(`./${lang}`);
 
-        this.lang = {
+        data = {
             ...en,
-            ...data,
+            ...langData,
         };
     },
 
     slate(key, params) {
-        let res = this.lang[key];
+        let res = data[key];
 
         if (!res) {
-            Debug.log(Color.parse(`No tran for key: [b][cY]${key}[/]`), 'ERROR');
-            return '-- no tran --';
+            Debug.log(Color.parse(`No tran found for the key: [b][cY]${key}[/]`), 'WARN');
+            return '[NOTRAN]';
         }
 
         if (!params) {

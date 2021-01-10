@@ -11,6 +11,9 @@ const types = {
     'ERROR': {
         color: 'cR',
     },
+    'WARN': {
+        color: 'cy',
+    },
     'CHAT': {
         color: 'cB',
     },

@@ -6,40 +6,8 @@ const Debug = require('../engine/debug');
 const Config = require('../config');
 const Store = require('../store');
 
-const pjson = require('../../package.json');
-
-const img = [
-    '                  YYWW                   WWCC                 ',
-    '                  YYWW                   WWCC                 ',
-    '                  WWYY      W W W W      CCWW                 ',
-    '                  WWYY      WWWWWWW      CCWW                 ',
-    '                  R         WWW WWW         R                 ',
-    '                  R         WWWWWWW         R                 ',
-    '                  R      W WRWRWRWRW W      R                 ',
-    '               W WRW W W WWWWWWWWWWWWW W W WRW W              ',
-    '               WWWWWWWWWWWW WWRRRWW WWWWWWWWWWWW              ',
-    '               WWWWWWWWWWWWWWWRRRWWWWWWWWWWWWWWW              ',
-];
-
 const askForLogin = player => {
     player.state = { step: 1 };
-
-    let res = [
-        '',
-        '',
-        Color.img(img),
-        '',
-        Color.parse('[b][r][cY] Welcome [/] to another [b][r][cW] MUD [/]'),
-        Color.align({ text: `v${pjson.version}`, align: 'right' }),
-        '',
-        'By what name are you known in this world?',
-    ];
-
-    Broadcaster.sendTo({
-        to: player,
-        text: res.join('\r\n'),
-    });
-
     Broadcaster.promt({
         to: player,
         text: `Your name: `,

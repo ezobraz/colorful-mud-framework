@@ -3,4 +3,5 @@ node_modules
 config/config.json
 
 modules/*
+!modules/motd
 !modules/demo-module
