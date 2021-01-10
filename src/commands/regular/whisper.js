@@ -4,12 +4,9 @@ const Debug = require('../../engine/debug');
 const Store = require('../../store');
 
 module.exports = {
-    names: ['whisper', 'w'],
-    desc: 'Sends private message to nearby player in your current location.',
-    examples: [
-        'whisper playername hello',
-        'w playername hi',
-    ],
+    names: tran.slate('command-whisper-names'),
+    desc: tran.slate('command-whisper-desc'),
+    examples: tran.slate('command-whisper-examples'),
     execute(player, text) {
         if (!text) {
             return;

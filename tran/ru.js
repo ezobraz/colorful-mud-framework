@@ -24,6 +24,15 @@ module.exports = {
     'window-name-stats': 'Характеристики',
     'window-name-inventory': 'Инвентарь',
 
+    'inventory-empty': "Пусто",
+    'alias': 'Синонимы',
+    'examples': 'Примеры',
+
+    'location-empty': 'Вы в пустоте...',
+    'location-players-nearby': 'Игроки поблизости',
+    'location-items': 'Предметы',
+    'location-exits': 'Выходы',
+
     'param-name-hp': 'ЖС',
     'param-name-mp': 'МС',
     'param-name-ed': 'ВН',
@@ -36,16 +45,16 @@ module.exports = {
     'command-help-command-examples': [
         'о комманде осмотреться',
         'о комманде взять',
-        'о комманде брость',
+        'о комманде бросить',
     ],
 
     'command-say-names': ['сказать', 'с'],
     'command-say-desc': 'Посылает сообщение в локальный чат всем игрокам поблизости',
 
-    'command-drop-names': ['брость', 'положить'],
+    'command-drop-names': ['бросить', 'положить'],
     'command-drop-desc': 'Положить выбранный предмет на землю',
     'command-drop-examples': [
-        'брость длинный меч',
+        'бросить длинный меч',
         'положить меч',
     ],
 
@@ -68,5 +77,21 @@ module.exports = {
         'перейти в 1',
         'уйти в 2',
         'войти в 2',
+    ],
+
+    'command-inventory-names': ['инвентарь', 'инв', 'сумка'],
+    'command-inventory-desc': 'Показывает содержимое вашего инвентаря',
+
+    'command-look-names': ['осмотреться', 'посмотреть'],
+    'command-look-desc': 'Показывает информацию о происходящем повкруг',
+
+    'command-quit-names': ['завершить сеанс', 'выход'],
+    'command-quit-desc': 'Завершает сеанс игры',
+
+    'command-whisper-names': ['шепнуть', 'шепот', 'ш'],
+    'command-whisper-desc': 'Отправляет приватное сообщение игрку в текущей локации',
+    'command-whisper-examples': [
+        'шепнуть имя_игрока привет',
+        'ш имя_игрока Здравствуйте!',
     ],
 };

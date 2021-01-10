@@ -24,6 +24,15 @@ module.exports = {
     'window-name-stats': 'Stats',
     'window-name-inventory': 'Inventory',
 
+    'inventory-empty': "It's empty",
+    'alias': 'Alias',
+    'examples': 'Examples',
+
+    'location-empty': 'You are in emptyness...',
+    'location-players-nearby': 'Players nearby',
+    'location-items': 'Items',
+    'location-exits': 'Exits',
+
     'param-name-hp': 'hp',
     'param-name-mp': 'mp',
     'param-name-ed': 'ed',
@@ -66,5 +75,21 @@ module.exports = {
     'command-go-examples': [
         'go 1',
         'move 2',
+    ],
+
+    'command-inventory-names': ['inventory', 'inv'],
+    'command-inventory-desc': 'Shows the list of items in your inventory',
+
+    'command-look-names': ['look', 'ls'],
+    'command-look-desc': 'Look around',
+
+    'command-quit-names': ['quit', 'exit'],
+    'command-quit-desc': 'Disconnects you from the game and saves your account',
+
+    'command-whisper-names': ['whisper', 'w'],
+    'command-whisper-desc': 'Sends private message to nearby player in your current location',
+    'command-whisper-examples': [
+        'whisper playerName hi',
+        'w someone hello',
     ],
 };

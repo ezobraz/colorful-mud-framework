@@ -19,13 +19,13 @@ const formatCmdInfo = cmd => {
 
     if (cmd.names.length > 1) {
         tmp.push(
-            Color.parse(`Alias: [b][${cmdColor}]${cmd.names.join(', ')}[/]`)
+            Color.parse(`${tran.slate('alias')}: [b][${cmdColor}]${cmd.names.join(', ')}[/]`)
         );
         tmp.push('');
     }
 
     if (cmd.examples && cmd.examples.length) {
-        tmp.push(Color.parse(`Examples:`));
+        tmp.push(Color.parse(`${tran.slate('examples')}:`));
 
         cmd.examples.forEach((ex, i) => {
             const parts = ex.split(' - ');

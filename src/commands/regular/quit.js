@@ -1,9 +1,6 @@
 module.exports = {
-    names: ['quit', 'exit'],
-    desc: 'Disconnects you from the game and saves your account',
-    examples: [
-        'quit',
-    ],
+    names: tran.slate('command-quit-names'),
+    desc: tran.slate('command-quit-desc'),
     execute(player, text) {
         player.disconnect();
         return true;

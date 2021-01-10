@@ -3,16 +3,13 @@ const Broadcaster = require('../../engine/broadcaster');
 const Store = require('../../store');
 
 module.exports = {
-    names: ['look', 'ls'],
-    desc: 'Look around',
-    examples: [
-        'look',
-    ],
+    names: tran.slate('command-look-names'),
+    desc: tran.slate('command-look-desc'),
     execute(player, text) {
         if (!player.locationId) {
             Broadcaster.sendTo({
                 to: player,
-                text: 'You are in emptyness...',
+                text: tran.slate('location-empty'),
             });
             return;
         }
@@ -56,7 +53,7 @@ module.exports = {
 
             res.push(
                 ...[
-                    Color.parse(`[b][u][cW]Players nearby:[/]`),
+                    Color.parse(`[b][u][cW]${tran.slate('location-players-nearby')}:[/]`),
                     ...Color.list(playerNames, 4),
                     '',
                 ],
@@ -68,7 +65,7 @@ module.exports = {
 
             res.push(
                 ...[
-                    Color.parse(`[b][u][cW]Items:[/]`),
+                    Color.parse(`[b][u][cW]${tran.slate('location-items')}:[/]`),
                     ...items.length > 10 ? Color.list(items, 4) : items,
                     '',
                 ],
@@ -96,7 +93,7 @@ module.exports = {
 
             res.push(
                 ...[
-                    Color.parse(`[b][u][cW]Exits:[/]`),
+                    Color.parse(`[b][u][cW]${tran.slate('location-exits')}:[/]`),
                     ...exits.length > 10 ? Color.list(exits, 4) : exits,
                     '',
                 ],

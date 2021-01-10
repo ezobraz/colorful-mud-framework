@@ -2,16 +2,13 @@ const Color = require('../../common/color');
 const Broadcaster = require('../../engine/broadcaster');
 
 module.exports = {
-    names: ['inventory', 'inv'],
-    desc: 'Shows the list of items in your inventory',
-    examples: [
-        'inventory',
-    ],
+    names: tran.slate('command-inventory-names'),
+    desc: tran.slate('command-inventory-desc'),
     execute(player) {
         const inventory = player.inventory;
 
         const res = [
-            Color.parse(`[b][r][cW]${ Color.align({ text: 'Inventory' }) }[/]`),
+            Color.parse(`[b][r][cW]${ Color.align({ text: tran.slate('window-name-inventory') }) }[/]`),
             '',
         ];
 
@@ -45,7 +42,7 @@ module.exports = {
 
         if (!player.inventory.length) {
             res.push(
-                Color.parse(`[b][cW]${ Color.align({ text: "It's empty" }) }[/]`),
+                Color.parse(`[b][cW]${ Color.align({ text: tran.slate('inventory-empty') }) }[/]`),
             );
         }
 
