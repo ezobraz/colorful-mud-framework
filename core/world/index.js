@@ -9,6 +9,7 @@ const Commands = require('./commands');
 const Events = require('./events');
 const Server = require('./server');
 const Cron = require('./cron');
+const Event = require('../common/event');
 
 module.exports = {
     async init() {
@@ -23,5 +24,7 @@ module.exports = {
         Events.init();
         Server.init();
         Cron.init();
+
+        Event.emit('serverReady');
     }
 }
