@@ -93,5 +93,7 @@
         "w someone hello"
     ],
 
-    "item-type-sword": "Sword"
+    "item-param-weight": "Weight",
+    "item-param-condition": "Condition",
+    "item-param-value": "Price"
 }

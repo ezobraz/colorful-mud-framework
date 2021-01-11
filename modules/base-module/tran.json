@@ -1,8 +1,10 @@
 {
     "en": {
+        "item-type-sword": "Sword",
         "player-params-mana": "Mana"
     },
     "ru": {
+        "item-type-sword": "Меч",
         "player-params-mana": "Мана"
     }
 }

@@ -1,4 +1,4 @@
-const Location = require('./base');
+const Location = require('../../../core/entities/locations/base');
 
 module.exports = class Castle extends Location {
     get color() {

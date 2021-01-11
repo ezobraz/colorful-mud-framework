@@ -5,7 +5,7 @@ module.exports = {
     commands: [
         {
             names: ['test'],
-            desc: 'This command is from the module "demo-custom-commands" module',
+            desc: 'This command is from the module "custom-commands"',
             execute(player) {
                 Broadcaster.sendTo({
                     to: player,

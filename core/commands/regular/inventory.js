@@ -24,14 +24,14 @@ module.exports = {
                 return Color.parse(`${data.name}${addStr}${data.value}`);
             });
 
-            const addStrWeight = new Array(paramLength - 'Weight'.length - item.weight.toString().length + 1).join('.');
-            outputData.push(Color.parse(`Weight${addStrWeight}${item.weight}`));
+            const addStrWeight = new Array(paramLength - tran.slate('item-param-weight').length - item.weight.toString().length + 1).join('.');
+            outputData.push(Color.parse(tran.slate('item-param-weight') + addStrWeight + item.weight));
 
-            const addStrCond = new Array(paramLength - 'Condition'.length - item.condition.toString().length).join('.');
-            outputData.push(Color.parse(`Condition${addStrCond}${item.condition}%`));
+            const addStrCond = new Array(paramLength - tran.slate('item-param-condition').length - item.condition.toString().length).join('.');
+            outputData.push(Color.parse(tran.slate('item-param-condition') + addStrCond + item.condition + '%'));
 
-            const addSttValue = new Array(paramLength - 'Price'.length - item.value.toString().length).join('.');
-            outputData.push(Color.parse(`Price${addSttValue}${item.value}g`));
+            const addSttValue = new Array(paramLength - tran.slate('item-param-value').length - item.value.toString().length).join('.');
+            outputData.push(Color.parse(tran.slate('item-param-value') + addSttValue + item.value + 'g'));
 
             res.push(...[
                 Color.parse(item.displayName),

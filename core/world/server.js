@@ -11,8 +11,8 @@ module.exports = {
         });
 
         server.on('error', e => {
-            Event.emit('save');
-            // this.server.close();
+            console.log(e);
+            server.close();
         });
 
         server.on('close', () => {

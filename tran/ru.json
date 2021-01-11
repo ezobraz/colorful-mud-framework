@@ -95,5 +95,7 @@
         "ш имя_игрока Здравствуйте!"
     ],
 
-    "item-type-sword": "Меч"
+    "item-param-weight": "Вес",
+    "item-param-condition": "Состояние",
+    "item-param-value": "Ценность"
 }

@@ -1,4 +1,4 @@
-const Param = require('./base');
+const Param = require('../../../core/entities/params/base');
 
 module.exports = class Health extends Param {
     max(player) {

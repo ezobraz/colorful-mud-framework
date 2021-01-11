@@ -1,5 +1,4 @@
-const Color = require('../../common/color');
-const Item = require('./base');
+const Item = require('../../../core/entities/items/base');
 
 const day = 1000 * 60 * 60 * 24;
 
