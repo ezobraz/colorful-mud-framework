@@ -1,4 +1,4 @@
-const Base = require('./base');
+const Attribute = require('./base');
 
-module.exports = class Strength extends Base {
+module.exports = class Strength extends Attribute {
 };

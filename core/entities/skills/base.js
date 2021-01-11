@@ -1,9 +1,12 @@
-module.exports = class Base {
+const Base = require('../base');
+
+module.exports = class Skill extends Base {
     constructor({ level, progress }) {
-        this.name = this.constructor.name;
-        this.level = level;
-        this.progress = progress;
-        this.max = 100;
+        super({
+            level: parseInt(level),
+            progress: parseFloat(progress),
+            max: 100,
+        });
     }
 
     get cap() {

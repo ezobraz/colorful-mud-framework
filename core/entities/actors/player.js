@@ -1,4 +1,4 @@
-const Actor = require('./actor');
+const Actor = require('./base');
 const Model = require('../../model');
 const hash = require('../../common/hash');
 const Event = require('../../common/event');
@@ -17,14 +17,43 @@ module.exports = class Player extends Actor {
         this.lastInput = Date.now();
     }
 
-    get dictionary() {
-        return {
-            ...super.dictionary,
-            permissions: {
-                type: Array,
-                default: [],
-            },
+    get props() {
+        const res = {...this};
+
+        delete res.meta;
+        delete res.socket;
+        delete res.canUseCommands;
+        delete res.lastInput;
+
+        return res;
+    }
+
+    get isGm() {
+        if (this.permissions && this.permissions.length > 0) {
+            const allPermissions = require('../../commands/helpers/all-permissions')();
+
+            if (this.permissions.length < allPermissions) {
+                return 1;
+            }
+
+            return 2;
         }
+
+        return 0;
+    }
+
+    get color() {
+        if (this.permissions && this.permissions.length > 0) {
+            const allPermissions = require('../../commands/helpers/all-permissions')();
+
+            if (this.permissions.length < allPermissions) {
+                return 'cY';
+            }
+
+            return 'cR';
+        }
+
+        return 'cW';
     }
 
     async setUp({ params, silent = false }) {
@@ -33,11 +62,11 @@ module.exports = class Player extends Actor {
             params.locationId = startLocationId;
         }
 
-        this.props = params;
-        this.initParams();
-        this.initAttributes();
-        this.initSkills();
-        this.initInventory();
+        for (let i in params) {
+            this[i] = params[i];
+        }
+
+        this.init();
 
         if (this.locationId && !silent) {
             let location = Store.findById('locations', this.locationId);

@@ -1,6 +1,6 @@
-const Base = require('./base');
+const Param = require('./base');
 
-module.exports = class Health extends Base {
+module.exports = class Health extends Param {
     max(player) {
         // todo
         return 100;

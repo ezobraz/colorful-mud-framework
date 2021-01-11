@@ -1,5 +1,5 @@
 const Color = require('../../common/color');
-const Store = require('../../store');
+const Dictionary = require('../../dictionary');
 const Broadcaster = require('../../engine/broadcaster');
 
 const process = (player, text, collection) => {
@@ -9,7 +9,7 @@ const process = (player, text, collection) => {
 
     const level = params[0];
 
-    const cls = Store.find(collection, name);
+    const cls = Dictionary.get(collection, name);
     const param = new cls({
         level,
     });
@@ -18,7 +18,7 @@ const process = (player, text, collection) => {
     player.save();
     Broadcaster.sendTo({
         to: player,
-        text: Color.parse(`[b][cW]${param.name}[/] was set to [cG]${level}[/]`),
+        text: Color.parse(`[b][cW]${param.type}[/] was set to [cG]${level}[/]`),
     });
 }
 

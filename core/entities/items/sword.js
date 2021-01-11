@@ -1,31 +1,14 @@
 const Color = require('../../common/color');
-const Item = require('./index');
+const Item = require('./base');
 
 const day = 1000 * 60 * 60 * 24;
 
 module.exports = class Sword extends Item {
-    get dictionary() {
-        return {
-            ...super.dictionary,
-            length: {
-                type: Number,
-                default: 1.0,
-            },
-            slot: {
-                type: String,
-                default: 'rHand',
-            },
-            sharpenedOn: {
-                type: Date,
-                default: null,
-            },
-            weight: {
-                type: Number,
-                default: 1.5,
-                min: 0.4,
-                max: 10,
-            },
-        }
+    constructor(params = {}) {
+        params.slot = params.slot || 'rHand';
+        params.sharpenedOn = params.sharpenedOn || Date.now();
+
+        super(params);
     }
 
     get outputData() {

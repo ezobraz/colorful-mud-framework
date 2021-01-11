@@ -2,6 +2,7 @@ const Color = require('../../common/color');
 const Config = require('../../config');
 const Broadcaster = require('../../engine/broadcaster');
 const Store = require('../../store');
+const Dictionary = require('../../dictionary');
 
 const setParams = [
     'name',
@@ -10,15 +11,6 @@ const setParams = [
     'type',
     'exit',
     'exit-bind',
-];
-
-const locTypes = [
-    'castle',
-    'town',
-    'village',
-    'nature',
-    'dungeon',
-    'room',
 ];
 
 module.exports = [
@@ -80,15 +72,16 @@ module.exports = [
 
             const type = words[0];
 
-            if (!locTypes.includes(type)) {
-                return;
-            }
-
             words.shift();
 
             const name = words.join(' ');
 
-            const Location = require(`../../entities/locations/${type}`);
+            const Location = Dictionary.get('locations', type);
+
+            if (!Location) {
+                return;
+            }
+
             const loc = new Location({
                 name,
             });

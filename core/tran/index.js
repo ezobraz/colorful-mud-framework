@@ -1,26 +1,7 @@
-const fs = require('fs')
 const en = require('../../tran/en');
 const Debug = require('../engine/debug');
 const Color = require('../common/color');
-const Config = require('../config');
-
-let data = en;
-
-const modules = Config.get('modules');
-const moduleTrans = {};
-modules.forEach(dir => {
-    let tranPath = `./modules/${dir}/tran.json`;
-    if (fs.existsSync(tranPath)) {
-        const tran = require(`../.${tranPath}`);
-        for (let key in tran) {
-            moduleTrans[key] = moduleTrans[key] || {};
-            moduleTrans[key] = {
-                ...moduleTrans[key],
-                ...tran[key],
-            };
-        }
-    }
-});
+const Dictionary = require('../dictionary');
 
 module.exports = {
     lang: 'en',
@@ -33,15 +14,14 @@ module.exports = {
         this.lang = lang;
         const langData = require(`../../tran/${lang}.json`);
 
-        data = {
+        let res = Dictionary.append('tran', {
             ...en,
             ...langData,
-            ...moduleTrans[lang] || {},
-        };
+        });
     },
 
     slate(key, params) {
-        let res = data[key];
+        let res = Dictionary.get('tran', key);
 
         if (!res) {
             Debug.log(Color.parse(`No tran found for the key: [b][cY]${key}[/]`), 'WARN');

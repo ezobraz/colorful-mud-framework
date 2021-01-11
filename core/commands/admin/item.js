@@ -1,9 +1,6 @@
 const Color = require('../../common/color');
 const Broadcaster = require('../../engine/broadcaster');
-
-const TYPES = [
-    'sword',
-];
+const Dictionary = require('../../dictionary');
 
 module.exports = [
     {
@@ -19,25 +16,22 @@ module.exports = [
             const type = params[0];
             params.shift();
 
-            if (!TYPES.includes(type)) {
+            const itemClass = Dictionary.get('items', type);
+
+            if (!itemClass) {
                 return;
             }
 
-            const itemClass = require(`../../entities/items/${type}`);
             const item = new itemClass();
-            const itemProps = item.props;
-            const props = {};
 
             params.forEach((param, i) => {
                 const data = param.split('=');
                 const value = data[1].replace(/"+/g, '');
 
-                if (typeof itemProps[data[0]] != 'undefined') {
-                    props[data[0]] = value;
+                if (typeof item[data[0]] != 'undefined') {
+                    item[data[0]] = value;
                 }
             });
-
-            item.props = props;
 
             player.addItem(item);
             player.save();
@@ -64,7 +58,7 @@ module.exports = [
                 player.save();
                 Broadcaster.sendTo({
                     to: player,
-                    text: Color.parse(`[b][cW]"${item.name}" ${item.className.toLowerCase()}[/] was [b][cR]destroyed[/]`),
+                    text: Color.parse(`[b][cW]"${item.name}" ${item.type.toLowerCase()}[/] was [b][cR]destroyed[/]`),
                 });
             }
         },

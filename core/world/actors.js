@@ -5,11 +5,11 @@ const fs = require('fs');
 module.exports = {
     async init() {
         await new Promise((resolve, reject) => {
-            fs.readdir('./core/entities/skills/', (err, files) => {
+            fs.readdir('./core/entities/actors/', (err, files) => {
                 files.forEach(file => {
                     if (file != 'base.js') {
                         const name = file.replace('.js', '');
-                        Dictionary.add('skills', name, require(`../entities/skills/${name}`));
+                        Dictionary.add('actors', name, require(`../entities/actors/${name}`));
                     }
                 });
 
@@ -17,6 +17,6 @@ module.exports = {
             });
         });
 
-        Debug.status('Skill types', Object.keys(Dictionary.get('skills')).length);
+        Debug.status('Actor types', Object.keys(Dictionary.get('actors')).length);
     }
 };

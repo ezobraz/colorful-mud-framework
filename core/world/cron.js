@@ -14,10 +14,6 @@ const tasks = {
             if (player.lastInput <= afkTimeLimit) {
                 player.disconnect('Timeout');
             }
-
-            if (player.ed < player.edMax / 2) {
-                player.ed++;
-            }
         }
     },
     60000: () => { // 1 min
@@ -29,9 +25,7 @@ const tasks = {
         const players = Store.get('players');
 
         for (const player of players) {
-            if (player.hp < player.hpMax / 3) {
-                player.hp++;
-            }
+            //
         }
     },
 }

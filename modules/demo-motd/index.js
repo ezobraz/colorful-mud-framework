@@ -25,8 +25,6 @@ const motd = [
 ];
 
 module.exports = {
-    name: 'Demo: MOTD',
-
     init() {
         Event.on('playerConnected', player => Broadcaster.sendTo({
             to: player,

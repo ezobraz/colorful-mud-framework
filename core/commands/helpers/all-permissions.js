@@ -1,12 +1,12 @@
-let allPermissions = [];
+const Dictionary = require('../../dictionary');
+const allPermissions = [];
+
 module.exports = () => {
     if (allPermissions.length) {
         return allPermissions;
     }
 
-    const list = require('../list');
-
-    list.forEach(cmd => {
+    Dictionary.get('commands').forEach(cmd => {
         if (cmd.permissions) {
             allPermissions.push(...cmd.permissions);
         }

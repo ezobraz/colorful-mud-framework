@@ -3,8 +3,7 @@ const Config = require('../config');
 const Debug = require('../engine/debug');
 const Store = require('../store');
 const Commands = require('../commands');
-
-const Player = require('../entities/actors/player');
+const Dictionary = require('../dictionary');
 
 const requireChatCommand = Config.get('chat.requireCommand');
 
@@ -24,6 +23,7 @@ const subscribers = {
     },
 
     'socketConnected': socket => {
+        const Player = Dictionary.get('actors', 'player');
         const player = new Player({
             socket,
         });

@@ -36,7 +36,7 @@ module.exports = {
                     continue;
                 }
 
-                const name = tran.slate(`player-${i}-${pack[key].name.toLowerCase()}`);
+                const name = tran.slate(`player-${i}-${pack[key].type.toLowerCase()}`);
                 const data = pack[key].level.toString();
 
                 let add = statLineLength - name.length - data.length;

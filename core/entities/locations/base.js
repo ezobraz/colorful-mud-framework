@@ -2,53 +2,24 @@ const Model = require('../../model');
 const Base = require('../base');
 const Broadcaster = require('../../engine/broadcaster');
 const Store = require('../../store');
+const Dictionary = require('../../dictionary');
+
+const defaultParams = {
+    _id: null,
+    img: [],
+    name: 'Unknown',
+    desc: null,
+    single: false,
+    locked: false,
+    ownerId: null,
+    items: [],
+    exits: [],
+};
 
 module.exports = class Location extends Base {
     constructor(params) {
-        super(params);
+        super({...defaultParams, ...params});
         this.initItems();
-    }
-
-    get dictionary() {
-        return {
-            ...super.dictionary,
-            _id: {
-                type: String,
-                default: null,
-            },
-            img: {
-                type: Array,
-                default: [],
-            },
-            name: {
-                type: String,
-                default: "Unknown",
-            },
-            desc: {
-                type: String,
-                default: null,
-            },
-            single: {
-                type: Boolean,
-                default: false,
-            },
-            locked: {
-                type: Boolean,
-                default: false,
-            },
-            ownerId: {
-                type: String,
-                default: null,
-            },
-            items: {
-                type: Array,
-                default: [],
-            },
-            exits: {
-                type: Array,
-                default: [],
-            },
-        }
     }
 
     get players() {
@@ -77,7 +48,9 @@ module.exports = class Location extends Base {
         });
 
         if (res) {
-            this.props = res;
+            for (let i in res) {
+                this[i] = res[i];
+            }
         }
 
         return res;
@@ -115,7 +88,7 @@ module.exports = class Location extends Base {
 
     initItems() {
         this.items = this.items.map(data => {
-            const obj = require(`../items/${data.className.toLowerCase()}`);
+            const obj = Dictionary.get('items', data);
             return new obj(data);
         });
     }

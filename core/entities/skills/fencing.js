@@ -1,4 +1,4 @@
-const Base = require('./base');
+const Skill = require('./base');
 
-module.exports = class Fencing extends Base {
+module.exports = class Fencing extends Skill {
 };

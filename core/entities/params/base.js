@@ -1,7 +1,10 @@
-module.exports = class Base {
+const Base = require('../base');
+
+module.exports = class Param extends Base {
     constructor({ level }) {
-        this.name = this.constructor.name;
-        this.level = parseInt(level);
+        super({
+            level: parseInt(level),
+        });
     }
 
     get bgColor() {

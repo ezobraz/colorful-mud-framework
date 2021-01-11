@@ -1,5 +1,6 @@
 const Broadcaster = require('../../engine/broadcaster');
 const Color = require('../../common/color');
+const Dictionary = require('../../dictionary');
 const hasPermissions = require('../helpers/has-permissions');
 
 const formatCmdInfo = cmd => {
@@ -52,7 +53,7 @@ module.exports = [
         names: tran.slate('command-help-commands-names'),
         desc: tran.slate('command-help-commands-desc'),
         execute(player, text) {
-            const commandsList = require('../list');
+            const commandsList = Dictionary.get('commands');
             const res = [];
 
             let commands = commandsList;
@@ -86,7 +87,7 @@ module.exports = [
                 return;
             }
 
-            const commandsList = require('../list');
+            const commandsList = Dictionary.get('commands');
             const command = commandsList.find(c => c.names.includes(text));
 
             if (!command) {

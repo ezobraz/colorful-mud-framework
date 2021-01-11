@@ -3,31 +3,20 @@ const Base = require('../base');
 
 const day = 1000 * 60 * 60 * 24;
 
+const defaultParams = {
+    name: 'Unknown',
+    slot: null,
+    weight: 0.1,
+    quality: 0,
+};
+
 module.exports = class Item extends Base {
-    get dictionary() {
-        return {
-            ...super.dictionary,
-            name: {
-                type: String,
-                default: "Unknown",
-            },
-            slot: {
-                type: String,
-                default: null,
-            },
-            weight: {
-                type: Number,
-                default: 0.1,
-                min: 0.1,
-                max: 100,
-            },
-            quality: {
-                type: Number,
-                default: 10,
-                min: 0,
-                max: 100,
-            },
+    constructor(params = {}) {
+        if (typeof params.quality != 'undefined') {
+            params.quality = parseFloat(params.quality);
         }
+
+        super({...defaultParams, ...params});
     }
 
     get displayName() {
@@ -54,7 +43,7 @@ module.exports = class Item extends Base {
             color = 'cM';
         }
 
-        return `[${this.className}] [b][${color}]${this.name}[/]`;
+        return `[${this.type}] [b][${color}]${this.name}[/]`;
     }
 
     get condition() {
