@@ -43,7 +43,7 @@ module.exports = class Item extends Base {
             color = 'cM';
         }
 
-        return `[${this.type}] [b][${color}]${this.name}[/]`;
+        return `[${tran.slate(`item-type-${this.type.toLowerCase()}`)}] [b][${color}]${this.name}[/]`;
     }
 
     get condition() {

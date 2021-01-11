@@ -88,7 +88,7 @@ module.exports = class Location extends Base {
 
     initItems() {
         this.items = this.items.map(data => {
-            const obj = Dictionary.get('items', data);
+            const obj = Dictionary.get('items', data.type.toLowerCase());
             return new obj(data);
         });
     }

@@ -1,0 +1,22 @@
+{
+    "en": {
+        "auth-promt-your-name": "Your name",
+        "auth-promt-password": "Password",
+        "auth-promt-create-password": "Create password",
+        "auth-error-name-long": "Too long, try something shorter",
+        "auth-error-password": "[cR]Incorrect.[/] Please, try again",
+        "auth-error-password-same-as-name": "[cR]Not a valid password.[/] Your name can't be your password. Try again",
+        "auth-success-signup": "[cG]Success.[/] Welcome to the game, {name}",
+        "auth-success-signin": "[cG]Correct.[/] Welcome back, {name}"
+    },
+    "ru": {
+        "auth-promt-your-name": "Ваше имя",
+        "auth-promt-password": "Пароль",
+        "auth-promt-create-password": "Придумайте пароль",
+        "auth-error-name-long": "Слишком длинное имя. Придумайте что-нибудь короче",
+        "auth-error-password": "[cR]Неверный пароль.[/] Пожалуйста, попробуйте еще раз",
+        "auth-error-password-same-as-name": "[cR]Ошибка.[/] Ваш пароль должен отличаться от вашего имени. Попробуйте еще раз",
+        "auth-success-signup": "[cG]Успех.[/] Добро пожаловать, {name}",
+        "auth-success-signin": "[cG]Успех.[/] С возвращением, {name}"
+    }
+}

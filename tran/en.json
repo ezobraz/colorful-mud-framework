@@ -91,5 +91,7 @@
     "command-whisper-examples": [
         "whisper playerName hi",
         "w someone hello"
-    ]
+    ],
+
+    "item-type-sword": "Sword"
 }

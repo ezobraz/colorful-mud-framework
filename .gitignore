@@ -3,7 +3,7 @@ node_modules
 config/config.json
 
 modules/*
-!modules/demo-motd
-!modules/demo-player-auth
-!modules/demo-custom-player-params
 !modules/demo-custom-commands
+!modules/demo-motd
+!modules/player-auth
+!modules/player-params
