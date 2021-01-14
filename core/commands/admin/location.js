@@ -1,8 +1,7 @@
-const Color = require('../../common/color');
-const Config = require('../../config');
-const Broadcaster = require('../../engine/broadcaster');
-const Store = require('../../store');
-const Dictionary = require('../../dictionary');
+const Config = __require('core/config');
+const Store = __require('core/store');
+const Dictionary = __require('core/dictionary');
+const { Color, Broadcaster } = __require('core/tools');
 
 const setParams = [
     'name',

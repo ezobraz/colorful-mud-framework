@@ -1,0 +1,20 @@
+{
+    "en": {
+        "command-look-names": ["look", "ls"],
+        "command-look-desc": "Look around",
+
+        "location-empty": "You are in emptyness...",
+        "location-players-nearby": "Players nearby",
+        "location-items": "Items",
+        "location-exits": "Exits"
+    },
+    "ru": {
+        "command-look-names": ["осмотреться", "посмотреть"],
+        "command-look-desc": "Показывает информацию о происходящем повкруг",
+
+        "location-empty": "Вы в пустоте...",
+        "location-players-nearby": "Игроки поблизости",
+        "location-items": "Предметы",
+        "location-exits": "Выходы"
+    }
+}

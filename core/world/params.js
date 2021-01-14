@@ -1,5 +1,5 @@
-const Debug = require('../engine/debug');
-const Dictionary = require('../dictionary');
+const { Debug } = __require('core/tools');
+const Dictionary = __require('core/dictionary');
 const fs = require('fs');
 
 module.exports = {
@@ -17,6 +17,6 @@ module.exports = {
             });
         });
 
-        Debug.status('Param types', Object.keys(Dictionary.get('params')).length);
+        Debug.status(`${Object.keys(Dictionary.get('params')).length} Param Classes`, 'loaded');
     }
 };

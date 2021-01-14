@@ -1,0 +1,10 @@
+{
+    "en": {
+        "command-quit-names": ["quit", "exit"],
+        "command-quit-desc": "Disconnects you from the game and saves your account"
+    },
+    "ru": {
+        "command-quit-names": ["завершить сеанс", "выход"],
+        "command-quit-desc": "Завершает сеанс игры"
+    }
+}

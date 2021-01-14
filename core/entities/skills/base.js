@@ -1,12 +1,21 @@
+/**
+* @namespace Skills
+*/
+
 const Base = require('../base');
 
-module.exports = class Skill extends Base {
-    constructor({ level, progress }) {
-        super({
-            level: parseInt(level),
-            progress: parseFloat(progress),
-            max: 100,
-        });
+/**
+* Base Skill
+*
+* @memberof Skills
+*/
+class Skill extends Base {
+    constructor(params = {}) {
+        super(params);
+
+        this.level = parseInt(params.level) || 0;
+        this.progress = parseFloat(params.progress) || 0;
+        this.max = parseInt(params.max) || 100;
     }
 
     get cap() {
@@ -24,3 +33,5 @@ module.exports = class Skill extends Base {
         }
     }
 };
+
+module.exports = Skill;

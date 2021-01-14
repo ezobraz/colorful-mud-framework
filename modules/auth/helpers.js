@@ -1,9 +1,7 @@
-const Broadcaster = require('../../core/engine/broadcaster');
-const Color = require('../../core/common/color');
-const Debug = require('../../core/engine/debug');
-const Config = require('../../core/config');
-const Store = require('../../core/store');
-const Event = require('../../core/common/event');
+const { Color, Debug, Broadcaster } = __require('core/tools');
+const Config = __require('core/config');
+const Store = __require('core/store');
+const Event = __require('core/event');
 
 const checkName = async (player, name) => {
     if (name.length > 16) {
@@ -57,7 +55,7 @@ const signUp = async (player, password) => {
     Debug.status('New player has signed up', player.name);
     player.meta.authStep = 0;
     player.canUseCommands = true;
-    Event.emit('playerSignedUp', player);
+    Event.emit('PLAYER_SIGNED_UP', player);
 };
 
 const signIn = async (player, password) => {
@@ -83,12 +81,12 @@ const signIn = async (player, password) => {
         Debug.status('Player has signed in as', player.name);
         player.meta.authStep = 0;
         player.canUseCommands = true;
-        Event.emit('playerSignedIn', player);
+        Event.emit('PLAYER_SIGNED_IN', player);
         return;
     }
 
     let attempts = player.meta.passwordAttempt || 0;
-    if (attempts >= Config.get('players.auth.maxPasswordAttempts')) {
+    if (attempts >= 5) {
         player.disconnect('Too many failed attempts');
         return;
     }

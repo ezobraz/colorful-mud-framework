@@ -1,12 +1,8 @@
-module.exports = class Base {
+class Base {
     constructor(params) {
-        this.type = this.constructor.name;
+        this.class = this.constructor.name;
         this.createdOn = params.createdOn || Date.now();
         this.meta = {};
-
-        for (let i in params) {
-            this[i] = params[i];
-        }
     }
 
     get props() {
@@ -17,3 +13,5 @@ module.exports = class Base {
         return res;
     }
 };
+
+module.exports = Base;

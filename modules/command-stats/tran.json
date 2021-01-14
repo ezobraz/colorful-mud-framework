@@ -1,0 +1,28 @@
+{
+    "en": {
+        "player-params": "Parameters",
+        "player-attributes": "Attributes",
+        "player-dependents": "Dependent attributes",
+        "player-skills": "Skills",
+
+        "command-stats-names": [
+            "stats",
+            "score",
+            "me"
+        ],
+        "window-name-stats": "Stats"
+    },
+    "ru": {
+        "player-params": "Параметры",
+        "player-attributes": "Характеристики",
+        "player-dependents": "Производные характеристики",
+        "player-skills": "Навыки",
+
+        "command-stats-names": [
+            "характеристики",
+            "статистика",
+            "я"
+        ],
+        "window-name-stats": "Характеристики"
+    }
+}

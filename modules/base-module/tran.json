@@ -1,10 +1,20 @@
 {
     "en": {
         "item-type-sword": "Sword",
-        "player-params-mana": "Mana"
+
+        "player-params-health": "Health",
+        "player-params-health-short": "HP",
+
+        "player-params-mana": "Mana",
+        "player-params-mana-short": "MP"
     },
     "ru": {
         "item-type-sword": "Меч",
-        "player-params-mana": "Мана"
+
+        "player-params-health": "Здоровье",
+        "player-params-health-short": "ЖС",
+
+        "player-params-mana": "Мана",
+        "player-params-mana-short": "МС"
     }
 }

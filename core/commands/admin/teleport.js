@@ -1,6 +1,5 @@
-const Color = require('../../common/color');
-const Store = require('../../store');
-const Broadcaster = require('../../engine/broadcaster');
+const Store = __require('core/store');
+const { Color, Broadcaster } = __require('core/tools');
 
 module.exports = [
     {

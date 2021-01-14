@@ -3,22 +3,23 @@
     "format": {
         "lineLength": 62
     },
-    "debug": {
-        "logRam": true
-    },
     "chat": {
         "requireCommand": true
-    },
-    "players": {
-        "auth": {
-            "maxPasswordAttempts": 5
-        },
-        "afkTimeout": 600000
     },
     "modules": [
         "base-module",
         "motd",
-        "custom-commands",
+        "command-stats",
+        "command-inventory",
+        "command-take-drop",
+        "command-look",
+        "command-go",
+        "command-quit",
+        "command-hp",
+        "command-help",
+        "afk-kick",
+        "system-monitoring",
+        "chat",
         "auth"
     ]
 }

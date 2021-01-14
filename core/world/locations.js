@@ -1,7 +1,7 @@
-const Store = require('../store');
-const Dictionary = require('../dictionary');
-const Model = require('../model');
-const Debug = require('../engine/debug');
+const Store = __require('core/store');
+const Dictionary = __require('core/dictionary');
+const Model = __require('core/model');
+const { Debug } = __require('core/tools');
 const fs = require('fs');
 
 module.exports = {
@@ -18,14 +18,14 @@ module.exports = {
                 resolve(true);
             });
         });
-        Debug.status('Location types', Object.keys(Dictionary.get('locations')).length);
+        Debug.status(`${Object.keys(Dictionary.get('locations')).length} Location Classes`, 'loaded');
 
         let locationsData = await Model.getters('locations/find', {});
         locationsData.forEach(data => {
-            const Location = Dictionary.get('locations', data.type.toLowerCase());
+            const Location = Dictionary.get('locations', data.class.toLowerCase());
             Store.add('locations', new Location(data));
         });
 
-        Debug.status('Locations', Store.get('locations').length);
+        Debug.status(`${Store.get('locations').length} Locations`, 'loaded');
     }
 };

@@ -1,0 +1,33 @@
+{
+    "en": {
+        "command-help-commands-names": ["help commands"],
+        "command-help-commands-desc": "Shows the list of all available commands",
+
+        "command-help-command-names": ["help command"],
+        "command-help-command-desc": "Shows command info",
+        "command-help-command-examples": [
+            "help commmand look",
+            "help commmand go",
+            "help commmand drop",
+            "help commmand take"
+        ],
+
+        "alias": "Alias",
+        "examples": "Examples"
+    },
+    "ru": {
+        "command-help-commands-names": ["список комманд"],
+        "command-help-commands-desc": "Показывает список всех доступных вам комманд",
+
+        "command-help-command-names": ["о комманде"],
+        "command-help-command-desc": "Показывает подробную информацию о комманде",
+        "command-help-command-examples": [
+            "о комманде осмотреться",
+            "о комманде взять",
+            "о комманде бросить"
+        ],
+
+        "alias": "Синонимы",
+        "examples": "Примеры"
+    }
+}

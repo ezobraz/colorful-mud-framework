@@ -2,12 +2,12 @@ const Model = require('../model');
 const fs = require('fs')
 
 const runtime = {};
-const static = require('../../config/config.default.json');
+const staticConfig = require('../../config/config.default.json');
 
 if (fs.existsSync('./config/config.json')) {
     let res = require('../../config/config.json');
     for (let i in res) {
-        static[i] = res[i];
+        staticConfig[i] = res[i];
     }
 }
 
@@ -37,7 +37,7 @@ module.exports = {
             return;
         }
 
-        let res = static;
+        let res = staticConfig;
 
         for (let key of parts) {
             if (!res[key]) {

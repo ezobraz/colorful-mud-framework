@@ -1,24 +1,32 @@
-const Model = require('../../model');
+/**
+* @namespace Locations
+*/
+
+const { Debug, Broadcaster } = __require('core/tools');
+const Model = __require('core/model');
+const Store = __require('core/store');
+const Dictionary = __require('core/dictionary');
 const Base = require('../base');
-const Broadcaster = require('../../engine/broadcaster');
-const Store = require('../../store');
-const Dictionary = require('../../dictionary');
 
-const defaultParams = {
-    _id: null,
-    img: [],
-    name: 'Unknown',
-    desc: null,
-    single: false,
-    locked: false,
-    ownerId: null,
-    items: [],
-    exits: [],
-};
+/**
+* Base Location
+*
+* @memberof Locations
+*/
+class Location extends Base {
+    constructor(params = {}) {
+        super(params);
 
-module.exports = class Location extends Base {
-    constructor(params) {
-        super({...defaultParams, ...params});
+        this._id = params._id || null;
+        this.img = params.img || [];
+        this.name = params.name || 'Unknown';
+        this.desc = params.desc || null;
+        this.single = params.single || false;
+        this.locked = params.locked || false;
+        this.ownerId = params.ownerId || null;
+        this.items = params.items || [];
+        this.exits = params.exits || [];
+
         this.initItems();
     }
 
@@ -88,7 +96,7 @@ module.exports = class Location extends Base {
 
     initItems() {
         this.items = this.items.map(data => {
-            const obj = Dictionary.get('items', data.type.toLowerCase());
+            const obj = Dictionary.get('items', data.class.toLowerCase());
             return new obj(data);
         });
     }
@@ -124,3 +132,5 @@ module.exports = class Location extends Base {
         });
     }
 };
+
+module.exports = Location;

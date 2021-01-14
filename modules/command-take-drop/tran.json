@@ -1,0 +1,30 @@
+{
+    "en": {
+        "command-take-names": ["take"],
+        "command-take-desc": "Pick up the specified item from the ground and",
+        "command-take-examples": [
+            "take long sword"
+        ],
+
+        "command-drop-names": ["drop"],
+        "command-drop-desc": "Places the specified item from your inventory to the ground",
+        "command-drop-examples": [
+            "drop long sword"
+        ]
+    },
+    "ru": {
+        "command-take-names": ["взять", "поднять"],
+        "command-take-desc": "Поднять выбранный предмет и положить в инвентарь",
+        "command-take-examples": [
+            "взять длинный меч",
+            "поднять меч"
+        ],
+
+        "command-drop-names": ["бросить", "положить"],
+        "command-drop-desc": "Положить выбранный предмет на землю",
+        "command-drop-examples": [
+            "бросить длинный меч",
+            "положить меч"
+        ]
+    }
+}

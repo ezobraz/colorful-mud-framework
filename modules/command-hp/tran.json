@@ -1,0 +1,10 @@
+{
+    "en": {
+        "command-hp-names": ["hp", "mp", "ed"],
+        "command-hp-desc": "Shows your health, endurance and other critical parameters"
+    },
+    "ru": {
+        "command-hp-names": ["здоровье", "жс"],
+        "command-hp-desc": "Shows your health, endurance and other critical parameters"
+    }
+}

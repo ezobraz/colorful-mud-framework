@@ -1,6 +1,5 @@
-const Color = require('../../common/color');
-const Broadcaster = require('../../engine/broadcaster');
-const Dictionary = require('../../dictionary');
+const { Color, Broadcaster } = __require('core/tools');
+const Dictionary = __require('core/dictionary');
 
 module.exports = [
     {
@@ -58,7 +57,7 @@ module.exports = [
                 player.save();
                 Broadcaster.sendTo({
                     to: player,
-                    text: Color.parse(`[b][cW]"${item.name}" ${item.type.toLowerCase()}[/] was [b][cR]destroyed[/]`),
+                    text: Color.parse(`[b][cW]"${item.name}" ${item.class.toLowerCase()}[/] was [b][cR]destroyed[/]`),
                 });
             }
         },

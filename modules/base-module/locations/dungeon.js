@@ -1,7 +1,15 @@
-const Location = require('../../../core/entities/locations/base');
+const Location = __require('core/entities/locations/base');
 
-module.exports = class Dungeon extends Location {
+/**
+* Dungeon
+*
+* @memberof Locations
+* @extends Location
+*/
+class Dungeon extends Location {
     get color() {
         return 'cr';
     }
 };
+
+module.exports = Dungeon;

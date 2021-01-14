@@ -1,21 +1,27 @@
 const Actor = require('./base');
-const Model = require('../../model');
-const hash = require('../../common/hash');
-const Event = require('../../common/event');
-const Color = require('../../common/color');
-const Config = require('../../config');
-const Store = require('../../store');
-const Debug = require('../../engine/debug');
+const Model = __require('core/model');
+const Config = __require('core/config');
+const Store = __require('core/store');
+const { Color, Hash, Debug } = __require('core/tools');
 
-module.exports = class Player extends Actor {
-
+/**
+* Player
+*
+* @memberof Actors
+*/
+class Player extends Actor {
     constructor(params) {
         super(params);
-
         this.socket = params.socket;
-        this.canUseCommands = true;
         this.lastInput = Date.now();
     }
+
+    /**
+     * If false, user will be limited to "quit" command
+     *
+     * @type {Boolean}
+     */
+    canUseCommands = true
 
     get props() {
         const res = {...this};
@@ -28,6 +34,11 @@ module.exports = class Player extends Actor {
         return res;
     }
 
+    /**
+     * Get player Gm level
+     *
+     * @return {Number}
+     */
     get isGm() {
         if (this.permissions && this.permissions.length > 0) {
             const allPermissions = require('../../commands/helpers/all-permissions')();
@@ -42,6 +53,12 @@ module.exports = class Player extends Actor {
         return 0;
     }
 
+    /**
+     * Get player color based on his gm leve
+     *
+     * @return {String}
+     * @default 'cW'
+     */
     get color() {
         if (this.permissions && this.permissions.length > 0) {
             const allPermissions = require('../../commands/helpers/all-permissions')();
@@ -80,6 +97,12 @@ module.exports = class Player extends Actor {
         }
     }
 
+    /**
+     * Save & Disconnect user from the server
+     *
+     * @param {String} reason
+     * @param {Boolean} silent Notify nearby players or not?
+     */
     async disconnect(reason = null, silent = false) {
         await this.save();
 
@@ -99,6 +122,11 @@ module.exports = class Player extends Actor {
         Debug.disconnected(this, reason);
     }
 
+    /**
+     * Check if player with this name already exists in the Database
+     *
+     * @return {Object} user data
+     */
     async exists() {
         if (!this.name) {
             return;
@@ -109,18 +137,29 @@ module.exports = class Player extends Actor {
         });
     }
 
+    /**
+     * Auth user with login and password
+     *
+     * @param {String} password
+     * @return {Object} user data
+     */
     async auth(password) {
         let res = await Model.getters('players/findOne', {
             username: this.name.toLowerCase(),
         });
 
-        if (!await hash.compare(password, res.password)) {
+        if (!await Hash.compare(password, res.password)) {
             res = null;
         }
 
         return res;
     }
 
+    /**
+     * Sign up user with login and password
+     *
+     * @param {String} password
+     */
     async signUp(password) {
         if (this._id) {
             return;
@@ -132,7 +171,7 @@ module.exports = class Player extends Actor {
             this.permissions = require('../../commands/helpers/all-permissions')();
         }
 
-        password = await hash.password(password);
+        password = await Hash.password(password);
 
         const params = this.props;
         delete params._id;
@@ -146,7 +185,13 @@ module.exports = class Player extends Actor {
         this.setUp({ params: res });
     }
 
-    async setPermission(permission, action = 1) {
+    /**
+     * Add or remove permission to user
+     *
+     * @param {String} permissionName
+     * @param {Boolean} action true - add, false - remove
+     */
+    async setPermission(permission, action = false) {
         if (!action) {
             this.permissions = this.permissions.filter(p => p != permission);
             return await this.save();
@@ -160,6 +205,10 @@ module.exports = class Player extends Actor {
         return await this.save();
     }
 
+    /**
+     * Save user in the Database
+     *
+     */
     async save() {
         if (!this._id) {
             return;
@@ -170,3 +219,5 @@ module.exports = class Player extends Actor {
         });
     }
 };
+
+module.exports = Player;

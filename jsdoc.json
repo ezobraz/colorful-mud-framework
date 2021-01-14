@@ -1,0 +1,16 @@
+{
+    "source": {
+        "include": [
+            "core",
+            "modules"
+        ],
+        "exclude": [
+            "node_modules"
+        ]
+    },
+    "sourceType": "module",
+    "opts": {
+        "destination": "./docs/",
+        "recurse": true
+    }
+}

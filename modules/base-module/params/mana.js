@@ -1,4 +1,4 @@
-const Param = require('../../../core/entities/params/base');
+const Param = __require('core/entities/params/base');
 
 module.exports = class Mana extends Param {
     max(player) {
@@ -11,10 +11,10 @@ module.exports = class Mana extends Param {
     }
 
     get textColor() {
-        return 'cS';
+        return 'cW';
     }
 
     get shortName() {
-        return 'MP';
+        return tran.slate('player-params-mana-short');
     }
 };

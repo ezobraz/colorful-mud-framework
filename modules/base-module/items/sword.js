@@ -1,13 +1,19 @@
-const Item = require('../../../core/entities/items/base');
+const Item = __require('core/entities/items/base');
 
 const day = 1000 * 60 * 60 * 24;
 
-module.exports = class Sword extends Item {
+/**
+* Sword Item
+*
+* @memberof Items
+* @extends Item
+*/
+class Sword extends Item {
     constructor(params = {}) {
         params.slot = params.slot || 'rHand';
-        params.sharpenedOn = params.sharpenedOn || Date.now();
-
         super(params);
+
+        this.sharpenedOn = params.sharpenedOn || Date.now();
     }
 
     get outputData() {
@@ -34,3 +40,5 @@ module.exports = class Sword extends Item {
         return Math.round(res);
     }
 };
+
+module.exports = Sword;

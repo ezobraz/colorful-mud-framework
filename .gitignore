@@ -2,8 +2,20 @@ db
 node_modules
 config/config.json
 
+docs
+
 modules/*
 !modules/base-module
 !modules/auth
 !modules/motd
-!modules/custom-commands
+!modules/command-stats
+!modules/command-inventory
+!modules/command-take-drop
+!modules/command-look
+!modules/command-go
+!modules/command-quit
+!modules/command-hp
+!modules/command-help
+!modules/chat
+!modules/afk-kick
+!modules/system-monitoring

@@ -1,10 +1,23 @@
+/**
+* @namespace Params
+*/
+
 const Base = require('../base');
 
-module.exports = class Param extends Base {
-    constructor({ level }) {
-        super({
-            level: parseInt(level),
-        });
+/**
+* Base Param
+*
+* @memberof Params
+*/
+class Param extends Base {
+    constructor(params = {}) {
+        super(params);
+
+        this.level = parseInt(params.level) || 0;
+    }
+
+    max(player) {
+        return 100;
     }
 
     get bgColor() {
@@ -19,3 +32,5 @@ module.exports = class Param extends Base {
         return this.name.slice(0, 2).toUpperCase();
     }
 };
+
+module.exports = Param;

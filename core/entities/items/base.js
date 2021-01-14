@@ -1,22 +1,29 @@
-const Color = require('../../common/color');
+/**
+ * @namespace Items
+ */
+
+const { Color } = __require('core/tools');
 const Base = require('../base');
 
 const day = 1000 * 60 * 60 * 24;
 
-const defaultParams = {
-    name: 'Unknown',
-    slot: null,
-    weight: 0.1,
-    quality: 0,
-};
-
-module.exports = class Item extends Base {
+/**
+* Parent-class for all "actors" in game
+*
+* @memberof Items
+*/
+class Item extends Base {
     constructor(params = {}) {
         if (typeof params.quality != 'undefined') {
             params.quality = parseFloat(params.quality);
         }
 
-        super({...defaultParams, ...params});
+        super(params);
+
+        this.name = params.name || 'Unknown';
+        this.slot = params.weight || null;
+        this.weight = parseFloat(params.weight) || 0.1;
+        this.quality = parseInt(params.quality) || 0;
     }
 
     get displayName() {
@@ -43,7 +50,7 @@ module.exports = class Item extends Base {
             color = 'cM';
         }
 
-        return `[${tran.slate(`item-type-${this.type.toLowerCase()}`)}] [b][${color}]${this.name}[/]`;
+        return `[${tran.slate(`item-type-${this.class.toLowerCase()}`)}] [b][${color}]${this.name}[/]`;
     }
 
     get condition() {
@@ -66,3 +73,5 @@ module.exports = class Item extends Base {
         return Math.round(res * 100) / 100;
     }
 };
+
+module.exports = Item;

@@ -1,5 +1,12 @@
 const Actor = require('./base');
 
-module.exports = class Npc extends Actor {
+/**
+* NPC
+*
+* @memberof Actors
+*/
+class Npc extends Actor {
 
 };
+
+module.exports = Npc;

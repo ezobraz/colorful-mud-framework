@@ -1,4 +1,4 @@
-const Param = require('../../../core/entities/params/base');
+const Param = __require('core/entities/params/base');
 
 module.exports = class Health extends Param {
     max(player) {
@@ -15,6 +15,6 @@ module.exports = class Health extends Param {
     }
 
     get shortName() {
-        return 'HP';
+        return tran.slate('player-params-health-short');
     }
 };

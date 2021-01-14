@@ -1,4 +1,5 @@
 const data = {
+    events: {},
     tran: {},
     actors: {},
     items: {},
@@ -6,7 +7,9 @@ const data = {
     attributes: {},
     skills: {},
     params: {},
+    dependents: {},
     commands: [],
+    cron: [],
 };
 
 module.exports = {

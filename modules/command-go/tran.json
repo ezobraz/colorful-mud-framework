@@ -1,0 +1,19 @@
+{
+    "en": {
+        "command-go-names": ["go", "move"],
+        "command-go-desc": "Go to specified location name or index (see exits section)",
+        "command-go-examples": [
+            "go 1",
+            "move 2"
+        ]
+    },
+    "ru": {
+        "command-go-names": ["перейти в", "пойти в", "идти в", "уйти в", "войти в"],
+        "command-go-desc": "Переход в локацию из списка выходов",
+        "command-go-examples": [
+            "перейти в 1",
+            "уйти в 2",
+            "войти в 2"
+        ]
+    }
+}

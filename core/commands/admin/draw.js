@@ -1,6 +1,5 @@
-const Color = require('../../common/color');
-const Broadcaster = require('../../engine/broadcaster');
-const Store = require('../../store');
+const { Color, Broadcaster } = __require('core/tools');
+const Store = __require('core/store');
 
 const replacePixel = (player, data) => {
     if (!player.meta.draw || !player.meta.draw.length) {

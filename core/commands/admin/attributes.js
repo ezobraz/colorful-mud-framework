@@ -1,24 +1,29 @@
-const Color = require('../../common/color');
-const Dictionary = require('../../dictionary');
-const Broadcaster = require('../../engine/broadcaster');
+const { Color, Broadcaster } = __require('core/tools');
+const Dictionary = __require('core/dictionary');
 
 const process = (player, text, collection) => {
     const params = text.split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
-    const name = params[0];
+    const className = params[0].toLowerCase();
     params.shift();
 
-    const level = params[0];
+    const level = parseInt(params[0]);
 
-    const cls = Dictionary.get(collection, name);
-    const param = new cls({
-        level,
-    });
+    let param = player[collection].find(el => el.class.toLowerCase() == className);
 
-    player.setParam(collection, param);
+    if (param) {
+        param.level = level;
+    } else {
+        const cls = Dictionary.get(collection, className);
+        param = new cls({
+            level,
+        });
+        player[collection].push(param);
+    }
+
     player.save();
     Broadcaster.sendTo({
         to: player,
-        text: Color.parse(`[b][cW]${param.type}[/] was set to [cG]${level}[/]`),
+        text: Color.parse(`[b][cW]${param.class}[/] was set to [cG]${level}[/]`),
     });
 }
 

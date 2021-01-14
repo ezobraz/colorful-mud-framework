@@ -1,53 +1,80 @@
-const Color = require('../../common/color');
+/**
+ * @namespace Actors
+ */
+
 const Base = require('../base');
-const Config = require('../../config');
-const Store = require('../../store');
-const Dictionary = require('../../dictionary');
+const Config = __require('core/config');
+const Store = __require('core/store');
+const Dictionary = __require('core/dictionary');
+const { Color } = __require('core/tools');
 
-const defaultParams = {
-    _id: null,
-    name: 'Unknown',
-    gender: 'm',
-    locationId: null,
-    inventory: [],
-    params: [],
-    attributes: [],
-    skills: [],
-    slots: {
-        rHand: null,
-        lHand: null,
-        rShoulder: null,
-        lShoulder: null,
-        chest: null,
-        legs: null,
-        boots: null,
-        robe: null,
-    },
-};
-
-module.exports = class Actor extends Base {
+/**
+* Parent-class for all "actors" in game
+*
+* @memberof Actors
+*/
+class Actor extends Base {
     constructor(params = {}) {
-        super({...defaultParams, ...params});
+        super(params);
+
+        this._id = params._id || null;
+        this.name = params.name || 'Unknown';
+        this.gender = params.gender || 'm';
+        this.locationId = params.locationId || null;
+        this.inventory = params.inventory || [];
+        this.params = params.params || [];
+        this.attributes = params.attributes || [];
+        this.dependents = params.dependents || [];
+        this.skills = params.skills || [];
+        this.slots = params.slots || {
+            rHand: null,
+            lHand: null,
+            rShoulder: null,
+            lShoulder: null,
+            chest: null,
+            legs: null,
+            boots: null,
+            robe: null,
+        };
     }
 
+    /**
+     * Grabs inventory, attributes, dependents, skills, params data and turns them into objects
+     *
+     */
     init() {
-        ['inventory', 'attributes', 'skills', 'params'].forEach(collection => {
+        ['inventory', 'attributes', 'dependents', 'skills', 'params'].forEach(collection => {
             this[collection] = this[collection].map(data => {
                 const dic = collection === 'inventory' ? 'items' : collection;
-                const obj = Dictionary.get(dic, data.type.toLowerCase());
+                const obj = Dictionary.get(dic, data.class.toLowerCase());
                 return new obj(data);
             });
         });
     }
 
+    /**
+     * Outputs the GM level
+     *
+     * @type {Number}
+     */
     get isGm() {
         return 0;
     }
 
+    /**
+     * Outputs color
+     *
+     * @type {String}
+     */
     get color() {
         return 'cW';
     }
 
+    /**
+     * Colored name of the Actor
+     *
+     * @type {String}
+     */
     get displayName() {
         const isGm = this.isGm;
         const color = this.color;
@@ -61,6 +88,12 @@ module.exports = class Actor extends Base {
         return `[${color}]${this.name}[/]`;
     }
 
+    /**
+     * Change actor's location
+     *
+     * @param {Object} location location object or location id where actor needs to be placed
+     * @param {Boolean} silent Don't notify other players
+     */
     changeLocation(location, silent = false) {
         const to = typeof location == 'string' ? Store.findById('locations', location) : location;
 
@@ -93,25 +126,29 @@ module.exports = class Actor extends Base {
         }
     }
 
-    setParam(collection = 'params', param) {
-        const exists = this[collection].find(a => a.type == param.type);
-
-        if (exists) {
-            exists.level = param.level;
-            return;
-        }
-
-        this[collection].push(param);
-    }
-
+    /**
+     * Add item to inventory
+     *
+     * @param {Object} item Item object
+     */
     addItem(item) {
         this.inventory.push(item);
     }
 
+    /**
+     * Remove item from inventory
+     *
+     * @param {Object} item Item object
+     */
     removeItem(item) {
         this.inventory = this.inventory.filter(i => i !== item);
     }
 
+    /**
+     * Equip item
+     *
+     * @param {Object} item Item object
+     */
     equip(item) {
         let slot = item.slot;
         if (!slot) {
@@ -122,6 +159,11 @@ module.exports = class Actor extends Base {
         this.slots[slot] = item;
     }
 
+    /**
+     * Unequip item
+     *
+     * @param {Object} item Item object
+     */
     unequip(item) {
         let slot = item.slot;
 
@@ -137,3 +179,5 @@ module.exports = class Actor extends Base {
         this.addItem(item);
     }
 };
+
+module.exports = Actor;

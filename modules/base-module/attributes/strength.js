@@ -1,4 +1,10 @@
-const Attribute = require('../../../core/entities/attributes/base');
-
-module.exports = class Strength extends Attribute {
+const Attribute = __require('core/entities/attributes/base');
+/**
+* Strength Attribute
+*
+* @memberof Attributes
+*/
+class Strength extends Attribute {
 };
+
+module.exports = Strength;

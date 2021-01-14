@@ -1,6 +1,5 @@
-const Broadcaster = require('../../core/engine/broadcaster');
-const Color = require('../../core/common/color');
-const Event = require('../../core/common/event');
+const { Color, Broadcaster } = __require('core/tools');
+const Event = __require('core/event');
 const pjson = require('../../package.json');
 
 const img = [
@@ -26,7 +25,7 @@ const motd = [
 
 module.exports = {
     init() {
-        Event.on('playerConnected', player => Broadcaster.sendTo({
+        Event.on('PLAYER_CONNECTED', player => Broadcaster.sendTo({
             to: player,
             text: motd.join('\r\n'),
         }));

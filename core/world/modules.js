@@ -1,6 +1,6 @@
-const Config = require('../config');
-const Debug = require('../engine/debug');
-const Dictionary = require('../dictionary');
+const Config = __require('core/config');
+const { Debug } = __require('core/tools');
+const Dictionary = __require('core/dictionary');
 const fs = require('fs');
 
 module.exports = {
@@ -8,57 +8,56 @@ module.exports = {
         const modules = Config.get('modules');
 
         for (let dir of modules) {
+            let indexFile = `./modules/${dir}/index.js`;
+
             // tran
-            let tranPath = `./modules/${dir}/tran.json`;
-            if (fs.existsSync(tranPath)) {
-                const tranData = require(`../.${tranPath}`);
-                Dictionary.append('tran', tranData[tran.lang] || {});
+            if (fs.existsSync(`./modules/${dir}/tran.json`)) {
+                const modTran = __require(`modules/${dir}/tran.json`);
+                Dictionary.append('tran', modTran[tran.lang] || {});
             }
 
-            // dictionary
-            let promises = [
-                'params',
-                'attributes',
-                'skills',
-                'locations',
-                'items',
-                'actors',
-            ].map(collection => new Promise((resolve, reject) => {
-                fs.readdir(`./modules/${dir}/${collection}/`, (err, files) => {
-                    if (!err && files) {
-                        files.forEach(file => {
-                            if (file != 'base.js') {
-                                const name = file.replace('.js', '');
-                                Dictionary.add(collection, name, require(`../../modules/${dir}/${collection}/${name}`));
-                            }
-                        });
-                    }
-
-                    resolve(true);
-                });
-            }));
-
-            await Promise.all(promises);
-
-            let mod;
-            let indexFile = `./modules/${dir}/index.js`;
             if (fs.existsSync(indexFile)) {
-                mod = require(`../../modules/${dir}`);
+                const mod = __require(`modules/${dir}`);
 
-                // init
-                if (typeof mod.init != 'undefined') {
-                    await mod.init();
-                }
+                // classes
+                [
+                    'params',
+                    'attributes',
+                    'skills',
+                    'dependents',
+                    'locations',
+                    'items',
+                    'actors',
+                ].forEach(collection => {
+                    if (mod[collection]) {
+                        for (let key in mod[collection]) {
+                            Dictionary.add(collection, key.toLowerCase(), mod[collection][key]);
+                        }
+                    }
+                });
 
                 // commands
                 if (mod.commands && mod.commands.length) {
                     Dictionary.get('commands').push(...mod.commands);
                 }
+
+                // events
+                if (mod.events) {
+                    Dictionary.append('events', mod.events);
+                }
+
+                // cron
+                if (mod.cron && mod.cron.length) {
+                    Dictionary.get('cron').push(...mod.cron);
+                }
+
+                // init
+                if (typeof mod.init != 'undefined') {
+                    await mod.init();
+                }
             }
 
             Debug.status(`Module "${dir}"`, 'loaded');
         }
-
-        Debug.status('Total modules loaded', modules.length);
     }
 };

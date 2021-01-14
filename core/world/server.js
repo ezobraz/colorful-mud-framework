@@ -1,13 +1,13 @@
 const net = require('net');
-const Event = require('../common/event');
-const Debug = require('../engine/debug');
+const Event = __require('core/event');
+const { Debug } = __require('core/tools');
 
 let server;
 
 module.exports = {
     async init() {
         server = net.createServer(socket => {
-            Event.emit('socketConnected', socket);
+            Event.emit('SOCKET_CONNECTED', socket);
         });
 
         server.on('error', e => {
@@ -16,10 +16,10 @@ module.exports = {
         });
 
         server.on('close', () => {
-            Event.emit('save');
+            Event.emit('SAVE');
         });
 
         server.listen(4000);
-        Debug.status('Server initialized');
+        Debug.status('Server', 'loaded');
     }
 };

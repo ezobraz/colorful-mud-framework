@@ -1,7 +1,6 @@
 const en = require('../../tran/en');
-const Debug = require('../engine/debug');
-const Color = require('../common/color');
-const Dictionary = require('../dictionary');
+const Dictionary = __require('core/dictionary');
+const { Color, Debug } = __require('core/tools');
 
 module.exports = {
     lang: 'en',

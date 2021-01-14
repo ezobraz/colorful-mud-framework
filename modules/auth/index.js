@@ -1,10 +1,28 @@
-const Broadcaster = require('../../core/engine/broadcaster');
-const Event = require('../../core/common/event');
+const { Broadcaster } = __require('core/tools');
+const Event = __require('core/event');
 const { checkName, signUp, signIn } = require('./helpers');
 
 module.exports = {
+    events: {
+        /**
+         * Fired when player has signed in
+         *
+         * @event PLAYER_SIGNED_IN
+         * @param {Object} Player
+         */
+        'PLAYER_SIGNED_IN': true,
+
+        /**
+         * Fired when new player has signed up
+         *
+         * @event PLAYER_SIGNED_UP
+         * @param {Object} Player
+         */
+        'PLAYER_SIGNED_UP': true,
+    },
+
     init() {
-        Event.on('playerConnected', player => {
+        Event.on('PLAYER_CONNECTED', player => {
             player.canUseCommands = false;
             player.meta.authStep = 1;
             Broadcaster.promt({
@@ -13,7 +31,7 @@ module.exports = {
             });
         });
 
-        Event.on('playerMessage', ({ player, message }) => {
+        Event.on('PLAYER_MESSAGE', ({ player, message }) => {
             if (!player.meta.authStep) {
                 return;
             }
