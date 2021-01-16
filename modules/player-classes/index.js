@@ -1,5 +1,6 @@
-const { Broadcaster } = __require('core/tools');
+const { Color, Broadcaster } = __require('core/tools');
 const Dictionary = __require('core/dictionary');
+const Config = __require('core/config');
 const Event = __require('core/event');
 const classes = require('./classes');
 
@@ -8,7 +9,7 @@ const askToSelectClass = player => {
 
     for (let i in classes) {
         res.push(...[
-            `${i}`,
+            Color.parse(`[b][cR]${i}[/]`),
             `${classes[i].desc}`,
             '',
         ]);
@@ -21,7 +22,7 @@ const askToSelectClass = player => {
 
     Broadcaster.promt({
         to: player,
-        text: `Now select your class: `,
+        text: `Your choice: `,
     });
 };
 
@@ -41,7 +42,7 @@ module.exports = {
             askToSelectClass(player);
         });
 
-        Event.on('PLAYER_MESSAGE', ({ player, message }) => {
+        Event.on('PLAYER_MESSAGE', async ({ player, message }) => {
             if (player.meta.class) {
                 return;
             }
@@ -59,13 +60,16 @@ module.exports = {
 
                 for (let type in pack) {
                     const params = pack[type];
-
                     const cls = Dictionary.get(collection, type);
 
                     if (typeof cls != 'undefined') {
                         player[collection].push(new cls(params));
                     }
                 }
+            }
+
+            if (!player.locationId) {
+                player.locationId = await Config.getRuntime('startLocationId');
             }
 
             player.save();

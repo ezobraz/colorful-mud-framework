@@ -45,7 +45,11 @@ const signUp = async (player, password) => {
         return;
     }
 
-    await player.signUp(password);
+    let res = await player.signUp(password);
+    for (let i in res) {
+        player[i] = res[i];
+    }
+    player.init();
 
     Broadcaster.sendTo({
         to: player,
@@ -59,7 +63,7 @@ const signUp = async (player, password) => {
 };
 
 const signIn = async (player, password) => {
-    let res = await player.auth(password);
+    let res = await player.signIn(password);
 
     if (res) {
         // kick mults
@@ -71,11 +75,16 @@ const signIn = async (player, password) => {
             });
         }
 
-        const startLocationId = await Config.getRuntime('startLocationId');
+        if (!res.meta.class) {
+            delete res.locationId;
+        } else if (!res.locationId) {
+            res.locationId = await Config.getRuntime('startLocationId');
+        }
 
-        player.locationId = player.locationId || startLocationId;
-
-        player.setUp({ params: res, silent });
+        for (let i in res) {
+            player[i] = res[i];
+        }
+        player.init();
 
         Broadcaster.sendTo({
             to: player,

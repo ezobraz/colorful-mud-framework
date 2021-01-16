@@ -72,25 +72,6 @@ class Player extends Actor {
         return 'cW';
     }
 
-    setUp({ params, silent = false }) {
-        for (let i in params) {
-            this[i] = params[i];
-        }
-
-        this.init();
-
-        if (this.locationId && !silent) {
-            let location = Store.findById('locations', this.locationId);
-
-            if (location) {
-                location.notifyAll({
-                    text: Color.parse(`${this.name} appeared here`),
-                    exclude: this,
-                });
-            }
-        }
-    }
-
     /**
      * Save & Disconnect user from the server
      *
@@ -132,12 +113,12 @@ class Player extends Actor {
     }
 
     /**
-     * Auth user with login and password
+     * Sign in user with login and password
      *
      * @param {String} password
      * @return {Object} user data
      */
-    async auth(password) {
+    async signIn(password) {
         let res = await Model.getters('players/findOne', {
             username: this.name.toLowerCase(),
         });
@@ -176,7 +157,7 @@ class Player extends Actor {
             password,
         });
 
-        this.setUp({ params: res });
+        return res;
     }
 
     /**
