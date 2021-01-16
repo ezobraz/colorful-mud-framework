@@ -16,7 +16,7 @@
         "examples": "Examples"
     },
     "ru": {
-        "command-help-commands-names": ["список комманд"],
+        "command-help-commands-names": ["список команд"],
         "command-help-commands-desc": "Показывает список всех доступных вам комманд",
 
         "command-help-command-names": ["о комманде"],

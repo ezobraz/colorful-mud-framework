@@ -1,3 +1,5 @@
+const { Color, Broadcaster } = __require('core/tools');
+
 const formatCmdInfo = cmd => {
     let cmdColor = cmd.permissions ? 'cr' : 'cy';
     let name = cmd.names[0];
