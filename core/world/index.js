@@ -29,7 +29,7 @@ const logo = [
     Color.parse("[cM] | |  | | |__| | |__| | [/]"),
     Color.parse(`[cM] |_|  |_|\\____/|_____/  [/] [b][cW]Framework[/] [b][r][cr] v${package.version} [/]`),
     Color.parse('[cM]  \\'),
-    Color.parse("   `-> [/] [u]https://github.com/ezobraz/colorful-mud-server-node.js[/]"),
+    Color.parse("   `-> [/] [u]https://github.com/ezobraz/colorful-mud-framework[/]"),
     '',
 ];
 

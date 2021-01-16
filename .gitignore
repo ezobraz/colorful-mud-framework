@@ -7,6 +7,7 @@ docs
 modules/*
 !modules/base-module
 !modules/auth
+!modules/player-classes
 !modules/motd
 !modules/command-stats
 !modules/command-inventory

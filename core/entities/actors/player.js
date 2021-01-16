@@ -1,6 +1,5 @@
 const Actor = require('./base');
 const Model = __require('core/model');
-const Config = __require('core/config');
 const Store = __require('core/store');
 const { Color, Hash, Debug } = __require('core/tools');
 
@@ -26,7 +25,7 @@ class Player extends Actor {
     get props() {
         const res = {...this};
 
-        delete res.meta;
+        delete res.tmp;
         delete res.socket;
         delete res.canUseCommands;
         delete res.lastInput;
@@ -73,12 +72,7 @@ class Player extends Actor {
         return 'cW';
     }
 
-    async setUp({ params, silent = false }) {
-        if (!params.locationId) {
-            const startLocationId = await Config.getRuntime('startLocationId');
-            params.locationId = startLocationId;
-        }
-
+    setUp({ params, silent = false }) {
         for (let i in params) {
             this[i] = params[i];
         }

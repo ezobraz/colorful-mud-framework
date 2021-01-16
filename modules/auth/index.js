@@ -24,7 +24,7 @@ module.exports = {
     init() {
         Event.on('PLAYER_CONNECTED', player => {
             player.canUseCommands = false;
-            player.meta.authStep = 1;
+            player.tmp.authStep = 1;
             Broadcaster.promt({
                 to: player,
                 text: `${tran.slate('auth-promt-your-name')}: `,
@@ -32,11 +32,11 @@ module.exports = {
         });
 
         Event.on('PLAYER_MESSAGE', ({ player, message }) => {
-            if (!player.meta.authStep) {
+            if (!player.tmp.authStep) {
                 return;
             }
 
-            switch(player.meta.authStep) {
+            switch(player.tmp.authStep) {
                 // receive login and check if user exists in db
                 case 1:
                     checkName(player, message);

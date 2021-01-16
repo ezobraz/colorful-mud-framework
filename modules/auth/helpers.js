@@ -17,7 +17,7 @@ const checkName = async (player, name) => {
     let exists = await player.exists();
 
     if (!exists) {
-        player.meta.authStep = 2;
+        player.tmp.authStep = 2;
         Broadcaster.promt({
             to: player,
             text: `${tran.slate('auth-promt-create-password')}: `,
@@ -25,7 +25,7 @@ const checkName = async (player, name) => {
         return;
     }
 
-    player.meta.authStep = 3;
+    player.tmp.authStep = 3;
     Broadcaster.promt({
         to: player,
         text: `${tran.slate('auth-promt-password')}: `,
@@ -53,7 +53,7 @@ const signUp = async (player, password) => {
     });
 
     Debug.status('New player has signed up', player.name);
-    player.meta.authStep = 0;
+    player.tmp.authStep = 0;
     player.canUseCommands = true;
     Event.emit('PLAYER_SIGNED_UP', player);
 };
@@ -71,6 +71,10 @@ const signIn = async (player, password) => {
             });
         }
 
+        const startLocationId = await Config.getRuntime('startLocationId');
+
+        player.locationId = player.locationId || startLocationId;
+
         player.setUp({ params: res, silent });
 
         Broadcaster.sendTo({
@@ -79,18 +83,18 @@ const signIn = async (player, password) => {
         });
 
         Debug.status('Player has signed in as', player.name);
-        player.meta.authStep = 0;
+        player.tmp.authStep = 0;
         player.canUseCommands = true;
         Event.emit('PLAYER_SIGNED_IN', player);
         return;
     }
 
-    let attempts = player.meta.passwordAttempt || 0;
+    let attempts = player.tmp.passwordAttempt || 0;
     if (attempts >= 5) {
         player.disconnect('Too many failed attempts');
         return;
     }
-    player.meta.passwordAttempt = attempts + 1;
+    player.tmp.passwordAttempt = attempts + 1;
 
     Broadcaster.sendTo({
         to: player,

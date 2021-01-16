@@ -3,12 +3,13 @@ class Base {
         this.class = this.constructor.name;
         this.createdOn = params.createdOn || Date.now();
         this.meta = {};
+        this.tmp = {};
     }
 
     get props() {
         const res = {...this};
 
-        delete res.meta;
+        delete res.tmp;
 
         return res;
     }

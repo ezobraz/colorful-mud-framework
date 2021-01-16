@@ -20,6 +20,7 @@
         "afk-kick",
         "system-monitoring",
         "chat",
-        "auth"
+        "auth",
+        "player-classes"
     ]
 }
