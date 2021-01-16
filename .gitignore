@@ -8,6 +8,7 @@ modules/*
 !modules/base-module
 !modules/player-auth
 !modules/player-classes
+!modules/renewable-params
 !modules/motd
 !modules/command-stats
 !modules/command-inventory

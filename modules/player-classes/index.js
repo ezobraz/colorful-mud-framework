@@ -1,6 +1,5 @@
 const { Color, Broadcaster } = __require('core/tools');
 const Dictionary = __require('core/dictionary');
-const Store = __require('core/store');
 const Config = __require('core/config');
 const Event = __require('core/event');
 const classes = require('./classes');
@@ -82,24 +81,4 @@ module.exports = {
             });
         });
     },
-
-    cron: [
-        {
-            interval: 10000,
-            execute() {
-                const players = Store.get('players');
-
-                players.forEach(ply => {
-                    if (ply.meta.class) {
-                        const health = ply.params.find(el => el.class.toLowerCase() == 'health');
-
-                        if (health) {
-                            health.level++;
-                            ply.save();
-                        }
-                    }
-                });
-            },
-        },
-    ],
 };

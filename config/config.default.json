@@ -21,6 +21,7 @@
         "system-monitoring",
         "chat",
         "player-auth",
-        "player-classes"
+        "player-classes",
+        "renewable-params"
     ]
 }

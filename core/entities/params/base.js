@@ -12,12 +12,7 @@ const Base = require('../base');
 class Param extends Base {
     constructor(params = {}) {
         super(params);
-
         this.level = parseInt(params.level) || 0;
-    }
-
-    max(player) {
-        return 100;
     }
 
     get bgColor() {
@@ -30,6 +25,14 @@ class Param extends Base {
 
     get shortName() {
         return this.name.slice(0, 2).toUpperCase();
+    }
+
+    max(player) {
+        return 100;
+    }
+
+    bit(player) {
+        return 1;
     }
 };
 
