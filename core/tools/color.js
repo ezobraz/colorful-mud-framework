@@ -235,6 +235,82 @@ const progress = ({ bgColor = 'bb', textColor = 'cw', val = 0, max = 100 }) => {
     return str;
 };
 
+const table = ({ title = null, color = 'cW', data }) => {
+    // collect longest cols
+    const colLengths = [];
+    data = data.map(row => row.map((col, colIndx) => {
+        let str = col.toString();
+
+        for (let symbol in alias) {
+            str = str.replace(new RegExp(`\u001b\\${alias[symbol]}`, 'g'), '');
+        }
+
+        const length = str.length + 3;
+
+        if (!colLengths[colIndx] || colLengths[colIndx] < length) {
+            colLengths[colIndx] = length;
+        }
+
+        return {
+            display: col.toString(),
+            clean: str,
+        }
+    }));
+
+    const rowLine = colLengths.reduce((a,b) => a + b, 0);
+    const res = [];
+
+    if (title) {
+        res.push(...[
+            ' ' + new Array(rowLine).join('_'),
+            '|' + parse(`[b][${color}][r]${ align({ text: title, length: rowLine }) }[/]`) + '|',
+        ]);
+    }
+
+    // draw row
+    const rowSep = new Array(rowLine).join('_');
+    data.forEach((row, rowIndx) => {
+        const l2 = '|' + row.map((col, colIndx) => {
+            const length = colLengths[colIndx];
+            let str = new Array(length).join(' ');
+            return str;
+        }).join('|') + '|';
+
+        const l3 = '|' + row.map((col, colIndx) => {
+            const length = colLengths[colIndx];
+            const displayStr = col.display;
+            const cleanStr = col.clean;
+
+            const arr = new Array(length + (displayStr.length - cleanStr.length)).join(' ').split('');
+
+            for (let i in displayStr) {
+                arr[1 + parseInt(i)] = displayStr[i];
+            }
+
+            return arr.join('');
+        }).join('|') + '|';
+
+        const l4 = '|' + row.map((col, colIndx) => {
+            const length = colLengths[colIndx];
+            return new Array(length).join('_');
+        }).join('|') + '|';
+
+        const tmp = [];
+
+        if (!title && rowIndx === 0) {
+            res.push(` ${rowSep}`);
+        }
+
+        res.push(...[
+            l2,
+            l3,
+            l4,
+        ]);
+    });
+
+    return res;
+};
+
 module.exports = {
     parse,
     wrap,
@@ -242,4 +318,5 @@ module.exports = {
     align,
     img,
     progress,
+    table,
 };

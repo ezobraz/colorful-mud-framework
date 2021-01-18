@@ -56,7 +56,7 @@ class Item extends Base {
             color = 'cM';
         }
 
-        return `[${tran.slate(`item-type-${this.class.toLowerCase()}`)}] [b][${color}]${this.name}[/]`;
+        return `[b][${color}]${this.name}[/]`;
     }
 
     get condition() {

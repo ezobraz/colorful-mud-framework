@@ -3,8 +3,11 @@
         "command-inventory-names": ["inventory", "inv", "items"],
         "command-inventory-desc": "Shows the list of items in your inventory",
         "window-name-inventory": "Inventory",
-        "inventory-empty": "It's empty",
 
+        "item-param-id": "#",
+        "item-param-type": "Type",
+        "item-param-name": "Name",
+        "item-param-quality": "Quality",
         "item-param-weight": "Weight",
         "item-param-condition": "Condition",
         "item-param-value": "Price"
@@ -13,8 +16,11 @@
         "command-inventory-names": ["инвентарь", "сумка", "инв"],
         "command-inventory-desc": "Показывает содержимое вашего инвентаря (сумки)",
         "window-name-inventory": "Инвентарь",
-        "inventory-empty": "Здесь пусто",
 
+        "item-param-id": "#",
+        "item-param-type": "Тип",
+        "item-param-name": "Имя",
+        "item-param-quality": "Качество",
         "item-param-weight": "Вес",
         "item-param-condition": "Состояние",
         "item-param-value": "Ценность"
