@@ -5,14 +5,6 @@ class Base {
         this.meta = {};
         this.tmp = {};
     }
-
-    get props() {
-        const res = {...this};
-
-        delete res.tmp;
-
-        return res;
-    }
 };
 
 module.exports = Base;

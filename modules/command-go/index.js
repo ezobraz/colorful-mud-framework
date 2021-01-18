@@ -1,6 +1,22 @@
 const Store = __require('core/store');
 const { Color, Broadcaster } = __require('core/tools');
 
+const changeLocation = (player, to, from) => {
+    player.locationId = to._id;
+
+    from.notifyAll({
+        text: Color.parse(`${player.name} left`),
+        exclude: player,
+    });
+
+    to.notifyAll({
+        text: Color.parse(`${player.name} appeared here`),
+        exclude: player,
+    });
+
+    Debug.log(Color.parse(`${player.displayName} went from [b]${from.displayName}[/] to [b]${to.displayName}[/]`), 'MOVE');
+};
+
 module.exports = {
     commands: [
         {
@@ -16,26 +32,24 @@ module.exports = {
                     return;
                 }
 
-                const index = parseInt(text) - 1;
-                const currentLocation = Store.findById('locations', player.locationId);
-
-                if (!currentLocation) {
+                const from = Store.findById('locations', player.locationId);
+                if (!from) {
                     return;
                 }
 
-                const locationId = currentLocation.exits[index];
-
+                const index = parseInt(text) - 1;
+                const locationId = from.exits[index];
                 if (!locationId) {
                     return;
                 }
 
-                const location = Store.findById('locations', locationId);
-
-                if (!location) {
+                const to = Store.findById('locations', locationId);
+                if (!to) {
                     return;
                 }
 
-                player.changeLocation(location);
+                changeLocation(player, to, from);
+
                 player.save();
                 Broadcaster.sendTo({
                     to: player,

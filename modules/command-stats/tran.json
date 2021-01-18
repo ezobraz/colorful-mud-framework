@@ -1,5 +1,6 @@
 {
     "en": {
+        "player-name": "Name",
         "player-params": "Parameters",
         "player-attributes": "Attributes",
         "player-dependents": "Dependent attributes",
@@ -13,6 +14,7 @@
         "window-name-stats": "Stats"
     },
     "ru": {
+        "player-name": "Имя",
         "player-params": "Параметры",
         "player-attributes": "Характеристики",
         "player-dependents": "Производные характеристики",

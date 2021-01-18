@@ -21,7 +21,8 @@ module.exports = [
                 return;
             }
 
-            player.changeLocation(location);
+            player.locationId = location._id;
+            player.save();
 
             Broadcaster.sendTo({
                 to: player,

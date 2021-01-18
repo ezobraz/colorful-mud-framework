@@ -25,9 +25,32 @@ class Location extends Base {
         this.locked = params.locked || false;
         this.ownerId = params.ownerId || null;
         this.items = params.items || [];
+        this.npcs = params.npcs || [];
         this.exits = params.exits || [];
 
-        this.initItems();
+        this.init();
+    }
+
+    /**
+     * Grabs items, npcs
+     *
+     */
+    init() {
+        ['items', 'npcs'].forEach(collection => {
+            this[collection] = this[collection].map(data => {
+                const dic = collection === 'npcs' ? 'actors' : collection;
+                const obj = Dictionary.get(dic, data.class.toLowerCase());
+                return new obj(data);
+            });
+        });
+    }
+
+    get savableData() {
+        const res = {...this};
+
+        delete res.tmp;
+
+        return res;
     }
 
     get players() {
@@ -47,7 +70,7 @@ class Location extends Base {
             return;
         }
 
-        const params = this.props;
+        const params = this.savableData;
         delete params._id;
 
         let res = await Model.mutations('locations/create', {
@@ -80,7 +103,7 @@ class Location extends Base {
         }
 
         await Model.mutations('locations/save', {
-            ...this.props,
+            ...this.savableData,
         });
     }
 
@@ -94,19 +117,20 @@ class Location extends Base {
         Store.remove('locations', this);
     }
 
-    initItems() {
-        this.items = this.items.map(data => {
-            const obj = Dictionary.get('items', data.class.toLowerCase());
-            return new obj(data);
-        });
-    }
-
     addItem(item) {
         this.items.push(item);
     }
 
     removeItem(item) {
         this.items = this.items.filter(i => i !== item);
+    }
+
+    addNpc(npc) {
+        this.npcs.push(npc);
+    }
+
+    removeNpc(npc) {
+        this.npcs = this.npcs.filter(i => i !== item);
     }
 
     addExit(id) {

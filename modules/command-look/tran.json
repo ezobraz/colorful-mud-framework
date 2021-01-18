@@ -5,6 +5,7 @@
 
         "location-empty": "You are in emptyness...",
         "location-players-nearby": "Players nearby",
+        "location-npcs-nearby": "NPCs nearby",
         "location-items": "Items",
         "location-exits": "Exits"
     },
@@ -14,6 +15,7 @@
 
         "location-empty": "Вы в пустоте...",
         "location-players-nearby": "Игроки поблизости",
+        "location-npcs-nearby": "Персонажи поблизости",
         "location-items": "Предметы",
         "location-exits": "Выходы"
     }

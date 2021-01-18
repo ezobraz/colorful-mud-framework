@@ -1,6 +1,8 @@
 {
     "en": {
         "item-type-sword": "Sword",
+        "item-type-sword-param-length": "Length",
+        "item-type-sword-param-sharpness": "Sharpness",
 
         "player-attributes-strength": "Strength",
 
@@ -16,6 +18,8 @@
     },
     "ru": {
         "item-type-sword": "Меч",
+        "item-type-sword-param-length": "Длинна",
+        "item-type-sword-param-sharpness": "Острота",
 
         "player-attributes-strength": "Сила",
 

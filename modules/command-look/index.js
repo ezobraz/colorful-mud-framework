@@ -61,6 +61,18 @@ module.exports = {
                     );
                 }
 
+                if (location.npcs.length) {
+                    const npcs = location.npcs.map(npc => Color.parse(npc.displayName));
+
+                    res.push(
+                        ...[
+                            Color.parse(`[b][u][cW]${tran.slate('location-npcs-nearby')}:[/]`),
+                            ...npcs.length > 10 ? Color.list(npcs, 4) : npcs,
+                            '',
+                        ],
+                    );
+                }
+
                 if (location.items.length) {
                     const items = location.items.map(item => Color.parse(item.displayName));
 

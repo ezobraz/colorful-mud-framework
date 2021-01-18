@@ -13,13 +13,18 @@ class Sword extends Item {
         params.slot = params.slot || 'rHand';
         super(params);
 
+        this.length = parseFloat(params.length) || 1;
         this.sharpenedOn = params.sharpenedOn || Date.now();
     }
 
     get outputData() {
         return [
             {
-                name: 'Sharpness',
+                name: tran.slate('item-type-sword-param-length'),
+                value: `${this.length}`,
+            },
+            {
+                name: tran.slate('item-type-sword-param-sharpness'),
                 value: `${this.sharpness}%`,
             },
         ];

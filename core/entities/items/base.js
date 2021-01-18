@@ -26,6 +26,12 @@ class Item extends Base {
         this.quality = parseInt(params.quality) || 0;
     }
 
+    get setters() {
+        const res = Object.keys(this);
+        const exclude = ['meta', 'tmp', 'class'];
+        return res.filter(p => !exclude.includes(p));
+    }
+
     get displayName() {
         const condition = this.condition;
         let color = 'cW';

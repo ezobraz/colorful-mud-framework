@@ -12,6 +12,7 @@ class Player extends Actor {
     constructor(params) {
         super(params);
         this.socket = params.socket;
+        this.permissions = params.permissions || [];
         this.lastInput = Date.now();
     }
 
@@ -22,7 +23,7 @@ class Player extends Actor {
      */
     canUseCommands = true
 
-    get props() {
+    get savableData() {
         const res = {...this};
 
         delete res.tmp;
@@ -39,7 +40,7 @@ class Player extends Actor {
      * @return {Number}
      */
     get isGm() {
-        if (this.permissions && this.permissions.length > 0) {
+        if (this.permissions.length > 0) {
             const allPermissions = require('../../commands/helpers/all-permissions')();
 
             if (this.permissions.length < allPermissions) {
@@ -59,7 +60,7 @@ class Player extends Actor {
      * @default 'cW'
      */
     get color() {
-        if (this.permissions && this.permissions.length > 0) {
+        if (this.permissions.length > 0) {
             const allPermissions = require('../../commands/helpers/all-permissions')();
 
             if (this.permissions.length < allPermissions) {
@@ -141,14 +142,14 @@ class Player extends Actor {
         }
 
         // first player is super admin, aka root
-        let otherS = await Model.getters('players/findOne', {});
-        if (!otherS) {
+        let others = await Model.getters('players/findOne', {});
+        if (!others) {
             this.permissions = require('../../commands/helpers/all-permissions')();
         }
 
         password = await Hash.password(password);
 
-        const params = this.props;
+        const params = this.savableData;
         delete params._id;
 
         let res = await Model.mutations('players/insert', {
@@ -190,7 +191,7 @@ class Player extends Actor {
         }
 
         await Model.mutations('players/save', {
-            ...this.props,
+            ...this.savableData,
         });
     }
 };

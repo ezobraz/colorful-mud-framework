@@ -1,3 +1,25 @@
 {
-    "player-name": "Name"
+    "command-list-actor-types-names": ["list actor types", "list npc types"],
+    "command-list-actor-types-desc": "Outputs the list of all actors you can create",
+
+    "command-create-actor-names": ["create npc"],
+    "command-create-actor-desc": "Creates non-playable character at current location",
+    "command-create-actor-examples": [
+        "create npc Harold"
+    ],
+
+    "command-list-item-types-names": ["list item types"],
+    "command-list-item-types-desc": "Outputs the list of all the items you can create",
+
+    "command-create-item-names": ["create item"],
+    "command-create-item-desc": "Spawns specified item in your inventory",
+    "command-create-item-examples": [
+        "create item {type} name=\"my new item\""
+    ],
+
+    "command-delete-item-names": ["delete item"],
+    "command-delete-item-desc": "Deletes specified item from your inventory",
+    "command-delete-item-examples": [
+        "delete item my new item"
+    ]
 }

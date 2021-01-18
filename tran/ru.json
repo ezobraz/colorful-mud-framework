@@ -1,3 +1,25 @@
 {
-    "player-name": "Имя"
+    "command-list-actor-types-names": ["типы нпс", "типы нип", "типы нпц", "типы актеров"],
+    "command-list-actor-types-desc": "Выводит список доступных классов для создания",
+
+    "command-create-actor-names": ["создать персонажа", "создать нип", "создать нпц", "создать нпс"],
+    "command-create-actor-desc": "Создает не игрового персонажа в данной локации",
+    "command-create-actor-examples": [
+        "создать нпс Гарольд"
+    ],
+
+    "command-list-item-types-names": ["типы предметов"],
+    "command-list-item-types-desc": "Выводит список предметов, которые можно создать",
+
+    "command-create-item-names": ["создать предмет"],
+    "command-create-item-desc": "Создает предмет заданного типа в вашем инвентаре",
+    "command-create-item-examples": [
+        "создать предмет {тип} name=\"мой новый предмет\""
+    ],
+
+    "command-delete-item-names": ["удалить предмет"],
+    "command-delete-item-desc": "Уничтожает предмет с указанным именем из вашего инвентаря",
+    "command-delete-item-examples": [
+        "удалить предмет мой новый предмет"
+    ]
 }

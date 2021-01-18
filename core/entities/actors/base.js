@@ -89,44 +89,6 @@ class Actor extends Base {
     }
 
     /**
-     * Change actor's location
-     *
-     * @param {Object} location location object or location id where actor needs to be placed
-     * @param {Boolean} silent Don't notify other players
-     */
-    changeLocation(location, silent = false) {
-        const to = typeof location == 'string' ? Store.findById('locations', location) : location;
-
-        if (!to) {
-            return;
-        }
-
-        let from = Store.findById('locations', this.locationId);
-
-        this.locationId = to._id;
-
-        if (from && !silent) {
-            from.notifyAll({
-                text: Color.parse(`${this.name} left`),
-                exclude: this,
-            });
-        }
-
-        if (!silent) {
-            to.notifyAll({
-                text: Color.parse(`${this.name} appeared here`),
-                exclude: this,
-            });
-        }
-
-        if (from) {
-            Debug.log(Color.parse(`${this.displayName} went from [b]${from.displayName}[/] to [b]${to.displayName}[/]`), 'MOVE');
-        } else {
-            Debug.log(Color.parse(`${this.displayName} appeared in [b]${to.displayName}[/]`), 'MOVE');
-        }
-    }
-
-    /**
      * Add item to inventory
      *
      * @param {Object} item Item object
