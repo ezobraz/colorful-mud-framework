@@ -6,17 +6,16 @@ module.exports = {
     lang: 'en',
 
     init(lang) {
-        if (lang == 'en') {
-            return;
+        this.lang = lang;
+        const data = {
+            ...en,
+        };
+
+        if (lang != 'en') {
+            data = {...data, ...require(`../../tran/${lang}.json`)};
         }
 
-        this.lang = lang;
-        const langData = require(`../../tran/${lang}.json`);
-
-        let res = Dictionary.append('tran', {
-            ...en,
-            ...langData,
-        });
+        let res = Dictionary.append('tran', data);
     },
 
     slate(key, params) {

@@ -34,25 +34,53 @@ const listeners = {
 
         Debug.connected(player);
 
-        player.socket.on('data', data => {
-            const message = new Buffer.from(data).toString().trim();
+        let data = '';
+        player.socket.on('data', d => {
+            data += d;
+            let p = data.indexOf('\n');
+            if(~p) {
+                let cmd = data.substr(0, p);
+                data = data.slice(p + 1);
 
-            if (!message || message.length >= 1024) {
-                return;
-            }
+                const message = cmd.trim();
 
-            player.lastInput = Date.now();
+                if (!message || message.length >= 1024) {
+                    return;
+                }
 
-            if (Commands.execute(player, message)) {
-                return;
-            }
+                player.lastInput = Date.now();
 
-            Event.emit('PLAYER_MESSAGE', { player, message });
+                if (Commands.execute(player, message)) {
+                    return;
+                }
 
-            if (!requireChatCommand) {
-                Commands.execute(player, `say ${message}`);
+                Event.emit('PLAYER_MESSAGE', { player, message });
+
+                if (!requireChatCommand) {
+                    Commands.execute(player, `say ${message}`);
+                }
             }
         });
+
+        // player.socket.on('data', data => {
+        //     const message = new Buffer.from(data).toString().trim();
+
+        //     if (!message || message.length >= 1024) {
+        //         return;
+        //     }
+
+        //     player.lastInput = Date.now();
+
+        //     if (Commands.execute(player, message)) {
+        //         return;
+        //     }
+
+        //     Event.emit('PLAYER_MESSAGE', { player, message });
+
+        //     if (!requireChatCommand) {
+        //         Commands.execute(player, `say ${message}`);
+        //     }
+        // });
 
         player.socket.on('error', e => {
             console.error(e);
