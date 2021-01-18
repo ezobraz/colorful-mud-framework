@@ -1,5 +1,4 @@
 # Colorful MUD Framework
-[![Build Status](https://travis-ci.org/ezobraz/colorful-mud-server-node.js.svg?branch=master)](https://travis-ci.org/ezobraz/colorful-mud-server-node.js)
 ![image](https://status.david-dm.org/gh/ezobraz/colorful-mud-server-node.js.svg)
 
 <img src="https://i.postimg.cc/x87Mw6FG/image.png">
