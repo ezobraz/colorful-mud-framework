@@ -37,10 +37,17 @@ const listeners = {
         let data = '';
         player.socket.on('data', d => {
             data += d;
-            let p = data.indexOf('\n');
-            if(~p) {
-                let cmd = data.substr(0, p);
-                data = data.slice(p + 1);
+            let enter = data.indexOf('\n');
+            let backspace = data.indexOf('\b');
+
+            if (~backspace) {
+                data = data.slice(0, -2);
+                return;
+            }
+
+            if (~enter) {
+                let cmd = data.substr(0, enter);
+                data = data.slice(enter + 1);
 
                 const message = cmd.trim();
 
