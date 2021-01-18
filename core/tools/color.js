@@ -239,6 +239,8 @@ const table = ({ title = null, color = 'cW', data }) => {
     // collect longest cols
     const colLengths = [];
     data = data.map(row => row.map((col, colIndx) => {
+        col = col || '';
+
         let str = col.toString();
 
         for (let symbol in alias) {

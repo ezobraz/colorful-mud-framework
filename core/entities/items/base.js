@@ -14,16 +14,12 @@ const day = 1000 * 60 * 60 * 24;
 */
 class Item extends Base {
     constructor(params = {}) {
-        if (typeof params.quality != 'undefined') {
-            params.quality = parseFloat(params.quality);
-        }
-
         super(params);
 
         this.name = params.name || 'Unknown';
-        this.slot = params.weight || null;
+        this.slot = params.slot || null;
         this.weight = parseFloat(params.weight) || 0.1;
-        this.quality = parseInt(params.quality) || 0;
+        this.quality = parseFloat(params.quality) || 0.1;
     }
 
     get setters() {
@@ -60,8 +56,11 @@ class Item extends Base {
     }
 
     get condition() {
+        const quality = parseFloat(this.quality);
+        const weight = parseFloat(this.weight);
+
         const negative = (Date.now() - this.createdOn) / (day * 5);
-        let res = this.quality + (this.weight / 2.5) - negative;
+        let res = quality + (weight / 2.5) - negative;
 
         if (res < 0) {
             res = 0;
@@ -75,7 +74,10 @@ class Item extends Base {
     }
 
     get value() {
-        let res = this.quality * 0.4 + this.condition * 0.7;
+        const quality = parseFloat(this.quality);
+        const condition = parseFloat(this.condition);
+
+        let res = quality * 0.4 + condition * 0.7;
         return Math.round(res * 100) / 100;
     }
 };

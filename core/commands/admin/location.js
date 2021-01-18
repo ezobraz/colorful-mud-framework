@@ -13,6 +13,7 @@ const setParams = [
 ];
 
 module.exports = [
+    // LIST
     {
         names: ['list locations', 'list loc'],
         permissions: ['see location id'],
@@ -23,11 +24,20 @@ module.exports = [
         ],
         async execute(player) {
             const locations = Store.get('locations');
-            const res = [
-                Color.parse(`[b][r][cW]${Color.align({ text: 'List of all locations in game' })}[/]`),
-                '',
-                ...locations.map(loc => `${Color.parse(`${loc.displayName}: [b][cW]${loc._id}[/]`)}`),
-            ];
+
+            const res = Color.table({
+                title: 'List of all locations in game',
+                data: [
+                    [
+                        'ID',
+                        'Name',
+                    ],
+                    ...locations.map(loc => [
+                        loc._id,
+                        Color.parse(loc.displayName),
+                    ]),
+                ],
+            });
 
             Broadcaster.sendTo({
                 to: player,
