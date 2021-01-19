@@ -18,6 +18,7 @@ class Item extends Base {
 
         this.name = params.name || 'Unknown';
         this.slot = params.slot || null;
+        this.rare = parseInt(params.rare) || 1;
         this.weight = parseFloat(params.weight) || 0.1;
         this.quality = parseFloat(params.quality) || 0.1;
     }
@@ -26,33 +27,6 @@ class Item extends Base {
         const res = Object.keys(this);
         const exclude = ['meta', 'tmp', 'class'];
         return res.filter(p => !exclude.includes(p));
-    }
-
-    get displayName() {
-        const condition = this.condition;
-        let color = 'cW';
-
-        if (condition >= 25) {
-            color = 'cC';
-        }
-
-        if (condition >= 50) {
-            color = 'cG';
-        }
-
-        if (condition >= 75) {
-            color = 'cB';
-        }
-
-        if (condition >= 90) {
-            color = 'cY';
-        }
-
-        if (condition >= 95) {
-            color = 'cM';
-        }
-
-        return `[b][${color}]${this.name}[/]`;
     }
 
     get condition() {
@@ -76,9 +50,96 @@ class Item extends Base {
     get value() {
         const quality = parseFloat(this.quality);
         const condition = parseFloat(this.condition);
+        const rare = parseInt(this.rare);
 
-        let res = quality * 0.4 + condition * 0.7;
+        let res = (quality * 0.4 + condition * 0.7) * rare;
         return Math.round(res * 100) / 100;
+    }
+
+    get displayClass() {
+        return tran.slate(`item-type-${this.class.toLowerCase()}`);
+    }
+
+    get displayName() {
+        const rare = parseInt(this.rare);
+        let color = 'cW';
+
+        switch(rare) {
+            case 6: // legendary
+                color = '[b][cY]';
+                break;
+            case 5: // epic
+                color = '[b][cM]';
+                break;
+            case 4: // rare
+                color = '[b][cC]';
+                break;
+            case 3: // uncommon
+                color = '[b][cG]';
+                break;
+            case 2: // common
+                color = '[b][cW]';
+                break;
+            case 1: // poor
+            default:
+                color = '';
+                break;
+        }
+
+        return `${color}${this.name}[/]`;
+    }
+
+    get displayWeight() {
+        const weight = parseFloat(this.weight);
+        let color = 'cg';
+
+        if (weight >= 50) {
+            color = 'cr';
+        } else if (weight >= 25) {
+            color = 'cy';
+        } else if (weight >= 10) {
+            color = 'cb';
+        }
+
+        return `[${color}]${weight}[/]`;
+    }
+
+    get displayQuality() {
+        const quality = parseFloat(this.quality);
+        let color = 'cr';
+
+        if (quality >= 90) {
+            color = 'cg';
+        } else if (quality >= 75) {
+            color = 'cc';
+        } else if (quality >= 50) {
+            color = 'cb';
+        } else if (quality >= 25) {
+            color = 'cy';
+        }
+
+        return `[${color}]${quality}%[/]`;
+    }
+
+    get displayCondition() {
+        const condition = parseFloat(this.condition);
+        let color = 'cr';
+
+        if (condition >= 90) {
+            color = 'cg';
+        } else if (condition >= 75) {
+            color = 'cc';
+        } else if (condition >= 50) {
+            color = 'cb';
+        } else if (condition >= 25) {
+            color = 'cy';
+        }
+
+        return `[${color}]${condition}%[/]`;
+    }
+
+    get displayValue() {
+        return `[cy]${this.value}[/]`;
     }
 };
 

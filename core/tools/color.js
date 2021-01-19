@@ -64,6 +64,12 @@ const imgSymbols = {
 };
 
 const parse = text => {
+    if (!text) {
+        return '';
+    }
+
+    text = text.toString();
+
     for (let symbol in alias) {
         text = text.replace(new RegExp(`\\[${symbol}\\]`, 'g'), '\u001b' + alias[symbol]);
     }

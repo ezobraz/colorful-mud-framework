@@ -20,12 +20,12 @@ module.exports = {
                         ],
                         ...player.inventory.map((item, i) => [
                             i + 1,
-                            tran.slate(`item-type-${item.class.toLowerCase()}`),
+                            item.displayClass,
                             Color.parse(item.displayName),
-                            item.weight,
-                            `${item.quality}%`,
-                            `${item.condition}%`,
-                            item.value,
+                            Color.parse(item.displayWeight),
+                            Color.parse(item.displayQuality),
+                            Color.parse(item.displayCondition),
+                            Color.parse(item.displayValue),
                         ]),
                     ],
                 });
