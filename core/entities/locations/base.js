@@ -57,12 +57,23 @@ class Location extends Base {
         return Store.findAll('players', 'locationId', this._id);
     }
 
+    get characters() {
+        return [
+            ...this.npcs,
+            ...this.players,
+        ];
+    }
+
     get color() {
         return 'cW';
     }
 
     get displayName() {
         return `[${this.color}]${this.name}[/]`;
+    }
+
+    get displayClass() {
+        return `[${this.color}]${this.class}[/]`;
     }
 
     async create() {

@@ -13,7 +13,6 @@ class Player extends Actor {
         super(params);
         this.socket = params.socket;
         this.permissions = params.permissions || [];
-        this.lastInput = Date.now();
     }
 
     /**
@@ -29,7 +28,6 @@ class Player extends Actor {
         delete res.tmp;
         delete res.socket;
         delete res.canUseCommands;
-        delete res.lastInput;
 
         return res;
     }

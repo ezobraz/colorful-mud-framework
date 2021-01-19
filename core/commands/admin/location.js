@@ -26,15 +26,25 @@ module.exports = [
             const locations = Store.get('locations');
 
             const res = Color.table({
-                title: 'List of all locations in game',
+                title: 'Locations',
                 data: [
                     [
                         'ID',
+                        'Type',
                         'Name',
+                        'Players',
+                        'NPCs',
+                        'Exits',
+                        'locked',
                     ],
                     ...locations.map(loc => [
                         loc._id,
+                        Color.parse(loc.displayClass),
                         Color.parse(loc.displayName),
+                        loc.players.length.toString(),
+                        loc.npcs.length.toString(),
+                        loc.exits.length.toString(),
+                        loc.locked ? Color.parse('[b][cR]c[][/]') : ' ',
                     ]),
                 ],
             });

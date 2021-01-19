@@ -24,7 +24,14 @@ module.exports = {
                 }
 
                 const name = text.toLowerCase();
-                const item = location.items.find(i => i.name.toLowerCase() == name);
+                const index = parseInt(text);
+                let item;
+
+                if (index > 0) {
+                    item = location.items[index - 1];
+                } else {
+                    item = location.items.find(i => i.name.toLowerCase() === name);
+                }
 
                 if (!item) {
                     return;
@@ -64,7 +71,14 @@ module.exports = {
                 }
 
                 const name = text.toLowerCase();
-                const item = player.inventory.find(i => i.name.toLowerCase() == name);
+                const index = parseInt(text);
+                let item;
+
+                if (index > 0) {
+                    item = player.inventory[index - 1];
+                } else {
+                    item = player.inventory.find(i => i.name.toLowerCase() === name);
+                }
 
                 if (!item) {
                     return;

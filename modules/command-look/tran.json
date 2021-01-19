@@ -4,8 +4,7 @@
         "command-look-desc": "Look around",
 
         "location-empty": "You are in emptyness...",
-        "location-players-nearby": "Players nearby",
-        "location-npcs-nearby": "NPCs nearby",
+        "location-characters-nearby": "Characters nearby",
         "location-items": "Items",
         "location-exits": "Exits"
     },
@@ -14,8 +13,7 @@
         "command-look-desc": "Показывает информацию о происходящем повкруг",
 
         "location-empty": "Вы в пустоте...",
-        "location-players-nearby": "Игроки поблизости",
-        "location-npcs-nearby": "Персонажи поблизости",
+        "location-characters-nearby": "Персонажи поблизости",
         "location-items": "Предметы",
         "location-exits": "Выходы"
     }

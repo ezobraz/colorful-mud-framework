@@ -6,12 +6,18 @@
     "chat": {
         "requireCommand": true
     },
+    "currency": {
+        "gold": "cY",
+        "silver": "cW",
+        "bronze": "cR"
+    },
     "modules": [
         "base-module",
         "motd",
         "command-stats",
         "command-inventory",
         "command-take-drop",
+        "command-look-at",
         "command-look",
         "command-go",
         "command-quit",

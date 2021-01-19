@@ -55,8 +55,6 @@ const listeners = {
                     return;
                 }
 
-                player.lastInput = Date.now();
-
                 if (Commands.execute(player, message)) {
                     return;
                 }
@@ -68,26 +66,6 @@ const listeners = {
                 }
             }
         });
-
-        // player.socket.on('data', data => {
-        //     const message = new Buffer.from(data).toString().trim();
-
-        //     if (!message || message.length >= 1024) {
-        //         return;
-        //     }
-
-        //     player.lastInput = Date.now();
-
-        //     if (Commands.execute(player, message)) {
-        //         return;
-        //     }
-
-        //     Event.emit('PLAYER_MESSAGE', { player, message });
-
-        //     if (!requireChatCommand) {
-        //         Commands.execute(player, `say ${message}`);
-        //     }
-        // });
 
         player.socket.on('error', e => {
             console.error(e);

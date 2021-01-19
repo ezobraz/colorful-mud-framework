@@ -47,39 +47,27 @@ module.exports = {
                     ]);
                 }
 
-                if (location.players.length > 0) {
+                if (location.characters.length > 0) {
                     res.push();
 
-                    const playerNames = location.players.map(ply => Color.parse(ply.displayName));
+                    const characters = location.characters.map((char, i) => `${i + 1}. ` + Color.parse(char.displayName));
 
                     res.push(
                         ...[
-                            Color.parse(`[b][u][cW]${tran.slate('location-players-nearby')}:[/]`),
-                            ...Color.list(playerNames, 4),
-                            '',
-                        ],
-                    );
-                }
-
-                if (location.npcs.length) {
-                    const npcs = location.npcs.map(npc => Color.parse(npc.displayName));
-
-                    res.push(
-                        ...[
-                            Color.parse(`[b][u][cW]${tran.slate('location-npcs-nearby')}:[/]`),
-                            ...npcs.length > 10 ? Color.list(npcs, 4) : npcs,
+                            Color.parse(`[b][u][cW]${tran.slate('location-characters-nearby')}:[/]`),
+                            ...Color.list(characters, 4, '  '),
                             '',
                         ],
                     );
                 }
 
                 if (location.items.length) {
-                    const items = location.items.map(item => Color.parse(item.displayName));
+                    const items = location.items.map((item, i) => `${i + 1}. ` + Color.parse(item.displayName));
 
                     res.push(
                         ...[
                             Color.parse(`[b][u][cW]${tran.slate('location-items')}:[/]`),
-                            ...items.length > 10 ? Color.list(items, 4) : items,
+                            ...Color.list(items, 2, '  '),
                             '',
                         ],
                     );

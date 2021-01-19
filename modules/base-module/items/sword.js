@@ -19,14 +19,14 @@ class Sword extends Item {
 
     get outputData() {
         return [
-            {
-                name: tran.slate('item-type-sword-param-length'),
-                value: `${this.length}`,
-            },
-            {
-                name: tran.slate('item-type-sword-param-sharpness'),
-                value: `${this.sharpness}%`,
-            },
+            [
+                tran.slate('item-type-sword-param-length'),
+                `${this.length}`,
+            ],
+            [
+                tran.slate('item-type-sword-param-sharpness'),
+                `${this.sharpness}%`,
+            ],
         ];
     }
 

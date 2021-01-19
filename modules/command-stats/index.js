@@ -1,9 +1,6 @@
 const { Color, Broadcaster } = __require('core/tools');
 const Config = __require('core/config');
 
-const lineLength = Config.get('format.lineLength');
-const statLineLength = lineLength / 2 - 1;
-
 module.exports = {
     commands: [
         {
@@ -17,14 +14,14 @@ module.exports = {
                 };
 
                 const res = [
-                    Color.parse(`[b][r][cG]${ Color.align({ text: tran.slate('window-name-stats') }) }[/]`),
+                    Color.parse(`[r]${ Color.align({ text: tran.slate('window-name-stats') }) }[/]`),
                     '',
                     Color.parse(`[b][cW]${tran.slate('player-name')}:[/] ${player.displayName}`),
                     '',
                 ];
 
                 for (let i in stats) {
-                    res.push(Color.parse(`[b][u][cG]${ Color.align({ text: tran.slate(`player-${i}`), align: 'left' }) }[/]`));
+                    // res.push(Color.parse(`[b][u]${ Color.align({ text: tran.slate(`player-${i}`), align: 'left' }) }[/]`));
 
                     const pack = stats[i];
                     const tmp = [];
@@ -46,14 +43,14 @@ module.exports = {
                                 break;
                         }
 
-                        let add = statLineLength - name.length - data.length;
-                        let addStr = new Array(add + 1).join('.');
-
-                        tmp.push(Color.parse(`[b][cW]${name}[/]${addStr}[b][cW]${data}[/]`));
+                        tmp.push([
+                            Color.parse(`[b][cW]${name}[/]`),
+                            Color.parse(`[b][cW]${data}[/]`),
+                        ]);
                     }
 
                     if (tmp.length) {
-                        res.push(...Color.list(tmp, 2));
+                        res.push(...Color.dottedList({ data: tmp, cols: 2 }));
                     }
 
                     if (i != 'skills') {

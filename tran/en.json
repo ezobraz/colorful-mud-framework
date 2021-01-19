@@ -1,8 +1,19 @@
 {
+    "actor-class-npc": "NPC",
+
+    "item-param-rare": "Rareness",
+
+    "item-type-rare-1": "Poor",
+    "item-type-rare-2": "Common",
+    "item-type-rare-3": "Uncommon",
+    "item-type-rare-4": "Rare",
+    "item-type-rare-5": "Epic",
+    "item-type-rare-6": "Legendary",
+
     "command-list-actor-types-names": ["list actor types", "list npc types"],
     "command-list-actor-types-desc": "Outputs the list of all actors you can create",
 
-    "command-create-actor-names": ["create npc"],
+    "command-create-actor-names": ["create npc", "create actor"],
     "command-create-actor-desc": "Creates non-playable character at current location",
     "command-create-actor-examples": [
         "create npc Harold"

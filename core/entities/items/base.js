@@ -3,9 +3,28 @@
  */
 
 const { Color } = __require('core/tools');
+const Config = __require('core/config');
 const Base = require('../base');
 
 const day = 1000 * 60 * 60 * 24;
+
+const rareColor = rare => {
+    switch(rare) {
+        case 6: // legendary
+            return '[b][cY]';
+        case 5: // epic
+            return '[b][cM]';
+        case 4: // rare
+            return '[b][cC]';
+        case 3: // uncommon
+            return '[b][cG]';
+        case 2: // common
+            return '[b][cW]';
+        case 1: // poor
+        default:
+            return '';
+    }
+}
 
 /**
 * Parent-class for all "actors" in game
@@ -62,31 +81,9 @@ class Item extends Base {
 
     get displayName() {
         const rare = parseInt(this.rare);
-        let color = 'cW';
+        let color = rareColor(rare);
 
-        switch(rare) {
-            case 6: // legendary
-                color = '[b][cY]';
-                break;
-            case 5: // epic
-                color = '[b][cM]';
-                break;
-            case 4: // rare
-                color = '[b][cC]';
-                break;
-            case 3: // uncommon
-                color = '[b][cG]';
-                break;
-            case 2: // common
-                color = '[b][cW]';
-                break;
-            case 1: // poor
-            default:
-                color = '';
-                break;
-        }
-
-        return `${color}${this.name}[/]`;
+        return `[${this.displayClass}] ${color}${this.name}[/]`;
     }
 
     get displayWeight() {
@@ -139,7 +136,14 @@ class Item extends Base {
     }
 
     get displayValue() {
-        return `[cy]${this.value}[/]`;
+        return Color.price(this.value);
+    }
+
+    get displayRare() {
+        const rare = parseInt(this.rare);
+        let color = rareColor(rare);
+
+        return `${color}${tran.slate(`item-type-rare-${rare}`)}[/]`;
     }
 };
 

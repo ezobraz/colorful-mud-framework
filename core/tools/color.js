@@ -1,6 +1,8 @@
 const Config = __require('core/config');
 
 const lineLength = Config.get('format.lineLength');
+const currency = Config.get('currency');
+const currencyKeys = Object.keys(currency);
 
 const alias = {
     // normal
@@ -61,6 +63,20 @@ const imgSymbols = {
     'M': alias['bm'], // magenta
     'C': alias['bc'], // cyan
     'W': alias['bw'], // white,
+};
+
+const clearStr = str => {
+    if (!str) {
+        return '';
+    }
+
+    str = str.toString();
+
+    for (let symbol in alias) {
+        str = str.replace(new RegExp(`\u001b\\${alias[symbol]}`, 'g'), '');
+    }
+
+    return str;
 };
 
 const parse = text => {
@@ -125,12 +141,12 @@ const wrap = text => {
     return chunks.join('\r\n');
 };
 
-const list = (arr, cols = 1) => {
+const list = (arr, cols = 1, separator = ' ') => {
     let res = [
         [],
     ];
 
-    cellLength = arr.sort((a, b) => b.length - a.length)[0].length;
+    const cellLength = Math.max(...arr.map(o => clearStr(o).length), 0);
 
     let lastCol = 0;
 
@@ -140,27 +156,47 @@ const list = (arr, cols = 1) => {
             res[lastCol] = [];
         }
 
-        let add = cellLength - item.length;
+        let add = cellLength - clearStr(item).length;
         let addStr = new Array(add + 1).join(' ');
 
         res[lastCol].push(`${item}${addStr}`);
     });
 
-    res = res.map(line => line.join(' '));
+    res = res.map(line => line.join(separator));
 
     return res;
-}
+};
 
-const align = ({ symbol = ' ', length = lineLength, text = null, align = 'center' }) => {
-    let start = 0;
-
-    if (text && align == 'center') {
-        start = Math.floor(length / 2 - text.length / 2);
-    } else if (text && align == 'right') {
-        start = length - text.length;
+const dottedList = ({ data = [], length = 0, cols = 1, symbol = '.', separator = ' ' }) => {
+    if (!length) {
+        length = lineLength / 2 - separator.length;
     }
 
-    const res = new Array(length).join(symbol).split('');
+    data = data.map(item => {
+        const cleanName = clearStr(item[0]);
+        const cleanData = clearStr(item[1]);
+
+        let add = length - cleanName.length - cleanData.length;
+        let addStr = new Array(add + 1).join(symbol);
+
+        return `${item[0]}${addStr}${item[1]}`;
+    });
+
+    return list(data, cols, separator);
+};
+
+const align = ({ symbol = ' ', length = lineLength, text = '', align = 'center' }) => {
+    let start = 0;
+
+    const cleanStr = clearStr(text);
+
+    if (text && align == 'center') {
+        start = Math.floor(length / 2 - cleanStr.length / 2);
+    } else if (text && align == 'right') {
+        start = length - cleanStr.length;
+    }
+
+    const res = new Array(length + text.length - cleanStr.length).join(symbol).split('');
 
     if (text) {
         for (var i in text) {
@@ -247,11 +283,7 @@ const table = ({ title = null, color = 'cW', data }) => {
     data = data.map(row => row.map((col, colIndx) => {
         col = col || '';
 
-        let str = col.toString();
-
-        for (let symbol in alias) {
-            str = str.replace(new RegExp(`\u001b\\${alias[symbol]}`, 'g'), '');
-        }
+        let str = clearStr(col);
 
         const length = str.length + 3;
 
@@ -271,7 +303,9 @@ const table = ({ title = null, color = 'cW', data }) => {
     if (title) {
         res.push(...[
             ' ' + new Array(rowLine).join('_'),
-            '|' + parse(`[b][${color}][r]${ align({ text: title, length: rowLine }) }[/]`) + '|',
+            '|' + new Array(rowLine).join(' ') + '|',
+            '|' + parse(`[b][${color}]${ align({ text: title, length: rowLine }) }[/]`) + '|',
+            '|' + new Array(rowLine).join('_') + '|',
         ]);
     }
 
@@ -319,12 +353,42 @@ const table = ({ title = null, color = 'cW', data }) => {
     return res;
 };
 
+const price = value => {
+    value = parseFloat(value);
+
+    const res = [];
+
+    if (currencyKeys.length === 1) {
+        res[0] = value;
+    } else {
+        currencyKeys.forEach((key, i) => {
+            if (i === 0) {
+                res[i] = parseInt(Math.floor(value / 100));
+            } else if (i === 1) {
+                res[i] = parseInt(Math.floor(value - res[0] * 100));
+            } else {
+                res[i] = parseInt((value - (res[0] * 100) - res[1] ) * 100);
+            }
+        });
+    }
+
+    return res.map((r, i) => {
+        if (r) {
+            const key = currencyKeys[i];
+            const color = currency[key];
+            return `[b][${color}]${r}${key.slice(0, 1)}[/]`;
+        }
+    }).filter(i => i).join(' ');
+};
+
 module.exports = {
     parse,
     wrap,
     list,
+    dottedList,
     align,
     img,
     progress,
     table,
+    price,
 };

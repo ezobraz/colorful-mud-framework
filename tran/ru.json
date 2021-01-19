@@ -1,4 +1,15 @@
 {
+    "actor-class-npc": "НИП",
+
+    "item-param-rare": "Редкость",
+
+    "item-type-rare-1": "Барахло",
+    "item-type-rare-2": "Обычный",
+    "item-type-rare-3": "Необычный",
+    "item-type-rare-4": "Редкий",
+    "item-type-rare-5": "Эпический",
+    "item-type-rare-6": "Легендарный",
+
     "command-list-actor-types-names": ["типы нпс", "типы нип", "типы нпц", "типы актеров"],
     "command-list-actor-types-desc": "Выводит список доступных классов для создания",
 
