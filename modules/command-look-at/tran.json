@@ -1,0 +1,10 @@
+{
+    "en": {
+        "command-look-at-names": ["look at"],
+        "command-look-at-desc": "Look at specified character"
+    },
+    "ru": {
+        "command-look-at-names": ["посмотреть на"],
+        "command-look-at-desc": "Посмотреть на указанного персонажа"
+    }
+}

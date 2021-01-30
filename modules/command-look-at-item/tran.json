@@ -1,0 +1,14 @@
+{
+    "en": {
+        "command-look-at-item-names": ["look at item"],
+        "command-look-at-item-desc": "Look at item on the ground",
+        "in-inventory": "in inventory",
+        "item-name": "Name"
+    },
+    "ru": {
+        "command-look-at-item-names": ["посмотреть на предмет"],
+        "command-look-at-item-desc": "Посмотреть на указанный премет поблизости",
+        "in-inventory": "в инвентаре",
+        "item-name": "Название"
+    }
+}

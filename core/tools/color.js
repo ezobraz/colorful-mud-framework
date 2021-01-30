@@ -356,6 +356,12 @@ const table = ({ title = null, color = 'cW', data }) => {
 const price = value => {
     value = parseFloat(value);
 
+    if (!value) {
+        const key = currencyKeys[currencyKeys.length -1];
+        const color = currency[key];
+        return `[b][${color}]0[/]`;
+    }
+
     const res = [];
 
     if (currencyKeys.length === 1) {

@@ -1,6 +1,7 @@
 {
     "en": {
         "player-name": "Name",
+        "player-money": "Money",
         "player-params": "Parameters",
         "player-attributes": "Attributes",
         "player-dependents": "Dependent attributes",
@@ -15,6 +16,7 @@
     },
     "ru": {
         "player-name": "Имя",
+        "player-money": "Деньги",
         "player-params": "Параметры",
         "player-attributes": "Характеристики",
         "player-dependents": "Производные характеристики",

@@ -17,6 +17,7 @@
         "command-stats",
         "command-inventory",
         "command-take-drop",
+        "command-look-at-item",
         "command-look-at",
         "command-look",
         "command-go",

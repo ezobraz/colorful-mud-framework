@@ -14,6 +14,8 @@ modules/*
 !modules/command-inventory
 !modules/command-take-drop
 !modules/command-look
+!modules/command-look-at
+!modules/command-look-at-item
 !modules/command-go
 !modules/command-quit
 !modules/command-hp

@@ -4,27 +4,8 @@
 
 const { Color } = __require('core/tools');
 const Config = __require('core/config');
+const { itemCondition, itemValue, itemRareColor } = __require('core/formulas');
 const Base = require('../base');
-
-const day = 1000 * 60 * 60 * 24;
-
-const rareColor = rare => {
-    switch(rare) {
-        case 6: // legendary
-            return '[b][cY]';
-        case 5: // epic
-            return '[b][cM]';
-        case 4: // rare
-            return '[b][cC]';
-        case 3: // uncommon
-            return '[b][cG]';
-        case 2: // common
-            return '[b][cW]';
-        case 1: // poor
-        default:
-            return '';
-    }
-}
 
 /**
 * Parent-class for all "actors" in game
@@ -49,30 +30,11 @@ class Item extends Base {
     }
 
     get condition() {
-        const quality = parseFloat(this.quality);
-        const weight = parseFloat(this.weight);
-
-        const negative = (Date.now() - this.createdOn) / (day * 5);
-        let res = quality + (weight / 2.5) - negative;
-
-        if (res < 0) {
-            res = 0;
-        }
-
-        if (res > 100) {
-            res = 100;
-        }
-
-        return Math.round(res * 100) / 100;
+        return itemCondition(this);
     }
 
     get value() {
-        const quality = parseFloat(this.quality);
-        const condition = parseFloat(this.condition);
-        const rare = parseInt(this.rare);
-
-        let res = (quality * 0.4 + condition * 0.7) * rare;
-        return Math.round(res * 100) / 100;
+        return itemValue(this);
     }
 
     get displayClass() {
@@ -81,7 +43,7 @@ class Item extends Base {
 
     get displayName() {
         const rare = parseInt(this.rare);
-        let color = rareColor(rare);
+        const color = itemRareColor(rare);
 
         return `[${this.displayClass}] ${color}${this.name}[/]`;
     }
@@ -141,7 +103,7 @@ class Item extends Base {
 
     get displayRare() {
         const rare = parseInt(this.rare);
-        let color = rareColor(rare);
+        let color = itemRareColor(rare);
 
         return `${color}${tran.slate(`item-type-rare-${rare}`)}[/]`;
     }

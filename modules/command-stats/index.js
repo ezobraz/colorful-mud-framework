@@ -17,6 +17,7 @@ module.exports = {
                     Color.parse(`[r]${ Color.align({ text: tran.slate('window-name-stats') }) }[/]`),
                     '',
                     Color.parse(`[b][cW]${tran.slate('player-name')}:[/] ${player.displayName}`),
+                    Color.parse(`[b][cW]${tran.slate('player-money')}:[/] ${Color.price(player.money)}`),
                     '',
                 ];
 

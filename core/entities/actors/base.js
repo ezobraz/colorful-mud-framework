@@ -26,6 +26,7 @@ class Actor extends Base {
         this.attributes = params.attributes || [];
         this.dependents = params.dependents || [];
         this.skills = params.skills || [];
+        this.money = parseFloat(params.money) || 0.0;
         this.slots = params.slots || {
             rHand: null,
             lHand: null,
